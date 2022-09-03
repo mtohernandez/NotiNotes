@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/home.css">
+  <link rel="stylesheet" href="./css/barhome.css">
+  <link rel="stylesheet" href="./css/root.css">
+  <title>Home</title>
+</head>
+
+<body>
+  <header class="header" id="header">
+    <nav class="nav">
+      <a class="nav__logo">NN</a>
+      <div class="nav__menu" id="nav-menu"> 
+        <ul class="nav__list">
+          <li class="nav__item">
+            <a href="./pages/about.html" class="nav__link">
+              about
+            </a>
+          </li>
+          <li class="nav__item">
+            <a href="./pages/donations.html" class="nav__link">
+              donations
+            </a>
+          </li>
+          <div class="nav__link">
+            <a href="./pages/login.html" class="button nav__button">
+              login
+            </a>
+          </div>
+        </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="section_title">
+      <div class="home__container">
+        <div class="home__header">
+          <div class="home__title">
+            <h1 class="home__title-item">NotiNotes</h1>
+          </div>
+          <div class="home__description">
+            <p class="home__description-item capitalize">create notes fast. like now. really.</p>
+          </div>
+          <div class="home__button">
+            <button onclick="document.location.href = './pages/notes.html'" class="home__button-item capitalize">
+              <p class="home__button-text">start now</p>
+              <img class="home__button-play" src="./assets/icons/play.svg" alt="play_icon">
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section_cards">
+      <div class="home__cards-title capitalize">
+        latest features:
+      </div>
+      <div class="home__cards">
+        <div class="home__card">
+          <img class="home__card-image" src="./assets/img/card-change-theme.png" alt="">
+        </div>
+        <div class="home__card">
+          <img class="home__card-image" src="./assets/img/card-resize-cards.png" alt="">
+        </div>
+        <div class="home__card">
+          <img class="home__card-image" src="./assets/img/card-collapse-fun.png" alt="">
+        </div>
+        <div class="home__card">
+          <img class="home__card-image" src="./assets/img/card-custom-layout.png" alt="">
+        </div>
+        <div class="home__card">
+          <img class="home__card-image" src="./assets/img/card-mobile-version.png" alt="">
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
