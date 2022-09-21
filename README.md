@@ -9,7 +9,7 @@ and improvement, new updates will be delivered in the next upcoming days.
 - Add custom tags to your cards
 - View date of card creation
 
-## Next Update
+## Next Update (soon)
 
 ![Notinotes](https://user-images.githubusercontent.com/67434849/191601408-0890261e-6877-44a8-bc1f-33abdd8878b0.png)
 
