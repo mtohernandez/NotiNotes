@@ -51,6 +51,7 @@
   border: 3px solid white;
   background-color: white;
   transition: transform .15s ease;
+  max-width: 55px;
 }
 
 .nav__button-plus svg{

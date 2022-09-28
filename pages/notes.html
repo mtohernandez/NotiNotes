@@ -69,7 +69,7 @@
         </form>
         <div class="note__creator-btn">
           <button class="note__creator-btn-item capitalize" form="note-creator-form">create</button>
-        </div>      
+        </div>           
       </div>
     </div>
   </div>
@@ -118,7 +118,28 @@
       <div class="notes__container" id="note-container">
 
         <!-- Notes -->
-
+        
+        <div class="note">
+          <div class="note__header">
+            <p>Title</p>
+            <p>Date Created</p>
+          </div>
+          <div class="note__description">
+            <p>This is a note.</p>
+          </div>
+          <div class="note__footer">
+            <div class="note__tags">
+              <p class="note__tag">Tag</p>
+            </div>
+            <div class="note__options">
+              <img class="note__options-dots" src="../assets/icons/3-dots.svg" alt="3-dots">
+              <div class="note__edit hidden">
+                <p class="note__edit-item">Edit</p>
+                <p class="note__edit-item">Delete</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- End of notes -->
 
@@ -127,6 +148,8 @@
   </main>
 
   <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
   <script src="../js/notes.js"></script>
+
 </body>
 </html>

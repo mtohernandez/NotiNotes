@@ -320,6 +320,10 @@
   align-items: center;
 }
 
+.note__options-dots:hover{
+  cursor: pointer;
+}
+
 .note__tags{
   display: flex;
   gap: var(--mb-0-5);
@@ -344,4 +348,23 @@
 }
 .note__tag:nth-child(6){
   color:rgb(255, 172, 84);
+}
+
+
+.note__edit{
+  position: absolute;
+  background-color: white;
+  left: 60%;
+  border-radius: 10px;
+  padding: 0.5rem;
+  transition: all 1s ease;
+}
+
+.note__edit p{
+  padding: 0.4rem;
+}
+
+.note__edit p:hover{
+  cursor: pointer;
+  background-color: #d3d3d3;
 }

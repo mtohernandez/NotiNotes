@@ -103,13 +103,15 @@ for (let i = 0; i < colors_note.length; i++) {
 }
 
 note_creator_btn.addEventListener("click", function (e) {
+
   e.preventDefault(); /* Prevent form */
 
   const note = document.createElement("div"),
     note_header = document.createElement("div"),
     note_description_div = document.createElement("div"),
     note_footer = document.createElement("div"),
-    note_options = document.createElement("div");
+    note_options = document.createElement("div"),
+    note_edit = document.createElement("div");
 
   const tags = document.querySelectorAll(".tag_name");
   
@@ -152,15 +154,33 @@ note_creator_btn.addEventListener("click", function (e) {
   }
 
   const dot_icon = document.createElement("img");
+  dot_icon.classList.add('note__options-dots')
   dot_icon.src = "../assets/icons/3-dots.svg";
   dot_icon.alt = "3-dots";
+
+  const edit_button = document.createElement("p"),
+     delete_button = document.createElement("p");
+  
+  edit_button.textContent = 'Edit';
+  delete_button.textContent = 'Delete';
+
+  note_edit.classList.add('note__edit');
+  note_edit.appendChild(edit_button);
+  note_edit.appendChild(delete_button);
+
+  dot_icon.addEventListener('click', function(){
+    note_edit.classList.remove('hidden');
+  })
+
+  note_options.appendChild(dot_icon);
+  // note_options.appendChild(note_edit);
 
   note_header.appendChild(note_title_text);
   note_header.appendChild(note_title_date);
   note_description_div.appendChild(note_description_text);
   note_footer.appendChild(note_tags);
   note_footer.appendChild(note_options);
-  note_options.appendChild(dot_icon);
+  
 
   note.appendChild(note_header);
   note.appendChild(note_description_div);
@@ -174,16 +194,6 @@ note_creator_btn.addEventListener("click", function (e) {
     masonry.layout();
     note_title_check.classList.add('hidden');
     note_description_check.classList.add('hidden');
-
-    // let noteInfo = {
-    //   title: note_title.value,
-    //   description: note_description.value,
-    //   date: note_title_date.textContent,
-    // }
-
-    // notes.push(noteInfo);
-    // localStorage.setItem('note', JSON.stringify(notes))
-
   }else{
     if(!note_title.value){
       note_title_check.classList.remove('hidden');
