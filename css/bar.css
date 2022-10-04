@@ -9,8 +9,6 @@
   justify-content: space-between;
   align-items: center;
   /* margin: 0 var(--mb-5); */
-  background: linear-gradient(114.29deg, var(--gradient-color-one) 25.84%, var(--main-general-color) 89.84%);
-  border-bottom: 2px solid white;
   z-index: 100;
 }
 

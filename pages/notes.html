@@ -10,22 +10,6 @@
   <title>Note App</title>
 </head>
 <body>
-
-  <div class="background">
-    <!-- <img src="./assets/Vector 32.svg" alt="top-right-corner" class="background-top"> -->
-    <svg class="background-top" width="511" height="646" viewBox="0 0 511 646" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8.19477 -132.999C-60.0627 352.199 363.78 588.485 584.233 645.978L742.281 -0.208228L8.19477 -132.999Z"/>
-    </svg>
-    <!-- <img src="./assets/Vector 33.svg" alt="bottom-left-corner" class="background-bottom"> -->
-    <svg class="background-bottom" width="951" height="823" viewBox="0 0 951 823" xmlns="http://www.w3.org/2000/svg">
-      <path d="M951 905C872.66 139.516 214.358 -16.4164 -105 1.30314V890.336L951 905Z" fill-opacity="0.2"/>
-      </svg>
-    <!-- <img src="./assets/Vector 34.svg" alt="bottom-left-corner-solid" class="background-bottom-solid"> -->
-    <svg class="background-bottom-solid" width="687" height="617" viewBox="0 0 687 617" xmlns="http://www.w3.org/2000/svg">
-      <path d="M687 664C667.8 174.4 208.667 17.3333 -18.5 0L-59 664H687Z"/>
-      </svg>
-  </div>
-
   <div class="note__creator hidden">
     <div class="note__form">
       <div class="note__content">
@@ -95,20 +79,6 @@
             </a>
           </div>
         </ul>
-        <button class="nav__button-plus">
-          <!-- <img src="./assets/plus-circle.svg" alt="plus-circle"> -->
-          <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_565_31)">
-            <circle cx="24.9999" cy="25.0004" r="15.2778" fill="white"/>
-            <path fill d="M50 25C50 31.6304 47.3661 37.9893 42.6777 42.6777C37.9893 47.3661 31.6304 50 25 50C18.3696 50 12.0107 47.3661 7.32233 42.6777C2.63392 37.9893 0 31.6304 0 25C0 18.3696 2.63392 12.0107 7.32233 7.32233C12.0107 2.63392 18.3696 0 25 0C31.6304 0 37.9893 2.63392 42.6777 7.32233C47.3661 12.0107 50 18.3696 50 25V25ZM26.5625 14.0625C26.5625 13.6481 26.3979 13.2507 26.1049 12.9576C25.8118 12.6646 25.4144 12.5 25 12.5C24.5856 12.5 24.1882 12.6646 23.8951 12.9576C23.6021 13.2507 23.4375 13.6481 23.4375 14.0625V23.4375H14.0625C13.6481 23.4375 13.2507 23.6021 12.9576 23.8951C12.6646 24.1882 12.5 24.5856 12.5 25C12.5 25.4144 12.6646 25.8118 12.9576 26.1049C13.2507 26.3979 13.6481 26.5625 14.0625 26.5625H23.4375V35.9375C23.4375 36.3519 23.6021 36.7493 23.8951 37.0424C24.1882 37.3354 24.5856 37.5 25 37.5C25.4144 37.5 25.8118 37.3354 26.1049 37.0424C26.3979 36.7493 26.5625 36.3519 26.5625 35.9375V26.5625H35.9375C36.3519 26.5625 36.7493 26.3979 37.0424 26.1049C37.3354 25.8118 37.5 25.4144 37.5 25C37.5 24.5856 37.3354 24.1882 37.0424 23.8951C36.7493 23.6021 36.3519 23.4375 35.9375 23.4375H26.5625V14.0625Z" fill="#EC7F7F"/>
-            </g>
-            <defs>
-            <clipPath id="clip0_565_31">
-            <rect width="50" height="50"/>
-            </clipPath>
-            </defs>
-          </svg>
-            
         </button>
     </nav>
   </header>
@@ -118,6 +88,35 @@
       <div class="notes__container" id="note-container">
 
         <!-- Notes -->
+
+        <div class="note">
+          <div class="note__header">
+            <div class="note__title">
+              <p>Title</p>
+              <p>Date Created</p>
+            </div>     
+            <div class="tags__squares">
+              <span class="tag__square"></span>
+              <span class="tag__square"></span>
+              <span class="tag__square"></span>
+              <span class="tag__square"></span>
+            </div>
+          </div>
+          <div class="note__content hidden">
+            <div class="note__description">
+              <p>This is a card and it was created Manually</p>
+            </div>
+  
+            <div class="note__footer">
+              <div class="note__tags">
+                <span class="note__tag">tag</span>
+              </div>
+              <div class="note__options">
+                <span>Options</span>
+              </div>
+            </div>
+          </div>   
+        </div>
 
 
         <!-- End of notes -->

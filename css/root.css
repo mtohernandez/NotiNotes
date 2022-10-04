@@ -89,7 +89,7 @@ img{
 body{
   position: relative;
   background: linear-gradient(114.29deg, var(--gradient-color-one) 25.84%, var(--main-general-color) 89.84%);
-  min-height: var(--min-body-height);
+  height: var(--min-body-height);
   scroll-behavior: smooth;
 }
 
