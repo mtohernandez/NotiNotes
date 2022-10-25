@@ -9,14 +9,15 @@
   justify-content: space-between;
   align-items: center;
   /* margin: 0 var(--mb-5); */
-  z-index: 100;
+  z-index: 1000;
 }
 
 .nav__logo{
   font-size: 2rem;
   font-weight: 600;
-  color: var(--main-font-color);
+  color: var(--second-font-color);
   margin-left: var(--mb-5);
+  pointer-events: none; /* Just for now */
 }
 
 .nav__list{
@@ -52,7 +53,7 @@
 }
 
 .nav__button-plus svg{
-  fill: var(--main-font-color);
+  fill: var(--gradient-color-one);
 }
 
 .nav__button-plus:hover{

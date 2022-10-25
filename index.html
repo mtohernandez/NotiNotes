@@ -5,12 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./css/home.css">
-  <link rel="stylesheet" href="./css/barhome.css">
+  <link rel="stylesheet" href="./css/navBar.css">
   <link rel="stylesheet" href="./css/root.css">
   <title>Home</title>
 </head>
 
 <body>
+
+  <div class="diagonal-box"></div>
+
   <header class="header" id="header">
     <nav class="nav">
       <a class="nav__logo">NN</a>
@@ -36,24 +39,88 @@
   </header>
 
   <main id="main">
-    <section class="section_title">
-      <div class="home__container">
-        <div class="home__header">
-          <div class="home__title">
-            <h1 class="home__title-item">NotiNotes</h1>
+    <section class="section_home">
+      <div class="content grid">
+        <div class="upper grid">
+          <div class="upper__title">
+            <div class="upper__title-title">
+              <h1 class="upper__title-item-1">NotiNotes</h1>
+              <h1 class="upper__title-item-2">NotiNotes</h1>
+            </div>
+            <div class="upper__title-description">
+              <p class="upper__description-item-1 capitalize">create notes fast. like now. really.</p>
+              <p class="upper__description-item-2 capitalize">create notes fast. like now. really.</p>
+            </div>        
           </div>
-          <div class="home__description">
-            <p class="home__description-item capitalize">create notes fast. like now. really.</p>
+          <div class="upper__card">
+            <div class="upper__card-item">
+              <div class="upper__card-item-picture">
+                <img src="./assets/img/card-resize-cards.png" alt="resizable-cards-image">
+              </div>
+              <div class="upper__card-item-content">
+                <p>watch trailer</p>
+                <p>more info.</p>
+              </div>
+            </div>
           </div>
-          <div class="home__button">
-            <button onclick="document.location.href = './pages/notes.html'" class="home__button-item capitalize">
-              <p class="home__button-text">start now</p>
-              <img class="home__button-play" src="./assets/icons/play.svg" alt="play_icon">
-            </button>
+        </div>
+        <div class="downwards grid">
+          <div class="downwards__leftside grid">
+            <div class="downwards__leftside-upper grid">
+              <div class="downwards__leftside-upper__leftside">
+                <div class="downwards__leftside-upper__leftside-card-item">
+                  <div class="downwards__leftside-upper__leftside-card-item__toptext">
+                    <p>ready to start?</p>
+                  </div>
+                  <div class="downwards__leftside-upper__leftside-card-item__title">
+                    <h3>everything will be set in seconds.</h3>
+                  </div>
+                  <button class="downwards__leftside-upper__leftside-card-item__button">start<img src="./assets/icons/play.svg" alt="start-icon"></button>
+                </div>
+              </div>
+              <div class="downwards__leftside-upper__rightside">
+                <div class="downwards__leftside-upper__rightside-card-item">
+                  <img src="./assets/img/card-mobile-version.png" alt="mobile-version-image">
+                </div>
+              </div>
+            </div>
+            <div class="downwards__leftside-downwards grid">
+              <div class="downwards__leftside-downwards__leftside">
+                <div class="downwards__leftside-downwards__leftside-card-item">
+                  
+                </div>
+              </div>
+              <div class="downwards__leftside-downwards__rightside">
+                <div class="downwards__leftside-downwards__rightside-card-item">
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="downwards__rightside-card">
+            <div class="downwards__rightside-card-item">
+    
+            </div>
           </div>
         </div>
       </div>
     </section>
   </main>
+
+  <!-- Creation of complex grid layout -->
+  
+
+  <!-- <div class="home__container">
+        <div class="home__header">
+          <div class="home__title">
+            <h1 class="home__title-item-1">NotiNotes</h1>
+            <h1 class="home__title-item-2">NotiNotes</h1>
+          </div>
+          <div class="home__description">
+            <p class="home__description-item-1 capitalize">create notes fast. like now. really.</p>
+            <p class="home__description-item-2 capitalize">create notes fast. like now. really.</p>
+          </div>
+        </div>
+      </div> -->
 </body>
 </html>

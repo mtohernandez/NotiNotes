@@ -196,3 +196,4 @@ note_creator_btn.addEventListener("click", function (e) {
     }
   }
 });
+
