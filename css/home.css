@@ -13,6 +13,19 @@
 
 /* upper */
 
+@keyframes slide-in-text {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+
 @keyframes slide-in-diagonal {
   0%{
     height: 0rem;
@@ -24,6 +37,22 @@
     transform: skewY(45deg);
     opacity: 1;
   }
+}
+
+
+#gradient-canvas {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width:100%;
+  height:100%;
+  --gradient-color-1: #48BFE3; 
+  --gradient-color-2: #5E60CE; 
+  --gradient-color-3: #72EFDD;  
+  --gradient-color-4: #F72585;
+  border-radius: 10px;
+  z-index: -1;
 }
 
 .diagonal-box{
@@ -66,6 +95,7 @@
   font-size: 7rem;
   font-weight: 600;
   line-height: 6rem;
+  animation: 2s ease 0s 1 slide-in-text;
 }
 
 .upper__title-item-1{
@@ -88,6 +118,7 @@
 .upper__description-item-1{
   color: var(--second-font-color); 
   mix-blend-mode:overlay;
+  animation: 2s ease 0s 1 slide-in-text;
 }
 
 .upper__description-item-2{
@@ -95,6 +126,7 @@
   top: 0;
   color: var(--main-font-color);
   z-index: -2;
+  animation: 2s ease 0s 1 slide-in-text;
 }
 
 /* First card: Upper Right Side */
@@ -224,7 +256,7 @@
 }
 
 .downwards__leftside-downwards__leftside-card-item{
-  background: url('../assets/img/gradientImage.png'); 
+  /* background: url('../assets/img/gradientImage.png');  */
   background-size: 100%;
   background-repeat: no-repeat;
 }
