@@ -88,12 +88,26 @@ img{
 body{
   position: relative;
   padding-top: var(--header-height);
-  background: linear-gradient(114.29deg, var(--gradient-color-one) 25.84%, var(--main-general-color) 89.84%);
-  height: var(--min-body-height);
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* min-height: var(--min-body-height); */
+  /* overflow: hidden; */
   scroll-behavior: smooth;
 }
 
 .capitalize{
   text-transform: capitalize;
+}
+
+
+/* Proper of this */
+
+.card-styles{ /* This applies to almost every card if not all of them */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 1rem;
 }

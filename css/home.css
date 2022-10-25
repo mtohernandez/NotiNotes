@@ -77,14 +77,8 @@
 }
 
 .upper__card-item{
-  width: 100%;
-  height: 100%;
   background: linear-gradient(122.62deg, #48BFE3 13.21%, #7400B8 114.06%);
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
 }
 
 .upper__card-item-picture img{
@@ -131,15 +125,9 @@
 }
 
 .downwards__leftside-upper__leftside-card-item{
-  width: 100%;
-  height: 100%;
   background-color: #F6F6FD; /*! Color to add */
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 5px;
-  border-radius: 10px;
 }
 
 .downwards__leftside-upper__leftside-card-item__toptext p{
@@ -191,12 +179,6 @@
 
 .downwards__leftside-upper__rightside-card-item{
   background: linear-gradient(122.62deg, #72EFDD 20.72%, #7400B8 114.06%);
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
 }
 
 .downwards__leftside-upper__rightside-card-item img{
@@ -218,12 +200,6 @@
   background: url('../assets/img/gradientImage.png'); 
   background-size: 100%;
   background-repeat: no-repeat;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
 }
 
 .downwards__leftside-downwards__leftside-card-item img{
@@ -238,12 +214,6 @@
 
 .downwards__leftside-downwards__rightside-card-item{
   background: url('../assets/img/gradientImage.png');
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .downwards__leftside-downwards__rightside-card-item img{
@@ -259,14 +229,57 @@
 
 .downwards__rightside-card-item{
   background: url('../assets/img/gradientImage.png');
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .downwards__rightside-card-item img{
   width: 20rem;
 }
+
+@media screen and (min-width: 1350px){
+  body{
+    overflow: hidden;
+  }
+}
+
+
+@media screen and (max-width: 1350px){
+
+  .diagonal-box{
+    left: -40rem;
+  }
+
+  .upper{
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+  }
+
+  .downwards{
+    grid-template-areas: "cars cars cars cars cars" 
+                        "car car car car car";
+  }
+}
+
+@media screen and (max-width: 920px){
+  .diagonal-box{
+    left: -20rem;
+  }
+
+  .upper__title{
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .downwards__leftside-upper{
+    grid-template-areas: "lef lef lef"
+                        "rig rig rig";
+  }
+}
+
+
+
+
+
+
