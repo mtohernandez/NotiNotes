@@ -12,12 +12,17 @@
   z-index: 1000;
 }
 
-.nav__logo{
+.nav__logo-1,
+.nav__logo-2{
   font-size: 2rem;
   font-weight: 600;
-  color: var(--second-font-color);
   margin-left: var(--mb-5);
-  pointer-events: none; /* Just for now */
+}
+
+.nav__logo-1{
+  position: relative;
+  color: var(--main-font-color);
+  mix-blend-mode: exclusion;
 }
 
 .nav__list{

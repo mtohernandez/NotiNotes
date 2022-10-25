@@ -1,13 +1,40 @@
+
+/* Maxed animations */
+
+.scale-up{
+  transform: scale(1);
+  transition: all .5s;
+}
+
+.scale-up:hover{
+  transform: scale(1.03);
+}
+
+
 /* upper */
+
+@keyframes slide-in-diagonal {
+  0%{
+    height: 0rem;
+    opacity: 0;
+  }
+
+  100%{
+    height: 30rem;
+    transform: skewY(45deg);
+    opacity: 1;
+  }
+}
 
 .diagonal-box{
   position: absolute;
   background-image: url('../assets/img/backgroundGradient-1.jpg');
   left: -90rem;
   right: 0;
-  height: 30rem;
-  transform: skewY(45deg);
+  animation: 2s ease 0s 1 slide-in-diagonal;
+  animation-fill-mode: forwards;
   z-index: -1;
+
 }
 
 .section_home{
