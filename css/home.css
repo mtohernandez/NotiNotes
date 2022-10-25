@@ -30,8 +30,8 @@
 
 .upper__title{
   position: relative;
-  margin-left: 5rem;
-  margin-top: 5rem;
+  margin-left: 10rem;
+  margin-top: 10rem;
 }
 
 .upper__title-item-1,
@@ -115,7 +115,6 @@
 
 .downwards__leftside{
   grid-template-rows: repeat(2, 1fr);
-  background-color: aquamarine; /* layout test */
   padding: 0.5rem;
   grid-area: cars;
 }
@@ -206,31 +205,68 @@
 
 
 .downwards__leftside-downwards{
-  background-color: aqua; /* layout test */
   grid-template-columns: repeat(2, 1fr);
 }
 
+/* Downwards Bottom Left Corner */
+
 .downwards__leftside-downwards__leftside{
-  background-color: rgb(54, 114, 94); /* layout test */
+  padding: 0.5rem;
+}
+
+.downwards__leftside-downwards__leftside-card-item{
+  background: url('../assets/img/gradientImage.png'); 
+  background-size: 100%;
+  background-repeat: no-repeat;
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
 }
+
+.downwards__leftside-downwards__leftside-card-item img{
+  width: 20rem;
+}
+
+/* Downwards Bottom Right Corner */
 
 .downwards__leftside-downwards__rightside{
-  background-color: rgb(17, 129, 92); /* layout test */
-  width: 100%;
-  height: 100%;
+  padding: 0.5rem;
 }
 
+.downwards__leftside-downwards__rightside-card-item{
+  background: url('../assets/img/gradientImage.png');
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.downwards__leftside-downwards__rightside-card-item img{
+  width: 15rem;
+}
+
+/* Downwards Bottom Right Right Corner */
 
 .downwards__rightside-card{
-  background-color: antiquewhite; /* layout test */
   padding: 0.5rem;
   grid-area: car;
 }
 
 .downwards__rightside-card-item{
-  background-color: blue;
+  background: url('../assets/img/gradientImage.png');
   width: 100%;
   height: 100%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.downwards__rightside-card-item img{
+  width: 20rem;
 }
