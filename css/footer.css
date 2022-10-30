@@ -1,0 +1,14 @@
+/* This file is just for test purposes */
+
+.footer{
+  position: fixed;
+  bottom: 1rem;
+}
+
+.footer-section{
+  font-size: 1rem;
+  opacity: .4;
+  display: flex;
+  gap: 1rem;
+  margin-left: 1rem; /* Footer margin */
+}
