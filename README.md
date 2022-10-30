@@ -6,7 +6,7 @@
 - multiple card creation
 - custom colors
 - save notes on local storage
-- mansonry layout
+- masonry layout
 
 ## Group Authors
 - Aura Marcela
