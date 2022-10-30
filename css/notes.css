@@ -31,6 +31,7 @@
   position: fixed;
   bottom: 1rem;
   right: 1rem;
+  z-index: 1000;
 }
 
 .button-plus{
@@ -111,7 +112,7 @@
 .note__content-title-item{
   font-weight: 500;
   font-size: 1.5rem;
-  color: var(--second-font-color);
+  color: var(--main-font-color);
 }
 
 .note__form-row{
@@ -121,7 +122,7 @@
 }
 
 .note__form-row label{
-  color: var(--second-font-color);
+  color: var(--main-font-color);
   margin-bottom: var(--mb-0-75);
 }
 
@@ -222,13 +223,13 @@
 
 .note__creator-btn-item:hover{
   background-color: white;
-  color: var(--second-font-color);
-  border: 1px solid var(--second-font-color);
+  color: var(--main-font-color);
+  border: 1px solid var(--main-font-color);
   cursor: pointer;
 }
 
 .note__creator-btn-item:active{
-  background-color: var(--main-general-color);
+  background-color: var(--main-font-color);
   color: var(--main-font-color);
   border: 0;
 }

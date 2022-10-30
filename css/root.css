@@ -95,6 +95,10 @@ body{
   scroll-behavior: smooth;
 }
 
+button{
+  cursor: pointer;
+}
+
 .capitalize{
   text-transform: capitalize;
 }
