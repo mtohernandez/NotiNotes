@@ -99,6 +99,17 @@ body{
   text-transform: capitalize;
 }
 
+.lightbold{
+  font-weight: 600;
+}
+
+.bold{
+  font-weight: 700;
+}
+
+.uppercase{
+  text-transform: uppercase;
+}
 
 /* Proper of this */
 

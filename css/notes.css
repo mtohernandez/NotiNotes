@@ -292,7 +292,7 @@
 /* Notes section */
 
 .notes__container{
-  margin: var(--mb-3) var(--mb-5);
+  margin: calc(var(--header-height)*.5) 0 0 var(--mb-5);
   /* padding-top: 9rem; */
   height: 100vh;
   overflow-x: hidden;

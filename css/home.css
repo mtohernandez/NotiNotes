@@ -239,7 +239,7 @@
   padding: 0.5rem;
   grid-area: cars;
   transform: translateX(-100%);
-  animation: 2s ease 1.5s 1 translate-left forwards; /* For now but works */
+  animation: 1.5s ease 1s 1 translate-left forwards; /* For now but works */
 }
 
 .downwards__leftside-upper{
@@ -254,9 +254,11 @@
 }
 
 .downwards__leftside-upper__leftside-card-item {
+  position: relative;
   background-color: #F6F6FD; /*! Color to add */
   flex-direction: column;
   gap: 5px;
+  z-index: 50; /* On top of the downwards leftside upper rightside */
   /* transform: translateX(-100%);
   animation: 2s ease 0.5s 1 translate-left forwards; */
 }
