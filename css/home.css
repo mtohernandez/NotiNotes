@@ -251,6 +251,7 @@
 
 .downwards__leftside-upper__leftside{
   grid-area: lef;
+  padding: 0 0.5rem;
 }
 
 .downwards__leftside-upper__leftside-card-item {
@@ -473,7 +474,19 @@
   }
 }
 
+@media screen and (min-width: 320px) and (max-width: 480px) {
+ .upper__title h1{
+  font-size: 4rem;
+ } 
 
+ .upper__card{
+  padding: 1rem 1rem;
+ }
+
+ .downwards__leftside-downwards{
+  grid-template-columns: 1fr;
+ }
+}
 
 
 
