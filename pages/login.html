@@ -1,199 +1,449 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/footer.css">
-  <link rel="stylesheet" href="../css/root.css">
-  <link rel="stylesheet" href="../css/login.css">
-  <link rel="stylesheet" href="../css/navBar.css">
-  <title>Login</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/root.css" />
+    <link rel="stylesheet" href="../css/login.css" />
+    <link rel="stylesheet" href="../css/navBar.css" />
+    <title>Login</title>
+  </head>
+  <body>
+    <header class="header" id="header">
+      <nav class="nav">
+        <a href="../index.html" class="nav__logo">NN</a>
 
-  <header class="header" id="header">
-    <nav class="nav">
-      <a href="../index.html" class="nav__logo">NN</a>
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="./notes.html" class="nav__link"> notes </a>
+            </li>
+            <li class="nav__item">
+              <a href="./pages/" class="nav__link"> bloc </a>
+            </li>
+            <li class="nav__item">
+              <a href="./pages/" class="nav__link"> open-source </a>
+            </li>
+            <li class="nav__item">
+              <a href="./donations.html" class="nav__link"> support </a>
+            </li>
+            <li class="nav__item">
+              <a href="./about.html" class="nav__link"> about </a>
+            </li>
 
-      <div class="nav__menu" id="nav-menu">
-        <ul class="nav__list">
-          <li class="nav__item">
-            <a href="./notes.html" class="nav__link"> notes </a>
-          </li>
-          <li class="nav__item">
-            <a href="./pages/" class="nav__link"> bloc </a>
-          </li>
-          <li class="nav__item">
-            <a href="./pages/" class="nav__link"> open-source </a>
-          </li>
-          <li class="nav__item">
-            <a href="./donations.html" class="nav__link"> support </a>
-          </li>
-          <li class="nav__item">
-            <a href="./about.html" class="nav__link"> about </a>
-          </li>
-
-          <div class="nav__link">
-            <a href="./login.html" class="button nav__button"> login </a>
-          </div>
-        </ul>
-
-        <div class="nav__close" id="nav__close">x</div>
-      </div>
-
-      <div class="nav__toggle" id="nav__toggle">
-        <img src="./assets/icons/menu.svg" alt="menu-logo" />
-      </div>
-
-      <div class="overlay hidden"></div>
-    </nav>
-  </header>
-
-
-  <main class="main" id="main">
-    <section class="form_section" id="form_section">
-       <div class="form">
-        <div class="form_body">
-          <div class="logo">
-            <p class="logo_aura-text">NotiNotes</p>
-          </div>
-          <div class="register_section hidden">
-            <div class="register">
-              <h2 class="register-text capitalize">register</h2>
-              <p class="register-description capitalize">save your personal notes, access everywhere.</p>
+            <div class="nav__link">
+              <a href="./login.html" class="button nav__button"> login </a>
             </div>
-            <div class="form_inputs">
-              <form id="form-register" action="https://xacarana.com/proyectos/backend/script.php" method="post">
-                <ul class="form-list">
-                  <li class="form-item">
-                    <img src="../assets/icons/ant-design_user-outlined.svg" alt="" class="label-icon">
-                    <input id="name-up" type="text" name="text" autocomplete="off" required />
-                    <label for="text" class="form-label">
-                      <span class="content-name uppercase">
-                        name:
-                      </span>
-                    </label>
-                  </li>
-                  <li class="form-item">
-                    <img src="../assets/icons/ant-design_user-outlined.svg" alt="user-icon" class="label-icon">
-                    <input id="surname-up" type="text" name="text" autocomplete="off" required />
-                    <label for="text" class="form-label">
-                      <span class="content-name uppercase">
-                        surname:
-                      </span>
-                    </label>
-                  </li>
-                  <li class="form-item">
-                    <img src="../assets/icons/cib_mail-ru.svg" alt="user-icon" class="label-icon">
-                    <input id="email-up" type="text" name="text" autocomplete="off" required />
-                    <label for="text" class="form-label">
-                      <span class="content-name uppercase">
-                        email:
-                      </span>
-                    </label>
-                  </li>
-                  <div class="password-container">
+          </ul>
+
+          <div class="nav__close" id="nav__close">x</div>
+        </div>
+
+        <div class="nav__toggle" id="nav__toggle">
+          <img src="./assets/icons/menu.svg" alt="menu-logo" />
+        </div>
+
+        <div class="overlay hidden"></div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="section-form">
+        <div class="form">
+          <h2>NotiNotes</h2>
+          <h4>login</h4>
+          <p>save your personal notes, access anywhere.</p>
+          <!-- Login Form -->
+          <form action="#" class="form--login">
+            <ul class="form--login__list">
+              <li class="form--login__list-item">
+                <img src="../assets/icons/cib_mail-ru.svg" alt="mail-icon" />
+                <input
+                  id="email-in"
+                  type="text"
+                  name="text"
+                  autocomplete="off"
+                  required
+                />
+                <label for="text" class="form-label">
+                  <span class="content-name uppercase">email:</span>
+                </label>
+              </li>
+              <li class="form--login__list-item">
+                <img
+                  src="../assets/icons/ant-design_lock-outlined.svg"
+                  alt="user-icon"
+                />
+                <input
+                  id="password-in"
+                  type="text"
+                  name="text"
+                  autocomplete="off"
+                  required
+                />
+                <label for="text" class="form-label">
+                  <span class="content-name uppercase">password:</span>
+                </label>
+              </li>
+            </ul>
+          </form>
+
+          <!-- Register Form -->
+          <form action="#" class="form--register" hidden> <!-- ! hidden default -->
+            <ul class="form--register__list">
+              <li class="form--register__list-item">
+                <img
+                  src="../assets/icons/ant-design_user-outlined.svg"
+                  alt="name-icon"
+                />
+                <input
+                  id="name-up"
+                  type="text"
+                  name="text"
+                  autocomplete="off"
+                  required
+                />
+                <label for="text" class="form-label">
+                  <span class="content-name uppercase"> name: </span>
+                </label>
+              </li>
+              <li class="form--register__list-item">
+                <img
+                  src="../assets/icons/ant-design_user-outlined.svg"
+                  alt="surname-icon"
+                />
+                <input
+                  id="surname-up"
+                  type="text"
+                  name="text"
+                  autocomplete="off"
+                  required
+                />
+                <label for="text" class="form-label">
+                  <span class="content-name uppercase"> surname: </span>
+                </label>
+              </li>
+              <li class="form--register__list-item">
+                <img src="../assets/icons/cib_mail-ru.svg" alt="mail-icon" />
+                <input
+                  id="email-up"
+                  type="text"
+                  name="text"
+                  autocomplete="off"
+                  required
+                />
+                <label for="text" class="form-label">
+                  <span class="content-name uppercase"> email: </span>
+                </label>
+              </li>
+              <li class="form--register__list-item">
+                <img
+                  src="../assets/icons/ant-design_lock-outlined.svg"
+                  alt="lock-icon"
+                />
+                <input
+                  id="password-up"
+                  type="text"
+                  name="text"
+                  autocomplete="off"
+                  required
+                />
+                <label for="text" class="form-label">
+                  <span class="content-name uppercase"> password: </span>
+                </label>
+              </li>
+              <li class="form--register__list-item">
+                <img
+                  src="../assets/icons/ant-design_lock-outlined.svg"
+                  alt="lock-icon"
+                />
+                <input
+                  id="password-confirm-up"
+                  type="password"
+                  name="text"
+                  autocomplete="off"
+                  required
+                />
+                <label for="password" class="form-label">
+                  <span class="content-name uppercase">
+                    confirm password:
+                  </span>
+                </label>
+              </li>
+              <li class="form--register__list-item">
+                <img
+                  src="../assets/icons/akar-icons_phone.svg"
+                  alt="phone-icon"
+                />
+                <input
+                  id="phone-up"
+                  type="text"
+                  name="text"
+                  autocomplete="off"
+                  required
+                />
+                <label for="text" class="form-label">
+                  <span class="content-name uppercase"> phone: </span>
+                </label>
+              </li>
+            </ul>
+          </form>
+
+          <!-- Registration/Login toggle -->
+          <p>no account yet? <span>sign up</span></p>
+
+          <!-- Sign Up Sign In Buttons 
+            This button will be imported from JS to change dynamically
+          -->
+          <button class="form-button" type="submit" form="form--login">
+            log in
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- <main class="main" id="main">
+      <section class="form_section" id="form_section">
+        <div class="form">
+          <div class="form_body">
+            <div class="logo">
+              <p class="logo_aura-text">NotiNotes</p>
+            </div>
+            <div class="register_section hidden">
+              <div class="register">
+                <h2 class="register-text capitalize">register</h2>
+                <p class="register-description capitalize">
+                  save your personal notes, access everywhere.
+                </p>
+              </div>
+              <div class="form_inputs">
+                <form
+                  id="form-register"
+                  action="https://xacarana.com/proyectos/backend/script.php"
+                  method="post"
+                >
+                  <ul class="form-list">
                     <li class="form-item">
-                      <img src="../assets/icons/ant-design_lock-outlined.svg" alt="user-icon" class="label-icon">
-                      <input id="password-up" type="text" name="text" autocomplete="off" required />
+                      <img
+                        src="../assets/icons/ant-design_user-outlined.svg"
+                        alt=""
+                        class="label-icon"
+                      />
+                      <input
+                        id="name-up"
+                        type="text"
+                        name="text"
+                        autocomplete="off"
+                        required
+                      />
                       <label for="text" class="form-label">
-                        <span class="content-name uppercase">
-                          password:
-                        </span>
+                        <span class="content-name uppercase"> name: </span>
                       </label>
                     </li>
                     <li class="form-item">
-                      <img src="../assets/icons/ant-design_lock-outlined.svg" alt="user-icon" class="label-icon">
-                      <input id="password-confirm-up" type="password" name="text" autocomplete="off" required />
-                      <label for="password" class="form-label">
-                        <span class="content-name uppercase">
-                          confirm password:
-                        </span>
+                      <img
+                        src="../assets/icons/ant-design_user-outlined.svg"
+                        alt="user-icon"
+                        class="label-icon"
+                      />
+                      <input
+                        id="surname-up"
+                        type="text"
+                        name="text"
+                        autocomplete="off"
+                        required
+                      />
+                      <label for="text" class="form-label">
+                        <span class="content-name uppercase"> surname: </span>
                       </label>
                     </li>
-                  </div> 
-                  <li class="form-item">
-                    <img src="../assets/icons/akar-icons_phone.svg" alt="user-icon" class="label-icon">
-                    <input id="phone-up" type="text" name="text" autocomplete="off" required />
-                    <label for="text" class="form-label">
-                      <span class="content-name uppercase">
-                        phone:
-                      </span>
-                    </label>
-                  </li>  
-                 </ul>
-              </form>
-              <div class="login_toggle">
-                <p class="login_toggle-text capitalize">already have an account? <span class="signin_toggle">sign up</span></p>
+                    <li class="form-item">
+                      <img
+                        src="../assets/icons/cib_mail-ru.svg"
+                        alt="user-icon"
+                        class="label-icon"
+                      />
+                      <input
+                        id="email-up"
+                        type="text"
+                        name="text"
+                        autocomplete="off"
+                        required
+                      />
+                      <label for="text" class="form-label">
+                        <span class="content-name uppercase"> email: </span>
+                      </label>
+                    </li>
+                    <div class="password-container">
+                      <li class="form-item">
+                        <img
+                          src="../assets/icons/ant-design_lock-outlined.svg"
+                          alt="user-icon"
+                          class="label-icon"
+                        />
+                        <input
+                          id="password-up"
+                          type="text"
+                          name="text"
+                          autocomplete="off"
+                          required
+                        />
+                        <label for="text" class="form-label">
+                          <span class="content-name uppercase">
+                            password:
+                          </span>
+                        </label>
+                      </li>
+                      <li class="form-item">
+                        <img
+                          src="../assets/icons/ant-design_lock-outlined.svg"
+                          alt="user-icon"
+                          class="label-icon"
+                        />
+                        <input
+                          id="password-confirm-up"
+                          type="password"
+                          name="text"
+                          autocomplete="off"
+                          required
+                        />
+                        <label for="password" class="form-label">
+                          <span class="content-name uppercase">
+                            confirm password:
+                          </span>
+                        </label>
+                      </li>
+                    </div>
+                    <li class="form-item">
+                      <img
+                        src="../assets/icons/akar-icons_phone.svg"
+                        alt="user-icon"
+                        class="label-icon"
+                      />
+                      <input
+                        id="phone-up"
+                        type="text"
+                        name="text"
+                        autocomplete="off"
+                        required
+                      />
+                      <label for="text" class="form-label">
+                        <span class="content-name uppercase"> phone: </span>
+                      </label>
+                    </li>
+                  </ul>
+                </form>
+                <div class="login_toggle">
+                  <p class="login_toggle-text capitalize">
+                    already have an account?
+                    <span class="signin_toggle">sign up</span>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="login_section">
-            <div class="login">
-              <h2 class="login-text capitalize">login</h2>
-              <p class="login-description capitalize">start your last session.</p>
-            </div>
-            <div class="form_login-inputs">
-              <form id="form-login">
-                <ul class="form-list">
-                  <li class="form-item">
-                    <img src="../assets/icons/cib_mail-ru.svg" alt="" class="label-icon">
-                    <input id="email-in" type="text" name="text" autocomplete="off" required/>
-                    <label for="text" class="form-label">
-                      <span class="content-name uppercase">
-                        email:
-                      </span>
-                    </label>
-                  </li>
-                  <li class="form-item">
-                    <img src="../assets/icons/ant-design_lock-outlined.svg" alt="user-icon" class="label-icon">
-                    <input id="password-in" type="text" name="text" autocomplete="off" required/>
-                    <label for="text" class="form-label">
-                      <span class="content-name uppercase">
-                        password:
-                      </span>
-                    </label>
-                  </li>
-                </ul>
-              </form>
-
-              <div class="register_toggle">
-                <p class="register_toggle-text capitalize">no account yet? <span class="signup_toggle">sign up</span></p>
+            <div class="login_section">
+              <div class="login">
+                <h2 class="login-text capitalize">login</h2>
+                <p class="login-description capitalize">
+                  start your last session.
+                </p>
               </div>
-            </div>          
-          </div>
-          
+              <div class="form_login-inputs">
+                <form id="form-login">
+                  <ul class="form-list">
+                    <li class="form-item">
+                      <img
+                        src="../assets/icons/cib_mail-ru.svg"
+                        alt=""
+                        class="label-icon"
+                      />
+                      <input
+                        id="email-in"
+                        type="text"
+                        name="text"
+                        autocomplete="off"
+                        required
+                      />
+                      <label for="text" class="form-label">
+                        <span class="content-name uppercase"> email: </span>
+                      </label>
+                    </li>
+                    <li class="form-item">
+                      <img
+                        src="../assets/icons/ant-design_lock-outlined.svg"
+                        alt="user-icon"
+                        class="label-icon"
+                      />
+                      <input
+                        id="password-in"
+                        type="text"
+                        name="text"
+                        autocomplete="off"
+                        required
+                      />
+                      <label for="text" class="form-label">
+                        <span class="content-name uppercase"> password: </span>
+                      </label>
+                    </li>
+                  </ul>
+                </form>
 
-          <div class="signup_options">
-            <div class="signup_description">
-              <p class="signup_description-item capitalize">or <span class="signin_option">sign in</span> with your favorite accounts...</p>
+                <div class="register_toggle">
+                  <p class="register_toggle-text capitalize">
+                    no account yet? <span class="signup_toggle">sign up</span>
+                  </p>
+                </div>
+              </div>
             </div>
-            <div class="signup_buttons">
-              <button class="signup_button-item"><img src="../assets/icons/flat-color-icons_google.svg" alt=></button>
-              <button class="signup_button-item"><img src="../assets/icons/logos_spotify-icon.svg" alt=></button>
-              <button class="signup_button-item"><img src="../assets/icons/bi_apple.svg" alt=></button>
-            </div>
-          </div>
 
-          <div class="registration_buttons">
-            <button class="signup capitalize hidden" type="submit" form="form-register">sign up</button>
-            <button class="signin capitalize" type="submit" form="form-login">log in</button>
+            <div class="signup_options">
+              <div class="signup_description">
+                <p class="signup_description-item capitalize">
+                  or <span class="signin_option">sign in</span> with your
+                  favorite accounts...
+                </p>
+              </div>
+              <div class="signup_buttons">
+                <button class="signup_button-item">
+                  <img src="../assets/icons/flat-color-icons_google.svg" alt=>
+                </button>
+                <button class="signup_button-item">
+                  <img src="../assets/icons/logos_spotify-icon.svg" alt=>
+                </button>
+                <button class="signup_button-item">
+                  <img src="../assets/icons/bi_apple.svg" alt=>
+                </button>
+              </div>
+            </div>
+
+            <div class="registration_buttons">
+              <button
+                class="signup capitalize hidden"
+                type="submit"
+                form="form-register"
+              >
+                sign up
+              </button>
+              <button class="signin capitalize" type="submit" form="form-login">
+                log in
+              </button>
+            </div>
           </div>
         </div>
-       </div>
-    </section>
-  </main>
-  
-  <footer id="footer" class="footer">
-    <div class="footer-section">
-      <p>@ All rights reserved NotiNotes App</p>
-      <p>Mateo Hernandez</p>
-      <p>Aura Marcela</p>
-    </div>
-  </footer>
+      </section>
+    </main> -->
 
-  <script src="../js/login.js"></script>
-</body>
+    <footer id="footer" class="footer">
+      <div class="footer-section">
+        <p>@ All rights reserved NotiNotes App</p>
+        <p>Mateo Hernandez</p>
+        <p>Aura Marcela</p>
+      </div>
+    </footer>
+
+    <script src="../js/login.js"></script>
+  </body>
 </html>
