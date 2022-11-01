@@ -2,13 +2,13 @@
 
 .footer{
   position: fixed;
-  bottom: 1rem;
+  display: flex;
+  bottom: var(--mb-1);
+  gap: var(--mb-0-25);
 }
 
-.footer-section{
-  font-size: 1rem;
+.footer p{
+  font-size: var(--small-font-size);
   opacity: .4;
-  display: flex;
-  gap: 1rem;
   margin-left: 1rem; /* Footer margin */
 }

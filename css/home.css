@@ -133,8 +133,8 @@
 }
 
 .section-grid{
-  grid-template-columns: repeat(6, 1fr) ;
-  grid-template-rows: repeat(5,1fr);
+  grid-template-columns: 0.2fr 0.5fr repeat(3, 1fr) 0.2fr;
+  grid-template-rows: 1fr 1.5fr 200px 0.1fr 1fr;
   grid-template-areas: ". . . . . ."
                        ". title title resize resize ."
                        ". start start mobile layout ."
@@ -151,6 +151,11 @@
   height: 100%;
   border-radius: 10px;
   padding: 1rem;
+  transition: all .15s ease;
+}
+
+.card:hover{
+  transform: scale(1.03);
 }
 
 .card--title,
@@ -174,7 +179,6 @@
 }
 
 .card--title h1:nth-child(1){
-  position: absolute;
   top: var(--mb-1);
   color: var(--second-font-color); 
   mix-blend-mode:overlay;
@@ -189,7 +193,7 @@
 
 .card--title p{
   position: absolute;
-  bottom: var(--mb-2);
+  bottom: var(--mb-5);
 }
 
 .card--title p:nth-child(3){
@@ -218,7 +222,7 @@
 }
 
 .card--resize img{
-  width: 60%;
+  width: 40%;
   object-fit: contain;
   animation: .8s ease-in-out 2s infinite floating;
 }
@@ -284,12 +288,12 @@
 }
 
 .card--mobile img:nth-child(1){
-  width: 60%;
+  width: 40%;
   object-fit: contain;
 }
 
 .card--mobile img:nth-child(2){
-  width: 20%;
+  width: 10%;
 }
 
 .card--mobile:hover img:nth-child(2){
@@ -327,7 +331,7 @@
 }
 
 .card--colors img{
-  width: 80%;
+  width: 50%;
   transition: all .5s ease;
 }
 
