@@ -6,21 +6,15 @@
 
   --main-font-color: #1D1D1F;
   --second-font-color: rgb(255, 255, 255);
-  --gray-font-color: #7D7D7D;
 
-  --main-general-color: #dedede;
-  --gradient-color-one: #ffffff;
-
-  /* --main-general-color: #828181;
-  --gradient-color-one: #bdbdbd; */
-
-  /* --main-general-color: #EB6868;
-  --gradient-color-one: #EC8B8B; */
+  --palid-white: #F6F6FD;
 
   --background-color-cards: #FBFBFD;
 
-  --normal-font-size: 0.2rem;
+  --normal-font-size: 1rem;
+  --medium-font-size: 1.5rem;
   --big-font-size: 2rem;
+  --title-font-size: 7rem;
   
   --body-font: 'Montserrat', Arial;
   --second-font: 'Akira Super', Arial;
@@ -87,11 +81,7 @@ img{
 
 body{
   position: relative;
-  padding-top: var(--header-height);
-  display: flex;
-  flex-direction: column;
   min-height: var(--min-body-height);
-  /* overflow: hidden; */
   scroll-behavior: smooth;
 }
 
@@ -115,16 +105,12 @@ button{
   text-transform: uppercase;
 }
 
-/* Proper of this */
+.grid{
+  display: grid;
+}
 
-.card-styles{ /* This applies to almost every card if not all of them */
-  width: 100%;
-  height: 100%;
+.flex{
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  padding: 1rem;
 }
 
 
