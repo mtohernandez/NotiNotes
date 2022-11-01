@@ -1,496 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/footer.css">
-  <link rel="stylesheet" href="../css/notes.css">
-  <link rel="stylesheet" href="../css/navBar.css">
-  <link rel="stylesheet" href="../css/root.css">
-  <title>Note App</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/notes.css" />
+    <link rel="stylesheet" href="../css/navBar.css" />
+    <link rel="stylesheet" href="../css/root.css" />
+    <title>Note App</title>
+  </head>
+  <body>
+    <header class="header" id="header">
+      <nav class="nav">
+        <a href="../index.html" class="nav__logo">NN</a>
 
-  <header class="header" id="header">
-    <nav class="nav">
-      <a href="../index.html" class="nav__logo">NN</a>
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="./notes.html" class="nav__link"> notes </a>
+            </li>
+            <li class="nav__item">
+              <a href="./pages/" class="nav__link"> bloc </a>
+            </li>
+            <li class="nav__item">
+              <a href="./pages/" class="nav__link"> open-source </a>
+            </li>
+            <li class="nav__item">
+              <a href="./donations.html" class="nav__link"> support </a>
+            </li>
+            <li class="nav__item">
+              <a href="./about.html" class="nav__link"> about </a>
+            </li>
 
-      <div class="nav__menu" id="nav-menu">
-        <ul class="nav__list">
-          <li class="nav__item">
-            <a href="./notes.html" class="nav__link"> notes </a>
-          </li>
-          <li class="nav__item">
-            <a href="./pages/" class="nav__link"> bloc </a>
-          </li>
-          <li class="nav__item">
-            <a href="./pages/" class="nav__link"> open-source </a>
-          </li>
-          <li class="nav__item">
-            <a href="./donations.html" class="nav__link"> support </a>
-          </li>
-          <li class="nav__item">
-            <a href="./about.html" class="nav__link"> about </a>
-          </li>
+            <div class="nav__link">
+              <a href="./login.html" class="button nav__button"> login </a>
+            </div>
+          </ul>
 
-          <div class="nav__link">
-            <a href="./login.html" class="button nav__button"> login </a>
-          </div>
-        </ul>
-
-        <div class="nav__close" id="nav__close">x</div>
-      </div>
-
-      <div class="nav__toggle" id="nav__toggle">
-        <img src="./assets/icons/menu.svg" alt="menu-logo" />
-      </div>
-
-      <div class="overlay hidden"></div>
-    </nav>
-  </header>
-
-  <div class="note__creator-activate">
-    <div class="button-plus nav__button-plus">
-      <img src="../assets/icons/plus-circle.svg" alt="plus-icon">
-    </div>
-  </div>
-
-  <div class="note__creator hidden">
-    <div class="note__form">
-      <div class="note__content">
-        <div class="note__content-title">
-          <p class="note__content-title-item capitalize">note creator</p>
-          <img src="../assets/icons/x-lg.svg" alt="x-icon" class="note__creator-close">
+          <div class="nav__close" id="nav__close">x</div>
         </div>
-        <form id="note-creator-form" class="note-creator-form">
-          <div class="note__form-row">
-            <label class="capitalize">title</label>
-            <input type="text" placeholder="Add title here" class="form__input form_title-input">
-            <p class="input-check-title capitalize hidden">no title provided.</p>
-          </div>
-          <div class="note__form-row">
-            <label class="capitalize">description</label>
-            <textarea placeholder="Add description here" class="form__input form_description-input"></textarea>
-            <p class="input-check-description capitalize hidden">no description provided.</p>
-          </div>
-          <div class="tags" id="tags">
-            <p class="tags__empty hidden">No tags yet</p>
-          </div>
-          <div class="note__form-row">
-            <label class="capitalize">tags (max: 6)</label>
-            <input placeholder="Add tags here" type="text" class="form__input tag__creator">
-            <p class="input-check-tags capitalize hidden">tag limit exceeded.</p>
-          </div>
-          
-          <div class="note__form-row note__form-colors">
-            <div class="title">
-              <label class="capitalize">card color</label>
-            </div>
-            <div class="colors">
-              <span class="color"></span>
-              <span class="color"></span>
-              <span class="color"></span>
-              <span class="color"></span>
-              <span class="color"></span>
-              <span class="color"></span>
-            </div>
-          </div>
-        </form>
-        <div class="note__creator-btn">
-          <button class="note__creator-btn-item capitalize" form="note-creator-form">create</button>
-        </div>      
+
+        <div class="nav__toggle" id="nav__toggle">
+          <img src="./assets/icons/menu.svg" alt="menu-logo" />
+        </div>
+
+        <div class="overlay hidden"></div>
+      </nav>
+    </header>
+
+    <div class="note__creator-activate">
+      <div class="button-plus nav__button-plus">
+        <img src="../assets/icons/plus-circle.svg" alt="plus-icon" />
       </div>
     </div>
-  </div>
 
-  <main id="main">
-    <section class="note__section">
-      <div class="notes__container" id="note-container">
+    <div class="note__creator hidden">
+      <div class="note__form">
+        <div class="note__content">
+          <div class="note__content-title">
+            <p class="note__content-title-item capitalize">note creator</p>
+            <img
+              src="../assets/icons/x-lg.svg"
+              alt="x-icon"
+              class="note__creator-close"
+            />
+          </div>
+          <form id="note-creator-form" class="note-creator-form">
+            <div class="note__form-row">
+              <label class="capitalize">title</label>
+              <input
+                type="text"
+                placeholder="Add title here"
+                class="form__input form_title-input"
+              />
+              <p class="input-check-title capitalize hidden">
+                no title provided.
+              </p>
+            </div>
+            <div class="note__form-row">
+              <label class="capitalize">description</label>
+              <textarea
+                placeholder="Add description here"
+                class="form__input form_description-input"
+              ></textarea>
+              <p class="input-check-description capitalize hidden">
+                no description provided.
+              </p>
+            </div>
+            <div class="tags" id="tags">
+              <p class="tags__empty hidden">No tags yet</p>
+            </div>
+            <div class="note__form-row">
+              <label class="capitalize">tags (max: 6)</label>
+              <input
+                placeholder="Add tags here"
+                type="text"
+                class="form__input tag__creator"
+              />
+              <p class="input-check-tags capitalize hidden">
+                tag limit exceeded.
+              </p>
+            </div>
 
-        <!-- Notes -->
-
-        <div class="note">
-          <div class="note__header">
-            <div class="note__title">
-              <p>Title</p>
-              <p>Date Created</p>
-            </div>     
-            <div class="tags__squares">
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
+            <div class="note__form-row note__form-colors">
+              <div class="title">
+                <label class="capitalize">card color</label>
+              </div>
+              <div class="colors">
+                <span class="color"></span>
+                <span class="color"></span>
+                <span class="color"></span>
+                <span class="color"></span>
+                <span class="color"></span>
+                <span class="color"></span>
+              </div>
             </div>
+          </form>
+          <div class="note__creator-btn">
+            <button
+              class="note__creator-btn-item capitalize"
+              form="note-creator-form"
+            >
+              create
+            </button>
           </div>
-          <div class="note__content">
-            <div class="note__description">
-              <p>This is a card and it was created Manually</p>
-            </div>
-  
-            <div class="note__footer">
-              <div class="note__tags">
-                <span class="note__tag">tag</span>
-              </div>
-              <div class="note__options">
-                <img src="../assets/icons/3-dots.svg" alt="3-dots">
-              </div>
-            </div>
-          </div>   
         </div>
-        <div class="note">
-          <div class="note__header">
-            <div class="note__title">
-              <p>Title</p>
-              <p>Date Created</p>
-            </div>     
-            <div class="tags__squares">
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-            </div>
-          </div>
-          <div class="note__content">
-            <div class="note__description">
-              <p>This is a card and it was created Manually</p>
-            </div>
-  
-            <div class="note__footer">
-              <div class="note__tags">
-                <span class="note__tag">tag</span>
-              </div>
-              <div class="note__options">
-                <img src="../assets/icons/3-dots.svg" alt="3-dots">
-              </div>
-            </div>
-          </div>   
-        </div>
-        <div class="note">
-          <div class="note__header">
-            <div class="note__title">
-              <p>Title</p>
-              <p>Date Created</p>
-            </div>     
-            <div class="tags__squares">
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-            </div>
-          </div>
-          <div class="note__content">
-            <div class="note__description">
-              <p>This is a card and it was created Manually</p>
-            </div>
-  
-            <div class="note__footer">
-              <div class="note__tags">
-                <span class="note__tag">tag</span>
-              </div>
-              <div class="note__options">
-                <img src="../assets/icons/3-dots.svg" alt="3-dots">
-              </div>
-            </div>
-          </div>   
-        </div>
-        <div class="note">
-          <div class="note__header">
-            <div class="note__title">
-              <p>Title</p>
-              <p>Date Created</p>
-            </div>     
-            <div class="tags__squares">
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-            </div>
-          </div>
-          <div class="note__content">
-            <div class="note__description">
-              <p>This is a card and it was created Manually</p>
-            </div>
-  
-            <div class="note__footer">
-              <div class="note__tags">
-                <span class="note__tag">tag</span>
-              </div>
-              <div class="note__options">
-                <img src="../assets/icons/3-dots.svg" alt="3-dots">
-              </div>
-            </div>
-          </div>   
-        </div>
-        <div class="note">
-          <div class="note__header">
-            <div class="note__title">
-              <p>Title</p>
-              <p>Date Created</p>
-            </div>     
-            <div class="tags__squares">
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-            </div>
-          </div>
-          <div class="note__content">
-            <div class="note__description">
-              <p>This is a card and it was created Manually</p>
-            </div>
-  
-            <div class="note__footer">
-              <div class="note__tags">
-                <span class="note__tag">tag</span>
-              </div>
-              <div class="note__options">
-                <img src="../assets/icons/3-dots.svg" alt="3-dots">
-              </div>
-            </div>
-          </div>   
-        </div>
-        <div class="note">
-          <div class="note__header">
-            <div class="note__title">
-              <p>Title</p>
-              <p>Date Created</p>
-            </div>     
-            <div class="tags__squares">
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-            </div>
-          </div>
-          <div class="note__content">
-            <div class="note__description">
-              <p>This is a card and it was created Manually</p>
-            </div>
-  
-            <div class="note__footer">
-              <div class="note__tags">
-                <span class="note__tag">tag</span>
-              </div>
-              <div class="note__options">
-                <img src="../assets/icons/3-dots.svg" alt="3-dots">
-              </div>
-            </div>
-          </div>   
-        </div>
-        <div class="note">
-          <div class="note__header">
-            <div class="note__title">
-              <p>Title</p>
-              <p>Date Created</p>
-            </div>     
-            <div class="tags__squares">
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-            </div>
-          </div>
-          <div class="note__content">
-            <div class="note__description">
-              <p>This is a card and it was created Manually</p>
-            </div>
-  
-            <div class="note__footer">
-              <div class="note__tags">
-                <span class="note__tag">tag</span>
-              </div>
-              <div class="note__options">
-                <img src="../assets/icons/3-dots.svg" alt="3-dots">
-              </div>
-            </div>
-          </div>   
-        </div>
-        <div class="note">
-          <div class="note__header">
-            <div class="note__title">
-              <p>Title</p>
-              <p>Date Created</p>
-            </div>     
-            <div class="tags__squares">
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-            </div>
-          </div>
-          <div class="note__content">
-            <div class="note__description">
-              <p>This is a card and it was created Manually</p>
-            </div>
-  
-            <div class="note__footer">
-              <div class="note__tags">
-                <span class="note__tag">tag</span>
-              </div>
-              <div class="note__options">
-                <img src="../assets/icons/3-dots.svg" alt="3-dots">
-              </div>
-            </div>
-          </div>   
-        </div>
-        <div class="note">
-          <div class="note__header">
-            <div class="note__title">
-              <p>Title</p>
-              <p>Date Created</p>
-            </div>     
-            <div class="tags__squares">
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-            </div>
-          </div>
-          <div class="note__content">
-            <div class="note__description">
-              <p>This is a card and it was created Manually</p>
-            </div>
-  
-            <div class="note__footer">
-              <div class="note__tags">
-                <span class="note__tag">tag</span>
-              </div>
-              <div class="note__options">
-                <img src="../assets/icons/3-dots.svg" alt="3-dots">
-              </div>
-            </div>
-          </div>   
-        </div>
-        <div class="note">
-          <div class="note__header">
-            <div class="note__title">
-              <p>Title</p>
-              <p>Date Created</p>
-            </div>     
-            <div class="tags__squares">
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-            </div>
-          </div>
-          <div class="note__content">
-            <div class="note__description">
-              <p>This is a card and it was created Manually</p>
-            </div>
-  
-            <div class="note__footer">
-              <div class="note__tags">
-                <span class="note__tag">tag</span>
-              </div>
-              <div class="note__options">
-                <img src="../assets/icons/3-dots.svg" alt="3-dots">
-              </div>
-            </div>
-          </div>   
-        </div>
-        <div class="note">
-          <div class="note__header">
-            <div class="note__title">
-              <p>Title</p>
-              <p>Date Created</p>
-            </div>     
-            <div class="tags__squares">
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-            </div>
-          </div>
-          <div class="note__content">
-            <div class="note__description">
-              <p>This is a card and it was created Manually</p>
-            </div>
-  
-            <div class="note__footer">
-              <div class="note__tags">
-                <span class="note__tag">tag</span>
-              </div>
-              <div class="note__options">
-                <img src="../assets/icons/3-dots.svg" alt="3-dots">
-              </div>
-            </div>
-          </div>   
-        </div>
-        <div class="note">
-          <div class="note__header">
-            <div class="note__title">
-              <p>Title</p>
-              <p>Date Created</p>
-            </div>     
-            <div class="tags__squares">
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-            </div>
-          </div>
-          <div class="note__content">
-            <div class="note__description">
-              <p>This is a card and it was created Manually</p>
-            </div>
-  
-            <div class="note__footer">
-              <div class="note__tags">
-                <span class="note__tag">tag</span>
-              </div>
-              <div class="note__options">
-                <img src="../assets/icons/3-dots.svg" alt="3-dots">
-              </div>
-            </div>
-          </div>   
-        </div>
-        <div class="note">
-          <div class="note__header">
-            <div class="note__title">
-              <p>Title</p>
-              <p>Date Created</p>
-            </div>     
-            <div class="tags__squares">
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-              <span class="tag__square"></span>
-            </div>
-          </div>
-          <div class="note__content">
-            <div class="note__description">
-              <p>This is a card and it was created Manually</p>
-            </div>
-  
-            <div class="note__footer">
-              <div class="note__tags">
-                <span class="note__tag">tag</span>
-              </div>
-              <div class="note__options">
-                <img src="../assets/icons/3-dots.svg" alt="3-dots">
-              </div>
-            </div>
-          </div>   
-        </div>
-
-
-        <!-- End of notes -->
-
       </div>
-    </section>
-  </main>
+    </div>
 
-  <footer id="footer" class="footer">
-    <div class="footer-section">
+    <main id="main">
+      <section class="note__section">
+        <div class="notes__container" id="note-container">
+          <!-- Notes -->
+
+          <div class="note">
+            <div class="note__header">
+              <div class="note__title">
+                <p>Title</p>
+                <p>Date Created</p>
+              </div>
+              <div class="tags__squares">
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+              </div>
+            </div>
+            <div class="note__content">
+              <div class="note__description">
+                <p>This is a card and it was created Manually</p>
+              </div>
+
+              <div class="note__footer">
+                <div class="note__tags">
+                  <span class="note__tag">tag</span>
+                </div>
+                <div class="note__options">
+                  <img src="../assets/icons/3-dots.svg" alt="3-dots" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="note">
+            <div class="note__header">
+              <div class="note__title">
+                <p>Title</p>
+                <p>Date Created</p>
+              </div>
+              <div class="tags__squares">
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+              </div>
+            </div>
+            <div class="note__content">
+              <div class="note__description">
+                <p>This is a card and it was created Manually</p>
+              </div>
+
+              <div class="note__footer">
+                <div class="note__tags">
+                  <span class="note__tag">tag</span>
+                </div>
+                <div class="note__options">
+                  <img src="../assets/icons/3-dots.svg" alt="3-dots" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="note">
+            <div class="note__header">
+              <div class="note__title">
+                <p>Title</p>
+                <p>Date Created</p>
+              </div>
+              <div class="tags__squares">
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+              </div>
+            </div>
+            <div class="note__content">
+              <div class="note__description">
+                <p>This is a card and it was created Manually</p>
+              </div>
+
+              <div class="note__footer">
+                <div class="note__tags">
+                  <span class="note__tag">tag</span>
+                </div>
+                <div class="note__options">
+                  <img src="../assets/icons/3-dots.svg" alt="3-dots" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="note">
+            <div class="note__header">
+              <div class="note__title">
+                <p>Title</p>
+                <p>Date Created</p>
+              </div>
+              <div class="tags__squares">
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+              </div>
+            </div>
+            <div class="note__content">
+              <div class="note__description">
+                <p>This is a card and it was created Manually</p>
+              </div>
+
+              <div class="note__footer">
+                <div class="note__tags">
+                  <span class="note__tag">tag</span>
+                </div>
+                <div class="note__options">
+                  <img src="../assets/icons/3-dots.svg" alt="3-dots" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="note">
+            <div class="note__header">
+              <div class="note__title">
+                <p>Title</p>
+                <p>Date Created</p>
+              </div>
+              <div class="tags__squares">
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+              </div>
+            </div>
+            <div class="note__content">
+              <div class="note__description">
+                <p>This is a card and it was created Manually</p>
+              </div>
+
+              <div class="note__footer">
+                <div class="note__tags">
+                  <span class="note__tag">tag</span>
+                </div>
+                <div class="note__options">
+                  <img src="../assets/icons/3-dots.svg" alt="3-dots" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="note">
+            <div class="note__header">
+              <div class="note__title">
+                <p>Title</p>
+                <p>Date Created</p>
+              </div>
+              <div class="tags__squares">
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+              </div>
+            </div>
+            <div class="note__content">
+              <div class="note__description">
+                <p>This is a card and it was created Manually</p>
+              </div>
+
+              <div class="note__footer">
+                <div class="note__tags">
+                  <span class="note__tag">tag</span>
+                </div>
+                <div class="note__options">
+                  <img src="../assets/icons/3-dots.svg" alt="3-dots" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="note">
+            <div class="note__header">
+              <div class="note__title">
+                <p>Title</p>
+                <p>Date Created</p>
+              </div>
+              <div class="tags__squares">
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+              </div>
+            </div>
+            <div class="note__content">
+              <div class="note__description">
+                <p>This is a card and it was created Manually</p>
+              </div>
+
+              <div class="note__footer">
+                <div class="note__tags">
+                  <span class="note__tag">tag</span>
+                </div>
+                <div class="note__options">
+                  <img src="../assets/icons/3-dots.svg" alt="3-dots" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="note">
+            <div class="note__header">
+              <div class="note__title">
+                <p>Title</p>
+                <p>Date Created</p>
+              </div>
+              <div class="tags__squares">
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+              </div>
+            </div>
+            <div class="note__content">
+              <div class="note__description">
+                <p>This is a card and it was created Manually</p>
+              </div>
+
+              <div class="note__footer">
+                <div class="note__tags">
+                  <span class="note__tag">tag</span>
+                </div>
+                <div class="note__options">
+                  <img src="../assets/icons/3-dots.svg" alt="3-dots" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="note">
+            <div class="note__header">
+              <div class="note__title">
+                <p>Title</p>
+                <p>Date Created</p>
+              </div>
+              <div class="tags__squares">
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+              </div>
+            </div>
+            <div class="note__content">
+              <div class="note__description">
+                <p>This is a card and it was created Manually</p>
+              </div>
+
+              <div class="note__footer">
+                <div class="note__tags">
+                  <span class="note__tag">tag</span>
+                </div>
+                <div class="note__options">
+                  <img src="../assets/icons/3-dots.svg" alt="3-dots" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="note">
+            <div class="note__header">
+              <div class="note__title">
+                <p>Title</p>
+                <p>Date Created</p>
+              </div>
+              <div class="tags__squares">
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+              </div>
+            </div>
+            <div class="note__content">
+              <div class="note__description">
+                <p>This is a card and it was created Manually</p>
+              </div>
+
+              <div class="note__footer">
+                <div class="note__tags">
+                  <span class="note__tag">tag</span>
+                </div>
+                <div class="note__options">
+                  <img src="../assets/icons/3-dots.svg" alt="3-dots" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="note">
+            <div class="note__header">
+              <div class="note__title">
+                <p>Title</p>
+                <p>Date Created</p>
+              </div>
+              <div class="tags__squares">
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+              </div>
+            </div>
+            <div class="note__content">
+              <div class="note__description">
+                <p>This is a card and it was created Manually</p>
+              </div>
+
+              <div class="note__footer">
+                <div class="note__tags">
+                  <span class="note__tag">tag</span>
+                </div>
+                <div class="note__options">
+                  <img src="../assets/icons/3-dots.svg" alt="3-dots" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="note">
+            <div class="note__header">
+              <div class="note__title">
+                <p>Title</p>
+                <p>Date Created</p>
+              </div>
+              <div class="tags__squares">
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+              </div>
+            </div>
+            <div class="note__content">
+              <div class="note__description">
+                <p>This is a card and it was created Manually</p>
+              </div>
+
+              <div class="note__footer">
+                <div class="note__tags">
+                  <span class="note__tag">tag</span>
+                </div>
+                <div class="note__options">
+                  <img src="../assets/icons/3-dots.svg" alt="3-dots" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="note">
+            <div class="note__header">
+              <div class="note__title">
+                <p>Title</p>
+                <p>Date Created</p>
+              </div>
+              <div class="tags__squares">
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+                <span class="tag__square"></span>
+              </div>
+            </div>
+            <div class="note__content">
+              <div class="note__description">
+                <p>This is a card and it was created Manually</p>
+              </div>
+
+              <div class="note__footer">
+                <div class="note__tags">
+                  <span class="note__tag">tag</span>
+                </div>
+                <div class="note__options">
+                  <img src="../assets/icons/3-dots.svg" alt="3-dots" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- End of notes -->
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer" class="footer">
       <p>@ All rights reserved NotiNotes App</p>
       <p>Mateo Hernandez</p>
       <p>Aura Marcela</p>
-    </div>
-  </footer>
+    </footer>
 
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  <script src="../js/notes.js"></script>
-</body>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="../js/notes.js"></script>
+  </body>
 </html>
