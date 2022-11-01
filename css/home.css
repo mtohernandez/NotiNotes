@@ -161,7 +161,7 @@
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  padding: var(--mb-1);
+  padding: var(--mb-2);
   transition: all .15s ease;
 }
 
@@ -206,7 +206,7 @@
 
 .card--title p{
   position: absolute;
-  bottom: var(--mb-5);
+  top: var(--mb-7);
 }
 
 .card--title p:nth-child(3){
@@ -218,9 +218,6 @@
   color: var(--main-font-color);
   z-index: -2;
 }
-
-
-
 
 
 /* First card: Upper Right Corner */
@@ -249,6 +246,7 @@
   text-decoration: underline;
 }
 
+
 /* Second card: Bottom Top Left Corner */
 
 .card--start{
@@ -256,6 +254,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 5px;
   text-transform: capitalize;
   background-color: #F6F6FD;
   transform: translateX(-150%);
@@ -296,6 +295,7 @@
 .card--start button:hover img{
   transform: translateX(10px);
 }
+
 
 /* Second Card: Bottom Top right Corner */
 
@@ -416,7 +416,7 @@
 }
 
 .card--layout:hover{
-  animation: 8s linear 0s gradient infinite forwards;
+  /* animation: 8s linear 0s gradient infinite forwards; */
 }
 
 .card--layout img{
@@ -428,65 +428,93 @@
   transform: scale(0.9);
 }
 
+/* For Mobile devices: 320px-480px.
+For Tablets or iPad: 480px - 768px.
+For Laptop or small-size screen: 768px -1024px.
+For Desktop or large-size screen: 1024px -1200px.
+For Extra-large size device: 1200px and more */
 
+/* @media screen and (min-width: 1200px) {
 
-@media screen and (min-width: 1350px){
-  body{
-    overflow: hidden;
-  }
 }
 
-
-@media screen and (max-width: 1350px){
-
-  .diagonal-box{
-    left: -40rem;
-  }
-
-  .upper{
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(2, 1fr);
-  }
-
-  .downwards{
-    grid-template-areas: "cars cars cars cars cars" 
-                        "car car car car car";
-  }
+@media screen and (min-width: 1024px) and (max-width: 1199px) {
+  
 }
 
-@media screen and (max-width: 920px){
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  
+}
+
+@media screen and (min-width: 480px) and (max-width: 767px) {
+  
+} */
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
+
   .diagonal-box{
     left: -20rem;
   }
 
-  .upper__title{
-    margin-left: 0;
+  .section-grid{
+    padding: var(--mb-5) var(--mb-1);
+    margin-bottom: var(--mb-5);
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr repeat(7, 1fr);
+    grid-template-areas: "."
+                         "title"
+                         "start"
+                         "resize"
+                         "mobile"
+                         "collapse"
+                         "colors"
+                         "layout"
+                         ".";
+  }
+
+  .card--title{
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
   }
 
-  .downwards__leftside-upper{
-    grid-template-areas: "lef lef lef"
-                        "rig rig rig";
+  .card--title h1{
+    font-size: var(--big-font-size);
   }
+
+  .card--title p{
+    top: var(--mb-5);
+    font-size: var(--small-font-size);
+  }
+
+  .card--start h3{
+    font-size: var(--normal-font-size);
+  }
+
+  .card--resize img{
+    width: 80%;
+  }
+
+  .card--mobile img:nth-child(1){
+    width: 50%;
+    transition: all .15s ease;
+  }
+
+  .card--mobile:hover img:nth-child(1){
+    transform: scale(0.7);
+  }
+
+  .card--mobile img:nth-child(2){
+    width: 15%;
+  }
+
+  .card--collapse img{
+    width: 80%;
+  }
+
+  .card--colors img{
+    width: 60%;
+  }
+
 }
-
-@media screen and (min-width: 320px) and (max-width: 480px) {
- .upper__title h1{
-  font-size: 4rem;
- } 
-
- .upper__card{
-  padding: 1rem 1rem;
- }
-
- .downwards__leftside-downwards{
-  grid-template-columns: 1fr;
- }
-}
-
-
 
 

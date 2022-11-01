@@ -84,6 +84,7 @@ body{
   position: relative;
   min-height: var(--min-body-height);
   scroll-behavior: smooth;
+  padding-bottom: var(--mb-3);
 }
 
 button{

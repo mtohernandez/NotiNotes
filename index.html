@@ -18,25 +18,36 @@
 
   <header class="header" id="header">
     <nav class="nav">
-      <a class="nav__logo-1">NN</a>
+      <a href="#" class="nav__logo">NN</a>
+
       <div class="nav__menu" id="nav-menu">
         <ul class="nav__list">
           <li class="nav__item">
-            <a href="./pages/about.html" class="nav__link">
-              about
-            </a>
+            <a href="#experience" class="nav__link"> notes </a>
           </li>
           <li class="nav__item">
-            <a href="./pages/donations.html" class="nav__link">
-              donations
-            </a>
+            <a href="#portfolio" class="nav__link"> bloc </a>
           </li>
+          <li class="nav__item">
+            <a href="#team" class="nav__link"> open-source </a>
+          </li>
+          <li class="nav__item">
+            <a href="#services" class="nav__link"> about </a>
+          </li>
+
           <div class="nav__link">
-            <a href="./pages/login.html" class="button nav__button">
-              login
-            </a>
+            <a href="#footer" class="button nav__button"> login </a>
           </div>
         </ul>
+
+        <div class="nav__close" id="nav__close">x</div>
+      </div>
+
+      <div class="nav__toggle" id="nav__toggle">
+        <img src="./assets/icons/menu.svg" alt="menu-logo" />
+      </div>
+
+      <div class="overlay hidden"></div>
     </nav>
   </header>
 
