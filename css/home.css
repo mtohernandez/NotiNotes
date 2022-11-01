@@ -1,7 +1,7 @@
 /* upper */
 @keyframes translate-left {
   0%{
-    transform: translateX(-100%);
+    transform: translateX(-150%);
   }
 
   100%{
@@ -11,12 +11,23 @@
 
 @keyframes translate-right {
   0%{
-    transform: translateX(100%);
+    transform: translateX(150%);
   }
 
   100%{
     transform: translateX(0%);
   }
+}
+
+@keyframes translate-up {
+  0%{
+    transform: translateY(300%);
+  }
+
+  100%{
+    transform: translateY(0%);
+  }
+  
 }
 
 
@@ -133,13 +144,13 @@
 }
 
 .section-grid{
-  grid-template-columns: 0.2fr 0.5fr repeat(3, 1fr) 0.2fr;
+  grid-template-columns: 0.2fr 0.5fr 0.8fr 0.5fr repeat(2, 1fr) 0.2fr;
   grid-template-rows: 1fr 1.5fr 200px 0.1fr 1fr;
-  grid-template-areas: ". . . . . ."
-                       ". title title resize resize ."
-                       ". start start mobile layout ."
-                       ". collapse collapse colors layout ."
-                       ". . . . . .";
+  grid-template-areas: ". . . . . . ."
+                       ". title title title resize resize ."
+                       ". start start start mobile layout ."
+                       ". collapse collapse colors colors layout ."
+                       ". . . . . . .";
   column-gap: var(--mb-1);
   row-gap: var(--mb-1);
   height: var(--min-body-height);
@@ -150,11 +161,12 @@
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  padding: 1rem;
+  padding: var(--mb-1);
   transition: all .15s ease;
 }
 
 .card:hover{
+  cursor: pointer;
   transform: scale(1.03);
 }
 
@@ -170,6 +182,7 @@
 
 .card--title{
   grid-area: title;
+  padding: var(--mb-1);
   animation: 2s ease 0s 1 slide-in-text;
 }
 
@@ -245,10 +258,17 @@
   justify-content: center;
   text-transform: capitalize;
   background-color: #F6F6FD;
+  transform: translateX(-150%);
+  animation: 1.5s ease .5s 1 translate-left forwards;
 }
 
 .card--start p{
   font-size: var(--normal-font-size);
+  transition: all .15s ease;
+}
+
+.card--start:hover p{
+  transform: scale(0.8);
 }
 
 .card--start h3{
@@ -285,6 +305,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transform: translateY(300%);
+  animation: 1.5s ease .6s 1 translate-up forwards;
 }
 
 .card--mobile img:nth-child(1){
@@ -307,6 +329,8 @@
   grid-area: collapse;
   justify-content: center;
   align-items: center;
+  transform: translateX(-150%);
+  animation: 1.5s ease .7s 1 translate-left forwards;
 }
 
 .card--collapse img{
@@ -328,10 +352,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transform: translateY(300%);
+  animation: 1.5s ease .9s 1 translate-up forwards;
 }
 
 .card--colors img{
-  width: 50%;
+  width: 30%;
   transition: all .5s ease;
 }
 
@@ -385,6 +411,8 @@
   background-size: 200%;
   justify-content: center;
   align-items: center;
+  transform: translateX(150%);
+  animation: 1.5s ease .9s 1 translate-right forwards;
 }
 
 .card--layout:hover{
