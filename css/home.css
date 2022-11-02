@@ -153,7 +153,7 @@
                        ". . . . . . .";
   column-gap: var(--mb-1);
   row-gap: var(--mb-1);
-  height: var(--min-body-height);
+  height: 100%;
 }
 
 
@@ -438,9 +438,18 @@ For Mobile devices: 320px-480px.
 For Tablets or iPad: 480px - 768px.
 For Laptop or small-size screen: 768px -1024px.
 For Desktop or large-size screen: 1024px -1200px.
-For Extra-large size device: 1200px and more */
+For Extra-large size device: 1200px and more 
+
+* This is how you do it manually
+
+*/
 
 @media screen and (min-width: 1024px) and (max-width: 1360px) {
+
+  .diagonal-box{
+    left: -65rem;
+  }
+
   .card--title h1{
     font-size: var(--bigger-font-size);
   }
@@ -449,12 +458,16 @@ For Extra-large size device: 1200px and more */
     top: 6rem;
   }
 
+  .card--resize img{
+    width: 60%;
+  }
+
   .card--start h3{
     font-size: calc(var(--normal-font-size)*1.2);
   }
 
   .card--mobile img:nth-child(1){
-    width: 80%;
+    width: 70%;
   }
 
   .card--mobile img:nth-child(2){
@@ -466,7 +479,7 @@ For Extra-large size device: 1200px and more */
   }
 
   .card--colors img{
-    width: 80%;
+    width: 60%;
   }
 
   .card--layout img{
@@ -488,8 +501,20 @@ For Extra-large size device: 1200px and more */
     top: 6rem; /* Needed */
   }
 
+  .card--resize img{
+    width: 80%;
+  }
+
+  .card--mobile img:nth-child(1){
+    width: 70%;
+  }
+
   .card--start h3{
     font-size: var(--normal-font-size);
+  }
+
+  .card--colors img{
+    width: 50%;
   }
 
   .card--layout img{
@@ -500,12 +525,12 @@ For Extra-large size device: 1200px and more */
     padding: var(--mb-7) var(--mb-1);
     margin-bottom: var(--mb-5);
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr 2fr repeat(7, 1fr);
+    grid-template-rows: 0.1fr 0.5fr  0.4fr repeat(4, 1fr) 0.1fr;
     grid-template-areas: ". ."
                          "title title"
                          "start resize"
                          "start mobile"
-                         "collapse mobile"
+                         "collapse collapse"
                          "colors colors"
                          "layout layout"
                          ". .";
@@ -515,7 +540,7 @@ For Extra-large size device: 1200px and more */
 @media screen and (min-width: 480px) and (max-width: 767px) {
 
   .diagonal-box{
-    left: -30rem;
+    left: -65rem;
   }
 
   .card--title h1{
@@ -528,15 +553,32 @@ For Extra-large size device: 1200px and more */
   }
 
   .card--start h3{
-    font-size: var(--normal-font-size);
+    font-size: 1.3rem;
+  }
+
+  .card--resize img{
+    min-width: 200px;
+    width: 90%;
   }
 
   .card--mobile img:nth-child(1){
     min-width: 100px;
+    width: 90%;
   }
 
   .card--mobile img:nth-child(2){
     min-width: 30px;
+    width: 20%;
+  }
+
+  .card--collapse img{
+    min-width: 200px;
+    width: 90%;
+  }
+
+  .card--colors img{
+    min-width: 200px;
+    width: 60%;
   }
 
   .card--layout img{
@@ -547,7 +589,7 @@ For Extra-large size device: 1200px and more */
     padding: var(--mb-7) var(--mb-1);
     margin-bottom: var(--mb-5);
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr 2fr repeat(7, 1fr);
+    grid-template-rows: 0.5fr 0.6fr  0.4fr repeat(4, 1fr) 0.1fr;
     grid-template-areas: ". ."
                          "title title"
                          "start start"
@@ -568,10 +610,10 @@ For Extra-large size device: 1200px and more */
   
 
   .section-grid{
-    padding: var(--mb-5) var(--mb-1);
-    margin-bottom: var(--mb-5);
+    padding: 0 var(--mb-1);
+    margin-bottom: var(--mb-1);
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 2fr repeat(7, 1fr);
+    grid-template-rows: 0.5fr 0.6fr  0.4fr repeat(5, 1fr) 0.5fr;
     grid-template-areas: "."
                          "title"
                          "start"
