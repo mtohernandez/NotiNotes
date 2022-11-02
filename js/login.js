@@ -5,6 +5,9 @@ window.onload = () => {
   const white = "#fff";
   const nav = document.querySelector('.nav__logo');
   const navToggle = document.querySelector('.nav__toggle');
+  const navLinks = document.querySelectorAll('.nav__item .nav__link').forEach(link => {
+    link.style.color = white;
+  })
   navToggle.style.filter = 'invert(100%) sepia(100%) saturate(0%) hue-rotate(281deg) brightness(106%) contrast(106%)';
   nav.style.color = white;
 }
