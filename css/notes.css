@@ -75,15 +75,6 @@
   transition: all .15s ease;
 }
 
-.note p{
-  border-radius: 10px;
-}
-
-.note p:hover{
-  cursor: pointer;
-  background-color: white;
-}
-
 .note__upper{
   align-items: center;
   gap: var(--mb-1);
