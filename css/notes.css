@@ -4,7 +4,7 @@
   margin-top: var(--mb-2);
   height: var(--min-body-height);
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   gap: var(--mb-2);
 }
 
@@ -52,23 +52,26 @@
 
 /* Note container */
 .notes-section__container{
-height: 100%;
+  /* height: 100%; */
+  padding: 0 var(--mb-5);
 }
 
 /* Notes */
 
 .note{
-  display: inline-block;
+  /* display: inline-block; */
   background-color: var(--palid-white);
   border-radius: 20px;
   padding: var(--mb-2);
+  margin-bottom: var(--mb-1);
   color: var(--main-font-color);
-  max-width: 350px;
+  width: 337px; /* Perfect size in pc */
 }
 
 .note__upper{
   align-items: center;
   gap: var(--mb-1);
+  margin-bottom: var(--mb-0-25);
 }
 
 .note__upper span{
@@ -81,6 +84,7 @@ height: 100%;
 
 .note__bottom{
   justify-content: space-between;
+  margin-top: var(--mb-1);
 }
 
 /* These colors are not final */
@@ -102,4 +106,34 @@ height: 100%;
 }
 .note-tag:nth-child(6){
   color:rgb(255, 172, 84);
+}
+
+
+/* Media queries */
+
+@media screen and (max-width: 1023px){
+  .notes-section__container{
+    padding: 0 var(--mb-3);
+  }
+
+  .note{
+    margin-bottom: 10px;
+    width: 170px;
+  }
+
+  .note__upper h2{
+    font-size: 20px;
+  }
+
+  .note__upper span{
+    font-size: var(--small-font-size);
+  }
+
+  .note p{
+    font-size: var(--small-font-size);
+  }
+
+  .note-tag{
+    font-size: var(--small-font-size);
+  }
 }
