@@ -72,6 +72,16 @@
   margin-bottom: var(--mb-1);
   color: var(--main-font-color);
   width: 337px; /* Perfect size in pc */
+  transition: all .15s ease;
+}
+
+.note p{
+  border-radius: 10px;
+}
+
+.note p:hover{
+  cursor: pointer;
+  background-color: white;
 }
 
 .note__upper{
