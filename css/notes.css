@@ -1,7 +1,7 @@
 
 
 .notes-section{
-  margin-top: var(--mb-2);
+  margin-top: 2.5rem; /* Perfect for the navigation bar */
   min-height: var(--min-body-height);
   flex-direction: column;
   /* align-items: center; */
@@ -18,6 +18,9 @@
   gap: var(--mb-1);
   justify-content: center;
   align-items: center;
+  background-color: white;
+  border-top: 1px solid var(--palid-white);
+  border-bottom: 1px solid var(--palid-white);
   z-index: var(--z-fixed);
 }
 
@@ -55,7 +58,7 @@
 .notes-section__container{
   /* height: 100%; */
   padding: 0 var(--mb-5);
-  margin-top: 6rem;
+  margin-top: 7rem;
   margin-bottom: var(--mb-5);
 }
 

@@ -1,5 +1,14 @@
 'use strict';
 
+/* This will allow to change colors on load */
+window.onload = () => {
+  const white = "#fff";
+  const nav = document.querySelector('.nav__logo');
+  const navToggle = document.querySelector('.nav__toggle');
+  navToggle.style.filter = 'invert(100%) sepia(100%) saturate(0%) hue-rotate(281deg) brightness(106%) contrast(106%)';
+  nav.style.color = white;
+}
+
 const toggleForm = document.querySelector('.js-toggle-form'),
       toggleLabel = document.querySelector('.js-toggle-label'),
       toggleButton = document.querySelector('.js-toggle-button'),
