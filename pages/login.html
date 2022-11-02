@@ -42,7 +42,7 @@
         </div>
 
         <div class="nav__toggle" id="nav__toggle">
-          <img src="./assets/icons/menu.svg" alt="menu-logo" />
+          <img src="../assets/icons/menu.svg" alt="menu-logo" />
         </div>
 
         <div class="overlay hidden"></div>
@@ -50,10 +50,11 @@
     </header>
 
     <main id="main">
-      <section class="section-form">
-        <div class="form">
+      <section class="section-form flex">
+        <div class="form capitalize">
+          <canvas id="gradient-canvas"></canvas>
           <h2>NotiNotes</h2>
-          <h4>login</h4>
+          <h4 class="js-toggle-text">login</h4>
           <p>save your personal notes, access anywhere.</p>
           <!-- Login Form -->
           <form action="#" class="form--login">
@@ -91,7 +92,7 @@
           </form>
 
           <!-- Register Form -->
-          <form action="#" class="form--register" hidden> <!-- ! hidden default -->
+          <form action="#" class="form--register hidden" > <!-- ! hidden default -->
             <ul class="form--register__list">
               <li class="form--register__list-item">
                 <img
@@ -106,7 +107,7 @@
                   required
                 />
                 <label for="text" class="form-label">
-                  <span class="content-name uppercase"> name: </span>
+                  <span class="content-name uppercase">name:</span>
                 </label>
               </li>
               <li class="form--register__list-item">
@@ -122,7 +123,7 @@
                   required
                 />
                 <label for="text" class="form-label">
-                  <span class="content-name uppercase"> surname: </span>
+                  <span class="content-name uppercase">surname:</span>
                 </label>
               </li>
               <li class="form--register__list-item">
@@ -135,7 +136,7 @@
                   required
                 />
                 <label for="text" class="form-label">
-                  <span class="content-name uppercase"> email: </span>
+                  <span class="content-name uppercase">email:</span>
                 </label>
               </li>
               <li class="form--register__list-item">
@@ -151,7 +152,7 @@
                   required
                 />
                 <label for="text" class="form-label">
-                  <span class="content-name uppercase"> password: </span>
+                  <span class="content-name uppercase">password:</span>
                 </label>
               </li>
               <li class="form--register__list-item">
@@ -192,12 +193,17 @@
           </form>
 
           <!-- Registration/Login toggle -->
-          <p>no account yet? <span>sign up</span></p>
+          <div class="account-details">
+            <p class="js-toggle-label">no account yet?</p>
+            <span class="js-toggle-form underline">sign up</span>
+          </div>
+          
+          
 
           <!-- Sign Up Sign In Buttons 
             This button will be imported from JS to change dynamically
           -->
-          <button class="form-button" type="submit" form="form--login">
+          <button class="js-toggle-button form-button-login capitalize" type="submit" form="form--login">
             log in
           </button>
         </div>
@@ -442,6 +448,8 @@
       <p>Aura Marcela</p>
     </footer>
 
+    <script src="../js/navigation.js"></script>
     <script src="../js/login.js"></script>
+    <script type="module" src="../js/gradientIm.js"></script>
   </body>
 </html>

@@ -1,28 +1,19 @@
 'use strict';
 
-const register = document.querySelector('.register_section'),
-  login = document.querySelector('.login_section'),
-  signin_toggle = document.querySelector('.signin_toggle'),
-  signup_toggle = document.querySelector('.signup_toggle'),
-  signup_button = document.querySelector('.signup'),
-  signin_button = document.querySelector('.signin'),
-  text_option = document.querySelector('.signin_option'),
-  form_login = document.getElementById('form-login'),
-  email_in = document.getElementById('email-in');
+const toggleForm = document.querySelector('.js-toggle-form'),
+      toggleLabel = document.querySelector('.js-toggle-label'),
+      toggleButton = document.querySelector('.js-toggle-button'),
+      toggleText = document.querySelector('.js-toggle-text'),
+      formLogin = document.querySelector('.form--login'),
+      formRegister = document.querySelector('.form--register');
 
-
-signin_toggle.addEventListener('click', function(){
-  register.classList.add('hidden');
-  login.classList.remove('hidden');
-  text_option.textContent = 'sign in';
-  signin_button.classList.remove('hidden');
-  signup_button.classList.add('hidden');
-})
-
-signup_toggle.addEventListener('click', function(){
-  register.classList.remove('hidden');
-  login.classList.add('hidden');
-  text_option.textContent = 'sign up';
-  signin_button.classList.add('hidden');
-  signup_button.classList.remove('hidden');
+toggleForm.addEventListener('click', () => {
+  toggleText.textContent = toggleText.textContent === 'login' ? 'register' : 'login';
+  formLogin.classList.toggle('hidden');
+  formRegister.classList.toggle('hidden');
+  toggleLabel.textContent = toggleLabel.textContent !== 'already have an account?' ? 'already have an account?' : 'no account yet?';
+  toggleForm.innerHTML = toggleForm.innerHTML === 'sign up' ? 'sign in' : 'sign up';
+  toggleButton.classList.toggle('form-button-login');
+  toggleButton.classList.toggle('form-button-register');
+  toggleButton.textContent = toggleButton.textContent !== 'sign up' ? 'sign up'  : 'log in';
 })
