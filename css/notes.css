@@ -1,7 +1,7 @@
 
 
 .notes-section{
-  margin-top: 2.5rem; /* Perfect for the navigation bar */
+  margin-top: 43px; /* Perfect for the search bar */
   min-height: var(--min-body-height);
   flex-direction: column;
   /* align-items: center; */

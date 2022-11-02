@@ -8,7 +8,7 @@
   height:100%;
   --gradient-color-1: #7400B8; 
   --gradient-color-2: #72EFDD; 
-  --gradient-color-3: #F72585;  
+  --gradient-color-3: #48BFE3;  
   --gradient-color-4: #5E60CE;
   z-index: -1;
 }
@@ -150,5 +150,5 @@
 }
 
 .form-button-register{
-  background-color: #48BFE3;
+  background-color: #040F0F;
 }
