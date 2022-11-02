@@ -2,7 +2,7 @@
 
 .notes-section{
   margin-top: var(--mb-2);
-  height: var(--min-body-height);
+  min-height: var(--min-body-height);
   flex-direction: column;
   /* align-items: center; */
   gap: var(--mb-2);
@@ -12,12 +12,13 @@
 /* Search Bar design */
 
 .search-bar{
-  position: relative;
+  position: fixed;
   width: 100%;  
   height: 10%;
   gap: var(--mb-1);
   justify-content: center;
   align-items: center;
+  z-index: var(--z-fixed);
 }
 
 .search-bar input{
@@ -54,6 +55,8 @@
 .notes-section__container{
   /* height: 100%; */
   padding: 0 var(--mb-5);
+  margin-top: 6rem;
+  margin-bottom: var(--mb-5);
 }
 
 /* Notes */
@@ -85,6 +88,10 @@
 .note__bottom{
   justify-content: space-between;
   margin-top: var(--mb-1);
+}
+
+.note__bottom img{
+  opacity: .4;
 }
 
 /* These colors are not final */
