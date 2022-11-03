@@ -123,13 +123,26 @@
 /* Media queries */
 
 @media screen and (max-width: 1023px){
+
+  .search-bar{
+    padding: 0 var(--mb-1);
+  }
+
+  .search-bar input{
+    width: 70%;
+  }
+
+  .notes-section{
+    margin-top: 27px;
+  }
+
   .notes-section__container{
-    padding: 0 var(--mb-3);
+    padding: 0 var(--mb-1);
   }
 
   .note{
     margin-bottom: 10px;
-    width: 170px;
+    width: 160px;
   }
 
   .note__upper h2{
