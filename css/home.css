@@ -133,7 +133,7 @@
 }
 
 .diagonal-box{
-  position: absolute;
+  position: fixed;
   background-image: url('../assets/img/backgroundGradient-1.jpg');
   left: -90rem;
   right: 0;

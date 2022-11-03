@@ -80,7 +80,6 @@ img{
 body{
   position: relative;
   min-height: var(--min-body-height);
-  scroll-behavior: smooth;
 }
 
 button{
