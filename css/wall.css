@@ -1,0 +1,21 @@
+.wall-section{
+  margin-top: 120px; /* Perfect for the search bar */
+  min-height: var(--min-body-height);
+}
+
+.items-bar{
+  position: fixed;
+  width: 100%;
+  height: 10%;
+  gap: var(--mb-1);
+  padding: 0 auto;
+  align-items: center;
+  background-color: white;
+  border-top: 1px solid var(--palid-white);
+  border-bottom: 1px solid var(--palid-white);
+  z-index: var(--z-fixed);
+}
+
+.items-bar__list{
+  gap: var(--mb-1);
+}

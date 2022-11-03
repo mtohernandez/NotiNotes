@@ -1,11 +1,23 @@
 const activePage = window.location;
-const navLinks = document.querySelectorAll(".nav__item .nav__link").forEach((link) => {
-  if (link.href.includes(`${activePage}`)) {
-    link.classList.add("active");
-  }else{
-    link.classList.remove("active");
-  }
-});
+const navLinks = document
+  .querySelectorAll(".nav__item .nav__link")
+  .forEach((link) => {
+    if (
+      activePage
+        .toString()
+        .slice([activePage.toString().lastIndexOf("/") + 1]) === ""
+    ) {
+      link.classList.remove("active");
+    } else if (
+      link.href.includes(
+        `${activePage
+          .toString()
+          .slice([activePage.toString().lastIndexOf("/") + 1])}`
+      )
+    ) {
+      link.classList.add("active");
+    }
+  });
 
 const openNav = document.getElementById("nav__toggle"),
   closeNav = document.getElementById("nav__close"),
