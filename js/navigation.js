@@ -1,9 +1,3 @@
-var Scrollbar = window.Scrollbar;
-
-Scrollbar.init(document.querySelector('#my-scrollbar'));
-
-
-
 const activePage = window.location;
 const navLinks = document.querySelectorAll(".nav__item .nav__link").forEach((link) => {
   if (link.href.includes(`${activePage}`)) {
