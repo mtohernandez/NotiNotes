@@ -1,7 +1,5 @@
 .about-section{
-  margin-top: var(--header-height);
-  margin-left: var(--mb-3);
-  margin-right: var(--mb-3);
+  margin: var(--header-height) var(--mb-2);
   display: flex;
   flex-direction: column;
   gap: var(--mb-1);
@@ -30,4 +28,14 @@
   border-radius: 10px;
   color: #7400B8;
   font-size: var(--medium-font-size);
+}
+
+@media screen and (max-width: 1023px) {
+  .about-section h1{
+    font-size: var(--big-font-size);
+  }
+
+  .about-section img{
+    min-width: 290px;
+  }
 }

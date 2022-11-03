@@ -2,6 +2,8 @@ const activePage = window.location;
 const navLinks = document.querySelectorAll(".nav__item .nav__link").forEach((link) => {
   if (link.href.includes(`${activePage}`)) {
     link.classList.add("active");
+  }else{
+    link.classList.remove("active");
   }
 });
 
