@@ -55,9 +55,10 @@
 
 
 /* Note container */
+
 .notes-section__container{
   /* height: 100%; */
-  padding: 0 var(--mb-5);
+  /* padding: 0 var(--mb-5); */
   margin-top: 7rem;
   margin-bottom: var(--mb-5);
 }
