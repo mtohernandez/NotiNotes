@@ -1,5 +1,6 @@
 .wall-section{
   min-height: var(--min-body-height);
+  max-width: 100vw;
 }
 
 .items-bar{

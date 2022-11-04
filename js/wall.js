@@ -28,7 +28,7 @@ function loadFile(event) {
 items.forEach((item) => {
   item.addEventListener("click", () => {
     const html = `<div class="wall-element"> 
-                    <${item.textContent.trim()}>
+                    <${item.textContent.trim()} style="max-width: 100vw;">
                       <span class="textarea" role="textbox" contenteditable></span>
                       <div contenteditable="false" class="tooltip">-</div>
                     </${item.textContent.trim()}>

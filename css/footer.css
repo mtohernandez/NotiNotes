@@ -1,7 +1,7 @@
 /* This file is just for test purposes */
 
 .footer{
-  position: fixed;
+  position: absolute;
   display: flex;
   bottom: var(--mb-1);
   gap: var(--mb-0-25);
