@@ -1,0 +1,154 @@
+
+#gradient-canvas {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width:100%;
+  height:100%;
+  --gradient-color-1: #7400B8; 
+  --gradient-color-2: #72EFDD; 
+  --gradient-color-3: #48BFE3;  
+  --gradient-color-4: #5E60CE;
+  z-index: -1;
+}
+
+
+.section-form{
+  height: var(--min-body-height);
+  justify-content: center;
+  align-items: center;
+  padding: 0 var(--mb-1);
+}
+
+.form{
+  /* background-color: #8235ab; */
+
+  display: inline-flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
+  border-radius: 10px;
+  padding: var(--mb-3);
+}
+
+.form h2,h4,p{
+  color: var(--second-font-color);
+}
+
+.form h2{
+  font-size: var(--big-font-size);
+  text-align: center;
+  margin-bottom: var(--mb-1);
+}
+
+.form h4{
+  font-size: var(--medium-font-size);
+}
+
+.form p{
+  font-size: var(--small-font-size);
+}
+
+
+/* This was neccessary for make same line */
+.account-details{
+  white-space: nowrap;
+}
+
+.account-details p{
+  display: inline-block;
+}
+
+.form span{
+  display: inline-block;
+  font-size: var(--small-font-size);
+  color: var(--second-font-color);
+  margin-bottom: var(--mb-1-5);
+}
+
+.form button{
+  padding: var(--mb-0-5);
+  border-radius: 20px;
+  font-size: var(--normal-font-size);
+  font-weight: 700;
+  border: 0;
+  color: var(--second-font-color);
+  transition: all .15s ease;
+}
+
+.form--login,
+.form--register{
+  margin-top: var(--mb-1);
+}
+
+.form--login input,
+.form--register input{
+  height: var(--mb-1-5);
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--second-font-color);
+  padding-left: var(--mb-1-5);
+  color: var(--second-font-color);
+  margin-bottom: var(--mb-1-5);
+  width: 100%; /* maybe a good idea */
+}
+
+.form--login__list-item,
+.form--register__list-item{
+  position: relative;
+}
+
+.form--login__list-item label,
+.form--register__list-item label{
+  position: absolute;
+  left: 0;
+  margin-left: var(--mb-1-5);
+  bottom: 5px;
+  color: var(--gray-tone);
+  pointer-events: none;
+}
+
+.form--login__list-item img,
+.form--register__list-item img{
+  position: absolute;
+  left: 4px;
+  bottom: 32px;
+}
+
+.form-label span{
+  position: absolute; /* why */
+  bottom: 0;
+  color: var(--second-font-color);
+  white-space: nowrap;
+  transition: all .15s ease;
+}
+
+.form--login input:focus,
+.form--register input:focus{
+  outline: none;
+}
+
+.form--login input:focus + .form-label .content-name,
+.form--login input:valid + .form-label .content-name,
+.form--register input:focus + .form-label .content-name,
+.form--register input:valid + .form-label .content-name{
+  transform: translateY(-150%);
+  font-size: 10px;
+  left: 0px;
+}
+
+.js-toggle-form{
+  display: inline;
+}
+
+.js-toggle-form:hover{
+  cursor: pointer;
+}
+
+.form-button-login{
+  background-color: #F72585; 
+}
+
+.form-button-register{
+  background-color: #040F0F;
+}
