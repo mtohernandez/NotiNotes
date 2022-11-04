@@ -73,19 +73,22 @@
           <li class="items-item">
             p
           </li>
+          <li class="items-item">
+            <input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: none;">
+            <label for="file">img</label> 
+          </li>
         </ul>
       </div>
 
       <!-- Wall Section -->
       <div class="wall-container">
 
-        <!-- Test -->
-        <h1 style="opacity: .5;">Start adding some content!</h1>
-
-        <!-- <div class="wall-element"> 
-          <h1 contenteditable="true">Title H1</h1>
-          <div contenteditable="false" class="tooltip">-</div>
-        </div> -->
+        <div class="wall-element"> 
+          <h1>
+            <span class="textarea" role="textbox" contenteditable></span>
+            <div contenteditable="false" class="tooltip">-</div>
+          </h1>
+        </div>
         
       </div>
     </section>
