@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+:root{
+  
+  --header-height: 6rem;
+
+  --main-font-color: #1D1D1F;
+  --second-font-color: rgb(255, 255, 255);
+
+  --palid-white: #F6F6FD;
+
+  --background-color-cards: #FBFBFD;
+
+  --small-font-size: 0.8rem;
+  --normal-font-size: 1rem;
+  --medium-font-size: 1.5rem;
+  --big-font-size: 2rem;
+  --bigger-font-size: 4rem;
+  --title-font-size: 7rem;
+
+  --default-border-radius: 10px;
+
+  --min-body-height: 100vh;
+
+
+  --mb-0-25: .25rem;
+  --mb-0-5: .5rem;
+  --mb-0-75: .75rem;
+  --mb-1: 1rem;
+  --mb-1-5: 1.5rem;
+  --mb-2: 2rem;
+  --mb-2-5: 2.5rem;
+  --mb-3: 3rem;
+  --mb-5: 5rem;
+  --mb-7: 7rem;
+
+  --z-fixed: 100;
+  --z-tooltop: 10; 
+  --z-top: 1000;
+  --z-under: 1;
+  --z-creator: 1500;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', Arial;
+}
+
+@keyframes scale {
+  0%{
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(1.5);
+  }
+  70%{
+    transform: scale(1.8);
+  }
+  80%{
+    transform: scale(1.6);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+
+ul{
+  list-style: none;
+}
+
+a{
+  text-decoration: none;
+}
+
+img{
+  max-width: 100%;
+}
+
+body{
+  position: relative;
+  min-height: var(--min-body-height);
+}
+
+button{
+  cursor: pointer;
+}
+
+.capitalize{
+  text-transform: capitalize;
+}
+
+.lightbold{
+  font-weight: 600;
+}
+
+.bold{
+  font-weight: 700;
+}
+
+.uppercase{
+  text-transform: uppercase;
+}
+
+.grid{
+  display: grid;
+}
+
+.flex{
+  display: flex;
+}
+
+.underline{
+  text-decoration: underline;
+}
+
+.hidden{
+  display: none;
+}
