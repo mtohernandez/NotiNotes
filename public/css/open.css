@@ -1,0 +1,9 @@
+.open-section{
+  margin-top: var(--header-height);
+  justify-content: center;
+}
+
+.open-section img{
+  width: 20%;
+  min-width: 300px;
+}
