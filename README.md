@@ -14,3 +14,7 @@ Colors are still in development, but you can already create text and images, giv
 
 ![openbanner](https://user-images.githubusercontent.com/67434849/200959224-efa2e3b1-f6a4-4a02-adf2-aa8a70deda9f.jpg)
 Open source means free. And yes. NotiNotes is open to everyone who wants to take a look at the code.
+
+## Group Authors
+* Mateo Hernandez
+* Aura Marcela
