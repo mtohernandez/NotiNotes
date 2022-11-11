@@ -1,5 +1,9 @@
 "use strict";
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js";
+
+
 window.onload = () => {
     const white = "#fff";
     const nav = document.querySelector(".nav");
@@ -49,6 +53,21 @@ notes.forEach(note => {
         masonry.layout();
     });
 })
+
+const firebaseConfig = {
+    apiKey: "{{config('services.firebase.apiKey')}}",
+    authDomain: "{{config('services.firebase.authDomain')}}",
+    projectId: "{{config('services.firebase.projectId')}}",
+    storageBucket: "{{config('services.firebase.storageBucket')}}",
+    messagingSenderId: "{{config('services.firebase.messagingSenderId')}}",
+    appId: "{{config('services.firebase.appId')}}",
+    measurementId: "{{config('services.firebase.measurementId')}}"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
 
 // Firebase Credentials
 

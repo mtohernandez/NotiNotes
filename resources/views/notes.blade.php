@@ -74,5 +74,5 @@
         </section>
     </main>
     <script src="{{ url('js/masonry.pkgd.min.js') }}"></script>
-    <script src="{{ url('js/notes.js') }}"></script>
+    <script type="module" src="{{ url('js/notes.js') }}"></script>
 @endsection
