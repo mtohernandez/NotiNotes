@@ -36,7 +36,7 @@
   z-index: 2000;
 }
 
-.overlay{
+.overlay-form{
   position: fixed;
   top: 0;
   left: 0;
@@ -57,12 +57,27 @@
 }
 
 .note-creator h4{
+  color: var(--main-font-color);
   font-size: var(--medium-font-size);
   opacity: .5;
 }
 
-.note-creator h2{
+.note-creator input{
+  display: block;
+  width: 100%;
+  border: 0;
   font-size: var(--big-font-size);
+}
+
+.note-creator input::placeholder{
+    color: var(--main-font-color);
+    opacity: 1;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.note-creator input:focus{
+	outline: none;
 }
 
 .note-creator h3{
@@ -194,12 +209,17 @@
 
 .note__upper{
   align-items: center;
+  justify-content: space-between;
   gap: var(--mb-1);
   margin-bottom: var(--mb-0-25);
 }
 
-.note__upper span{
+.note__upper span:nth-child(2){
   opacity: .5;
+}
+
+.note__upper img{
+    width: 20%;
 }
 
 .note-tags{
@@ -236,6 +256,35 @@
   color:rgb(255, 172, 84);
 }
 
+.note-options{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    right: 0;
+    bottom: -20%;
+    background-color: white;
+    border-radius: 10px;
+    z-index: var(--z-fixed);
+}
+
+.note-options > p{
+    padding: 0.2rem 0.5rem;
+}
+
+.note-options > p:nth-child(1){
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.note-options > p:nth-child(2){
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.note-options > p:hover{
+    cursor: pointer;
+    background-color: rgb(211, 211, 211);
+}
 
 /* Media queries */
 

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;700&family=Poppins:wght@400;500;600;700&display=swap');
 
 :root{
-  
+
   --header-height: 6rem;
 
   --main-font-color: #1D1D1F;
@@ -35,7 +35,7 @@
   --mb-7: 7rem;
 
   --z-fixed: 100;
-  --z-tooltop: 10; 
+  --z-tooltop: 10;
   --z-top: 1000;
   --z-under: 1;
   --z-creator: 1500;
@@ -117,4 +117,8 @@ button{
 
 .hidden{
   display: none;
+}
+
+.visibility{
+    visibility: hidden;
 }
