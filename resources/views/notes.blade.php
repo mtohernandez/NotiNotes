@@ -38,13 +38,17 @@
                     <!-- For background rounded -->
                     <img src="../assets/icons/search.svg" alt="search-icon">
                 </div>
+                <div class="search-bar__icon" id="update-masonry">
+                    <!-- For background rounded -->
+                    <img src="../assets/icons/update-icon.svg" alt="update-icon">
+                </div>
             </div>
 
 
             <div class="notes-section__container" id="app">
 
                 <!-- Note Template -->
-                <div class="note">
+                {{-- <div class="note">
                     <div class="note__upper flex">
                         <h2>Title</h2>
                         <span>Date Created</span>
@@ -69,7 +73,7 @@
                             <p>edit</p>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
         </section>

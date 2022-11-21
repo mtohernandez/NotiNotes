@@ -39,7 +39,7 @@ const toggleForm = document.querySelector(".js-toggle-form"),
     formLogin = document.querySelector(".form--login"),
     formRegister = document.querySelector(".form--register");
 
-toggleForm.addEventListener("click", () => {
+toggleForm?.addEventListener("click", () => {
     toggleText.textContent =
         toggleText.textContent === "login" ? "register" : "login";
     formLogin.classList.toggle("hidden");
