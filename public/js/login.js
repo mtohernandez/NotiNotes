@@ -35,7 +35,7 @@ const toggleForm = document.querySelector(".js-toggle-form"),
     formLogin = document.querySelector(".form--login"),
     formRegister = document.querySelector(".form--register");
 
-toggleForm.addEventListener("click", () => {
+toggleForm?.addEventListener("click", () => {
     toggleText.textContent =
         toggleText.textContent === "login" ? "register" : "login";
     formLogin.classList.toggle("hidden");
@@ -52,21 +52,4 @@ toggleForm.addEventListener("click", () => {
         toggleButton.textContent !== "sign up" ? "sign up" : "log in";
 });
 
-const firebaseConfig = {
-    apiKey: "{{config('services.firebase.apiKey')}}",
-    authDomain: "{{config('services.firebase.authDomain')}}",
-    projectId: "{{config('services.firebase.projectId')}}",
-    storageBucket: "{{config('services.firebase.storageBucket')}}",
-    messagingSenderId: "{{config('services.firebase.messagingSenderId')}}",
-    appId: "{{config('services.firebase.appId')}}",
-    measurementId: "{{config('services.firebase.measurementId')}}",
-};
 
-console.log(firebaseConfig.apiKey);
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-const auth = app.auth();
-const database = app.database();
