@@ -2,6 +2,10 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 const activePage = window.location;
 /* This will allow to change colors on load */
 console.log(
@@ -52,14 +56,18 @@ toggleForm.addEventListener("click", () => {
         toggleButton.textContent !== "sign up" ? "sign up" : "log in";
 });
 
+email= document.getElementById('email-up')
+password= document.getElementById('password-up')
+
 const firebaseConfig = {
-    apiKey: "{{config('services.firebase.apiKey')}}",
-    authDomain: "{{config('services.firebase.authDomain')}}",
-    projectId: "{{config('services.firebase.projectId')}}",
-    storageBucket: "{{config('services.firebase.storageBucket')}}",
-    messagingSenderId: "{{config('services.firebase.messagingSenderId')}}",
-    appId: "{{config('services.firebase.appId')}}",
-    measurementId: "{{config('services.firebase.measurementId')}}",
+    apiKey: "AIzaSyBw7Ih0SBN0ib8fIwF_zqWDRY8w3hxeMYo",
+    authDomain: "notinotes-c37aa.firebaseapp.com",
+    databaseURL: "https://notinotes-c37aa-default-rtdb.firebaseio.com",
+    projectId: "notinotes-c37aa",
+    storageBucket: "notinotes-c37aa.appspot.com",
+    messagingSenderId: "27454562419",
+    appId: "1:27454562419:web:90dab40eb631e02d358a06",
+    measurementId: "G-3W32VKLK1B"
 };
 
 console.log(firebaseConfig.apiKey);
@@ -70,3 +78,43 @@ const analytics = getAnalytics(app);
 
 const auth = app.auth();
 const database = app.database();
+//registro
+
+createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in
+    const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+
+
+//inicio de sesion
+
+signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in
+    const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+
+  //observador
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const uid = user.uid;
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+});
