@@ -165,6 +165,5 @@
       </section>
     </main>
 
-    <script src="{{url('js/login.js')}}"></script>
-    <script type="module" src="{{url('js/gradientLogin.js')}}"></script>
+
 @endsection

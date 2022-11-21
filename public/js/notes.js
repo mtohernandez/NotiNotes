@@ -1,7 +1,6 @@
 "use strict";
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js";
+import notesApi from './notesApi.js';
 
 
 window.onload = () => {
@@ -54,24 +53,17 @@ notes.forEach(note => {
     });
 })
 
-const firebaseConfig = {
-    apiKey: "{{config('services.firebase.apiKey')}}",
-    authDomain: "{{config('services.firebase.authDomain')}}",
-    projectId: "{{config('services.firebase.projectId')}}",
-    storageBucket: "{{config('services.firebase.storageBucket')}}",
-    messagingSenderId: "{{config('services.firebase.messagingSenderId')}}",
-    appId: "{{config('services.firebase.appId')}}",
-    measurementId: "{{config('services.firebase.measurementId')}}"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-
-// Firebase Credentials
-
 // Create Note
+notesApi.saveNote({
+    id: 1122,
+    title: 'title note',
+    body: 'This is the content',
+    tags: ['tag1', 'tag2', 'tag3'],
+    saved: '2022:12:23',
+    
+})
+
+console.log(notesApi.getAllNotes());
 
 // Edit Note
 

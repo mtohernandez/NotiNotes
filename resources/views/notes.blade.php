@@ -9,8 +9,8 @@
         <div class="note-creator capitalize flex">
             <h4>NotiCreator</h4>
             <div class="note-creator__content">
-                <input placeholder="title">
-                <input placeholder="description">
+                <input type="text" placeholder="title">
+                <textarea placeholder="description"></textarea>
             </div>
             <p>separate your tags with spaces: tag1 tag2</p>
             <input placeholder="tags">
@@ -24,6 +24,7 @@
                 <span></span>
             </div>
             <p>click outside to close.</p>
+            <button id="create-note">create</button>
         </div>
     </div>
 
@@ -40,7 +41,7 @@
             </div>
 
 
-            <div class="notes-section__container">
+            <div class="notes-section__container" id="app">
 
                 <!-- Note Template -->
                 <div class="note">

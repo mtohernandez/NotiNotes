@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{{url('css/about.css')}}">
   <link rel="stylesheet" href="{{url('css/login.css')}}">
   <link rel="stylesheet" href="{{url('css/footer.css')}}">
+  <!-- Start firebase for the whole project -->
   <title>Home</title>
 </head>
 

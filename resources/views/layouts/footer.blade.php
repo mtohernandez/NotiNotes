@@ -7,6 +7,8 @@
 
 
 <script src="{{ url('js/navigation.js') }}"></script>
+<script type="module" src="{{url('js/login.js')}}"></>
+<script type="module" src="{{url('js/gradientLogin.js')}}"></script>
 </body>
 
 </html>

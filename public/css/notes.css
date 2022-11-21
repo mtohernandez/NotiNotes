@@ -50,7 +50,7 @@
 .note-creator{
   background-color: white;
   width: fit-content;
-  padding: var(--mb-2) var(--mb-7) var(--mb-2) var(--mb-2);
+  padding: var(--mb-2);
   border-radius: 20px;
   flex-direction: column;
   gap: var(--mb-1);
@@ -62,21 +62,28 @@
   opacity: .5;
 }
 
-.note-creator input{
+.note-creator input,
+.note-creator textarea{
   display: block;
   width: 100%;
   border: 0;
   font-size: var(--big-font-size);
 }
 
-.note-creator input::placeholder{
+.note-creator textarea{
+    resize: none;
+}
+
+.note-creator input::placeholder,
+.note-creator textarea::placeholder{
     color: var(--main-font-color);
     opacity: 1;
     font-weight: 700;
     text-transform: capitalize;
 }
 
-.note-creator input:focus{
+.note-creator input:focus,
+.note-creator textarea:focus{
 	outline: none;
 }
 
@@ -90,6 +97,22 @@
 
 .note-creator p:nth-child(6){
   font-size: var(--small-font-size);
+}
+
+.note-creator button{
+    padding: var(--mb-0-5) 0;
+    text-transform: capitalize;
+    color: var(--second-font-color);
+    background-color: black;
+    border: 1px solid black;
+    border-radius: 10px;
+    transition: all .15s ease;
+}
+
+.note-creator button:hover{
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--main-font-color);
 }
 
 .note-creator__colors{
