@@ -1,16 +1,4 @@
-# noti_notes_app
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# NotiNotes 3.0 on the way
+This time I'm releasing a full version to mobile, after all sorts of problems with the web launch I am switching it to pure mobile. Here's the first look.
+![final1](https://user-images.githubusercontent.com/67434849/207646618-66858072-55c9-4a12-a08a-22bf1db91f04.png)
+Features will be listed soon.
