@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:noti_notes_app/screens/login_screen.dart';
 import 'package:noti_notes_app/widgets/tag_item.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +43,9 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
                 style: Theme.of(context).textTheme.headline1,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushNamed(LoginSignupScreen.routeName);
+                },
                 child: CircleAvatar(
                   radius: Theme.of(context).textTheme.headline1!.fontSize! * .6,
                   backgroundImage: const AssetImage(

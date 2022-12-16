@@ -7,7 +7,7 @@ class NoteItem extends StatelessWidget {
   final String id;
   final String title;
   final String content;
-  final List<String> tags;
+  final Set<String> tags;
   final String imageUrl;
   final DateTime date;
 
@@ -34,6 +34,20 @@ class NoteItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // This code right here
+            if (imageUrl.isNotEmpty)
+              Container(
+                height: MediaQuery.of(context).size.height * 0.1,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    image: AssetImage(imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            if (imageUrl.isNotEmpty) const SizedBox(height: 5),
             Text(
               title,
               style: Theme.of(context).textTheme.headline1,
@@ -53,7 +67,7 @@ class NoteItem extends StatelessWidget {
                   itemCount: tags.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => TagItem(
-                    tag: tags[index],
+                    tag: tags.elementAt(index),
                   ),
                 ),
               ),

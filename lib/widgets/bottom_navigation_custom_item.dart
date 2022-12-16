@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:noti_notes_app/screens/notes_creation_screen.dart';
 
 class BottomNavigationCustomItem extends StatelessWidget {
   @override
@@ -22,7 +23,7 @@ class BottomNavigationCustomItem extends StatelessWidget {
               child: TextField(
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Color(0xff292929),
+                  fillColor: const Color(0xff292929),
                   hintText: 'Search Notes',
                   hintStyle: TextStyle(
                     color: Theme.of(context)
@@ -41,6 +42,7 @@ class BottomNavigationCustomItem extends StatelessWidget {
                     vertical: 5,
                   ),
                 ),
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
             const SizedBox(width: 10),
@@ -58,7 +60,10 @@ class BottomNavigationCustomItem extends StatelessWidget {
                 ),
                 IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(NotesCreationScreen.routeName);
+                  },
                   icon: SvgPicture.asset(
                     'lib/assets/icons/plus.svg',
                     color: Theme.of(context).backgroundColor,

@@ -36,6 +36,11 @@ class MyApp extends StatelessWidget {
               fontSize: 30,
               fontWeight: FontWeight.w700,
             ),
+            headline2: const TextStyle(
+              color: Colors.white,
+              fontSize: 32,
+              fontWeight: FontWeight.w700,
+            ),
             bodyText1: const TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -52,6 +57,7 @@ class MyApp extends StatelessWidget {
         routes: {
           NotesOverviewScreen.routeName: (context) => NotesOverviewScreen(),
           NotesCreationScreen.routeName: (context) => NotesCreationScreen(),
+          LoginSignupScreen.routeName: (context) => LoginSignupScreen(),
         },
       ),
     );

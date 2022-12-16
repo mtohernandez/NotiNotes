@@ -2,7 +2,7 @@ class Note {
   final String id;
   final String title;
   final String content;
-  final List<String> tags;
+  final Set<String> tags;
   final DateTime dateCreated;
   final String imageUrl;
 
