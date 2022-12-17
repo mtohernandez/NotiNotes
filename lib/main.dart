@@ -6,6 +6,7 @@ import './screens/notes_creation_screen.dart';
 import './screens/notes_overview_screen.dart';
 
 import './providers/notes.dart';
+import './providers/search.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => Notes(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Search(),
+        ),
       ],
       child: MaterialApp(
         title: 'NotiNotes',

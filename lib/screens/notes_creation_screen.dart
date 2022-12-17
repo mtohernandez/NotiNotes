@@ -113,7 +113,7 @@ class _NotesCreationScreenState extends State<NotesCreationScreen> {
                   height: 20,
                 ),
                 Text(
-                  'Add your tags',
+                  'Add your tags (double tap on one to delete)',
                   style: TextStyle(
                     color: Theme.of(context)
                         .textTheme
