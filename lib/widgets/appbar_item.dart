@@ -19,6 +19,17 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
+  String greeting() {
+    var hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Morning';
+    }
+    if (hour < 17) {
+      return 'Afternoon';
+    }
+    return 'Evening';
+  }
+
   @override
   Widget build(BuildContext context) {
     final notes = Provider.of<Notes>(context);
@@ -35,11 +46,7 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                DateFormat('a').format(DateTime.now()) == 'AM'
-                    ? 'Good Morning'
-                    : DateFormat('a').format(DateTime.now()) == 'PM'
-                        ? 'Good Afternoon'
-                        : 'Good Evening',
+                'Good ${greeting()}',
                 style: Theme.of(context).textTheme.headline1,
               ),
               GestureDetector(

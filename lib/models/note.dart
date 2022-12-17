@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Note {
   final String id;
   final String title;
@@ -5,6 +7,7 @@ class Note {
   final Set<String> tags;
   final DateTime dateCreated;
   final String imageUrl;
+  final Color colorBackground;
 
   Note(
     this.tags,
@@ -13,5 +16,6 @@ class Note {
     required this.title,
     required this.content,
     required this.dateCreated,
+    required this.colorBackground,
   });
 }

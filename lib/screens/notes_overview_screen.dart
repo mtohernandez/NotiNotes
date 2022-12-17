@@ -61,6 +61,7 @@ class NotesOverviewScreen extends StatelessWidget {
                                     title: note.title,
                                     content: note.content,
                                     date: note.dateCreated,
+                                    colorBackground: note.colorBackground,
                                   ),
                                 )
                                 .toList(),
@@ -75,6 +76,7 @@ class NotesOverviewScreen extends StatelessWidget {
                                     title: note.title,
                                     content: note.content,
                                     date: note.dateCreated,
+                                    colorBackground: note.colorBackground,
                                   ),
                                 )
                                 .toList(),

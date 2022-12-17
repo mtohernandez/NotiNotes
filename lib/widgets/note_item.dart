@@ -10,6 +10,7 @@ class NoteItem extends StatelessWidget {
   final Set<String> tags;
   final String imageUrl;
   final DateTime date;
+  final Color colorBackground;
 
   const NoteItem(
     this.tags,
@@ -19,6 +20,7 @@ class NoteItem extends StatelessWidget {
     required this.title,
     required this.content,
     required this.date,
+    required this.colorBackground,
   });
 
   @override
@@ -26,7 +28,7 @@ class NoteItem extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.red, // This will be the color for now
+        color: colorBackground, // This will be the color for now
         borderRadius: BorderRadius.circular(30),
       ),
       child: Padding(

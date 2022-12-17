@@ -20,6 +20,21 @@ class _NotesCreationScreenState extends State<NotesCreationScreen> {
   final _contentFocusNode = FocusNode();
   final _tagController = TextEditingController();
 
+  //! Testing purposes
+
+  Color? colorSelected;
+
+  final List<Color> allColors = [
+    const Color(0xff9638CD),
+    const Color(0xff5B5DD7),
+    const Color(0xff48BFE3),
+    const Color(0xff72EFDD),
+    const Color(0xffF9C100),
+    const Color(0xffEF233C),
+  ];
+
+  //! Testing Purposes
+
   var _creatingNote = Note(
     {},
     '',
@@ -27,6 +42,7 @@ class _NotesCreationScreenState extends State<NotesCreationScreen> {
     title: '',
     content: '',
     dateCreated: DateTime.now(),
+    colorBackground: Colors.black,
   );
 
   @override
@@ -45,6 +61,7 @@ class _NotesCreationScreenState extends State<NotesCreationScreen> {
   @override
   Widget build(BuildContext context) {
     final tagsSize = Theme.of(context).textTheme.bodyText1!.fontSize! * 2.7;
+    final colorSize = MediaQuery.of(context).size.height * 0.07;
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -86,6 +103,7 @@ class _NotesCreationScreenState extends State<NotesCreationScreen> {
                       title: value,
                       content: _creatingNote.content,
                       dateCreated: _creatingNote.dateCreated,
+                      colorBackground: _creatingNote.colorBackground,
                     );
                   },
                 ),
@@ -106,6 +124,7 @@ class _NotesCreationScreenState extends State<NotesCreationScreen> {
                       title: _creatingNote.title,
                       content: value,
                       dateCreated: _creatingNote.dateCreated,
+                      colorBackground: _creatingNote.colorBackground,
                     );
                   },
                 ),
@@ -168,6 +187,9 @@ class _NotesCreationScreenState extends State<NotesCreationScreen> {
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
                               backgroundColor:
                                   Theme.of(context).backgroundColor,
                               title: Text(
@@ -254,6 +276,49 @@ class _NotesCreationScreenState extends State<NotesCreationScreen> {
                   ),
                 ),
                 const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: colorSize,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: allColors.length,
+                    itemBuilder: (context, index) {
+                      return OutlinedButton(
+                        onPressed: () {
+                          setState(() {
+                            colorSelected = allColors[index];
+                          });
+                        },
+                        style: ButtonStyle(
+                          padding: MaterialStateProperty.all(EdgeInsets.zero),
+                          shape: MaterialStateProperty.all(
+                            const CircleBorder(),
+                          ),
+                          side: MaterialStateProperty.all(
+                            BorderSide(
+                              color: allColors[index] == colorSelected
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).backgroundColor,
+                              width:
+                                  allColors[index] == colorSelected ? 2.0 : 0,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                        ),
+                        child: Container(
+                          width: colorSize,
+                          height: colorSize,
+                          decoration: BoxDecoration(
+                            color: allColors[index],
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -268,6 +333,8 @@ class _NotesCreationScreenState extends State<NotesCreationScreen> {
                             title: _creatingNote.title,
                             content: _creatingNote.content,
                             dateCreated: _creatingNote.dateCreated,
+                            colorBackground:
+                                colorSelected ?? _creatingNote.colorBackground,
                           );
                           addNote();
                           Navigator.of(context).pop();
