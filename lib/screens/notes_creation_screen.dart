@@ -18,7 +18,7 @@ class _NotesCreationScreenState extends State<NotesCreationScreen> {
   File? img;
   final ImagePicker _picker = ImagePicker();
 
-  Future _pickImage(ImageSource source) async {
+  Future pickImage(ImageSource source) async {
     try {
       final image = await _picker.pickImage(source: source);
       if (image == null) return;
@@ -29,7 +29,7 @@ class _NotesCreationScreenState extends State<NotesCreationScreen> {
         },
       );
     } on Exception catch (e) {
-      // Show error message;
+      Navigator.of(context).pop();
     }
   }
 
@@ -41,7 +41,7 @@ class _NotesCreationScreenState extends State<NotesCreationScreen> {
       builder: (bctx) {
         return Wrap(
           children: [
-            MediaGrid(_pickImage),
+            MediaGrid(pickImage),
           ],
         );
       },
@@ -59,6 +59,7 @@ class _NotesCreationScreenState extends State<NotesCreationScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Theme.of(context).backgroundColor,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),

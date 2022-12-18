@@ -266,33 +266,37 @@ class _FormNoteCreationState extends State<FormNoteCreation> {
                   scrollDirection: Axis.horizontal,
                   itemCount: allColors.length,
                   itemBuilder: (context, index) {
-                    return OutlinedButton(
-                      onPressed: () {
-                        setState(() {
-                          colorSelected = allColors[index];
-                        });
-                      },
-                      style: ButtonStyle(
-                        padding: MaterialStateProperty.all(EdgeInsets.zero),
-                        shape: MaterialStateProperty.all(
-                          const CircleBorder(),
-                        ),
-                        side: MaterialStateProperty.all(
-                          BorderSide(
-                            color: allColors[index] == colorSelected
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).backgroundColor,
-                            width: allColors[index] == colorSelected ? 2.0 : 0,
-                            style: BorderStyle.solid,
+                    return Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      child: OutlinedButton(
+                        onPressed: () {
+                          setState(() {
+                            colorSelected = allColors[index];
+                          });
+                        },
+                        style: ButtonStyle(
+                          padding: MaterialStateProperty.all(EdgeInsets.zero),
+                          shape: MaterialStateProperty.all(
+                            const CircleBorder(),
+                          ),
+                          side: MaterialStateProperty.all(
+                            BorderSide(
+                              color: allColors[index] == colorSelected
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).backgroundColor,
+                              width:
+                                  allColors[index] == colorSelected ? 2.0 : 0,
+                              style: BorderStyle.solid,
+                            ),
                           ),
                         ),
-                      ),
-                      child: Container(
-                        width: colorSize,
-                        height: colorSize,
-                        decoration: BoxDecoration(
-                          color: allColors[index],
-                          shape: BoxShape.circle,
+                        child: Container(
+                          width: colorSize,
+                          height: colorSize,
+                          decoration: BoxDecoration(
+                            color: allColors[index],
+                            shape: BoxShape.circle,
+                          ),
                         ),
                       ),
                     );

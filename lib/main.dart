@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noti_notes_app/screens/note_view_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 import './screens/login_screen.dart';
 import './screens/notes_creation_screen.dart';
@@ -10,6 +11,11 @@ import './providers/notes.dart';
 import './providers/search.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      systemNavigationBarColor: Color(0xff1D1D1D),
+    ),
+  );
   runApp(const MyApp());
 }
 
