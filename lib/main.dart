@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:noti_notes_app/screens/note_view_screen.dart';
 import 'package:provider/provider.dart';
 
 import './screens/login_screen.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'NotiNotes',
         theme: ThemeData(
           fontFamily: 'SF Pro Display',
@@ -62,6 +64,7 @@ class MyApp extends StatelessWidget {
           NotesOverviewScreen.routeName: (context) => NotesOverviewScreen(),
           NotesCreationScreen.routeName: (context) => NotesCreationScreen(),
           LoginSignupScreen.routeName: (context) => LoginSignupScreen(),
+          NoteViewScreen.routeName: (context) => NoteViewScreen(),
         },
       ),
     );

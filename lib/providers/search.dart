@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
 
+enum SearchType {
+  notSearching,
+  searchingByTitle,
+  searchingByTag,
+}
+
 class Search with ChangeNotifier{
-  bool _isSearching = false;
+  SearchType _isSearching = SearchType.notSearching;
   String _searchQuery = '';
 
-  bool get isSearching => _isSearching;
+  SearchType get isSearching => _isSearching;
   String get searchQuery => _searchQuery;
 
-  void activateSearch(){
-    _isSearching = true;
+  void activateSearchByTitle(){
+    _isSearching = SearchType.searchingByTitle;
+    notifyListeners();
+  }
+
+  void activateSearchByTag(){
+    _isSearching = SearchType.searchingByTag;
     notifyListeners();
   }
 
   void deactivateSearch(){
-    _isSearching = false;
+    _isSearching = SearchType.notSearching;
     notifyListeners();
   }
 

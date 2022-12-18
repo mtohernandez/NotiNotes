@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:noti_notes_app/screens/notes_creation_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/search.dart';
-import '../providers/notes.dart';
+import '../../providers/search.dart';
+import '../../providers/notes.dart';
 
 class BottomNavigationCustomItem extends StatefulWidget {
   @override
@@ -28,6 +28,7 @@ class _BottomNavigationCustomItemState
   Widget build(BuildContext context) {
     final isSearching = Provider.of<Search>(context);
     final notes = Provider.of<Notes>(context);
+
     return Container(
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -38,7 +39,7 @@ class _BottomNavigationCustomItemState
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -68,7 +69,7 @@ class _BottomNavigationCustomItemState
                 controller: _searchController,
                 style: Theme.of(context).textTheme.bodyText1,
                 onChanged: (value) {
-                  isSearching.activateSearch();
+                  isSearching.activateSearchByTitle();
                   isSearching.setSearchQuery(value);
                 },
               ),
@@ -86,7 +87,7 @@ class _BottomNavigationCustomItemState
                   radius:
                       Theme.of(context).textTheme.bodyText1!.fontSize! * 1.5,
                 ),
-                if (!isSearching.isSearching)
+                if (_searchController.text.isEmpty)
                   IconButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
@@ -102,12 +103,12 @@ class _BottomNavigationCustomItemState
                           2.7,
                     ),
                   ),
-                if (isSearching.isSearching)
+                if (_searchController.text.isNotEmpty)
                   IconButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
                       _searchController.clear();
-                      isSearching.deactivateSearch();
+                      // isSearching.deactivateSearch();
                       FocusScope.of(context).unfocus();
                     },
                     icon: SvgPicture.asset(

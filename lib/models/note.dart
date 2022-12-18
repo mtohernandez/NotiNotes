@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 class Note {
   final String id;
-  final String title;
-  final String content;
+  String title;
+  String content;
   final Set<String> tags;
   final DateTime dateCreated;
-  final String imageUrl;
+  final File? imageFile;
   final Color colorBackground;
 
   Note(
     this.tags,
-    this.imageUrl, {
+    this.imageFile, {
     required this.id,
     required this.title,
     required this.content,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:noti_notes_app/screens/login_screen.dart';
-import 'package:noti_notes_app/widgets/tag_item.dart';
+import 'package:noti_notes_app/widgets/items/tag_item.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/notes.dart';
+import '../../providers/notes.dart';
 
 class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
   final double size;
@@ -62,17 +62,18 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
               ),
             ],
           ),
-          const SizedBox(height: 20),
-          SizedBox(
-            height: Theme.of(context).textTheme.bodyText1!.fontSize! * 2.0,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => TagItem(
-                tag: allTags.elementAt(index),
+          const SizedBox(height: 10),
+          if (allTags.isNotEmpty)
+            SizedBox(
+              height: Theme.of(context).textTheme.bodyText1!.fontSize! * 2.0,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) => TagItem(
+                  tag: allTags.elementAt(index),
+                ),
+                itemCount: allTags.length,
               ),
-              itemCount: allTags.length,
-            ),
-          )
+            )
         ],
       ),
     );
