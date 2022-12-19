@@ -6,7 +6,7 @@ class Note {
   String title;
   String content;
   final Set<String> tags;
-  final DateTime dateCreated;
+  DateTime dateCreated;
   final File? imageFile;
   final Color colorBackground;
 

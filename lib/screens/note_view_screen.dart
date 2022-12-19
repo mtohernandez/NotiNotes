@@ -61,6 +61,7 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
             maxLines: 1,
             onChanged: (value) {
               _loadedNote.title = value;
+              _loadedNote.dateCreated = DateTime.now();
               Provider.of<Notes>(context, listen: false)
                   .updateNote(_loadedNote);
             },
@@ -98,6 +99,7 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
                   },
                   onChanged: (value) {
                     _loadedNote.content = value;
+                    _loadedNote.dateCreated = DateTime.now();
                     Provider.of<Notes>(context, listen: false)
                         .updateNote(_loadedNote);
                   },
