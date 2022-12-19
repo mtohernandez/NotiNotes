@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:masonry_grid/masonry_grid.dart';
 import 'package:noti_notes_app/widgets/items/note_item.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class NotesOverviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final notes = Provider.of<Notes>(context);
     final isSearching = Provider.of<Search>(context);
-    final appBarSize = MediaQuery.of(context).size.height * 0.2;
+    final appBarSize = MediaQuery.of(context).size.height * 0.15;
 
     return GestureDetector(
       onTap: () {
@@ -41,7 +42,7 @@ class NotesOverviewScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-                    TextButton(
+                    IconButton(
                       onPressed: () {
                         isSearching.deactivateSearch();
                       },
@@ -50,15 +51,10 @@ class NotesOverviewScreen extends StatelessWidget {
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         minimumSize: const Size(30, 0),
                       ),
-                      child: Text(
-                        'X',
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .color!
-                                  .withOpacity(.5),
-                            ),
+                      icon: SvgPicture.asset(
+                        'lib/assets/icons/xFlat.svg',
+                        color: Theme.of(context).textTheme.bodyText1!.color,
+                        height: Theme.of(context).textTheme.bodyText1!.fontSize,
                       ),
                     )
                   ],

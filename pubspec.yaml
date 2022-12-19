@@ -72,6 +72,7 @@ flutter:
     - lib/assets/icons/plus.svg
     - lib/assets/icons/check.svg
     - lib/assets/icons/x.svg
+    - lib/assets/icons/xFlat.svg
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -39,8 +39,10 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: size,
       elevation: 0,
       backgroundColor: Theme.of(context).backgroundColor,
+      titleSpacing: 15,
       title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.baseline,
+        textBaseline: TextBaseline.alphabetic,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
