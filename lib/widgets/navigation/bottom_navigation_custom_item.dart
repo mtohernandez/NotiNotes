@@ -4,7 +4,6 @@ import 'package:noti_notes_app/screens/notes_creation_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/search.dart';
-import '../../providers/notes.dart';
 
 class BottomNavigationCustomItem extends StatefulWidget {
   @override
@@ -27,7 +26,6 @@ class _BottomNavigationCustomItemState
   @override
   Widget build(BuildContext context) {
     final isSearching = Provider.of<Search>(context);
-    final notes = Provider.of<Notes>(context);
 
     return Container(
       padding:
@@ -72,56 +70,55 @@ class _BottomNavigationCustomItemState
                   isSearching.activateSearchByTitle();
                   isSearching.setSearchQuery(value);
                 },
+                onSubmitted: (value) => _searchController.clear(),
               ),
             ),
             const SizedBox(width: 10),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                CircleAvatar(
-                  backgroundColor: Theme.of(context)
+            if (_searchController.text.isEmpty)
+              IconButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(NotesCreationScreen.routeName);
+                },
+                style: IconButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                ),
+                icon: SvgPicture.asset(
+                  'lib/assets/icons/plus.svg',
+                  color: Theme.of(context)
                       .textTheme
                       .bodyText1!
                       .color!
                       .withOpacity(.5),
-                  radius:
+                  height:
                       Theme.of(context).textTheme.bodyText1!.fontSize! * 1.5,
+                  width: Theme.of(context).textTheme.bodyText1!.fontSize! * 1.5,
                 ),
-                if (_searchController.text.isEmpty)
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed(NotesCreationScreen.routeName);
-                    },
-                    icon: SvgPicture.asset(
-                      'lib/assets/icons/plus.svg',
-                      color: Theme.of(context).backgroundColor,
-                      height: Theme.of(context).textTheme.bodyText1!.fontSize! *
-                          2.7,
-                      width: Theme.of(context).textTheme.bodyText1!.fontSize! *
-                          2.7,
-                    ),
-                  ),
-                if (_searchController.text.isNotEmpty)
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      _searchController.clear();
-                      // isSearching.deactivateSearch();
-                      FocusScope.of(context).unfocus();
-                    },
-                    icon: SvgPicture.asset(
-                      'lib/assets/icons/check.svg',
-                      color: Theme.of(context).backgroundColor,
-                      height: Theme.of(context).textTheme.bodyText1!.fontSize! *
-                          1.5,
-                      width: Theme.of(context).textTheme.bodyText1!.fontSize! *
-                          1.5,
-                    ),
-                  ),
-              ],
-            )
+              ),
+            if (_searchController.text.isNotEmpty)
+              IconButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  _searchController.clear();
+                  // isSearching.deactivateSearch();
+                  FocusScope.of(context).unfocus();
+                },
+                icon: SvgPicture.asset(
+                  'lib/assets/icons/check.svg',
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .color!
+                      .withOpacity(.5),
+                  height:
+                      Theme.of(context).textTheme.bodyText1!.fontSize! * 1.5,
+                  width: Theme.of(context).textTheme.bodyText1!.fontSize! * 1.5,
+                ),
+              )
           ],
         ),
       ),

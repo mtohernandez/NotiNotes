@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:noti_notes_app/screens/login_screen.dart';
 import 'package:noti_notes_app/widgets/items/tag_item.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +32,7 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final notes = Provider.of<Notes>(context);
+
     Set<String> allTags = importTags(notes);
 
     return AppBar(
@@ -72,6 +72,7 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) => TagItem(
                   tag: allTags.elementAt(index),
+                  isForSearch: true,
                 ),
                 itemCount: allTags.length,
               ),

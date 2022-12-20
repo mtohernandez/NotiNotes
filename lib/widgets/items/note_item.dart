@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:noti_notes_app/screens/note_view_screen.dart';
 import 'dart:io';
+import 'package:provider/provider.dart';
 
+import '../../providers/search.dart';
+import '../../screens/note_view_screen.dart';
+import '../../providers/notes.dart';
 import 'tag_item.dart';
 
-class NoteItem extends StatelessWidget {
+class NoteItem extends StatefulWidget {
   final String id;
   final String title;
   final String content;
   final Set<String> tags;
   final File? imageFile;
   final DateTime date;
-  final Color colorBackground;
+  Color colorBackground;
 
-  const NoteItem(
+  NoteItem(
     this.tags,
     this.imageFile, {
     super.key,
@@ -26,17 +29,43 @@ class NoteItem extends StatelessWidget {
   });
 
   @override
+  State<NoteItem> createState() => _NoteItemState();
+}
+
+class _NoteItemState extends State<NoteItem> {
+  var isSelected = false;
+
+  @override
   Widget build(BuildContext context) {
+    final notes = Provider.of<Notes>(context, listen: false);
+    final isSearching = Provider.of<Search>(context, listen: false);
     return GestureDetector(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed(NoteViewScreen.routeName, arguments: id);
+        if (!notes.editMode) {
+          Navigator.of(context)
+              .pushNamed(NoteViewScreen.routeName, arguments: widget.id);
+        } else {
+          if (notes.notesToDelete.contains(widget.id)) {
+            notes.notesToDelete.remove(widget.id);
+          } else {
+            notes.notesToDelete.add(widget.id);
+          }
+          setState(() {
+            isSelected = !isSelected;
+          });
+        }
       },
-      onLongPress: () {},
+      onLongPress: () {
+        if (isSearching.isSearching == SearchType.notSearching) {
+          notes.activateEditMode();
+        }
+      },
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: colorBackground, // This will be the color for now
+          color: isSelected
+              ? widget.colorBackground.withOpacity(.5)
+              : widget.colorBackground,
           borderRadius: BorderRadius.circular(30),
         ),
         child: Padding(
@@ -45,51 +74,52 @@ class NoteItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // This code right here
-              if (imageFile != null)
+              if (widget.imageFile != null)
                 Hero(
-                  tag: 'noteImage$id',
+                  tag: 'noteImage${widget.id}',
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       image: DecorationImage(
-                        image: FileImage(imageFile!),
+                        image: FileImage(widget.imageFile!),
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
                 ),
-              if (imageFile != null) const SizedBox(height: 5),
-              if (title.isNotEmpty)
+              if (widget.imageFile != null) const SizedBox(height: 5),
+              if (widget.title.isNotEmpty)
                 Text(
-                  title,
+                  widget.title,
                   style: Theme.of(context).textTheme.headline1,
                 ),
-              if (title.isNotEmpty) const SizedBox(height: 10),
-              if (content.isNotEmpty)
+              if (widget.title.isNotEmpty) const SizedBox(height: 10),
+              if (widget.content.isNotEmpty)
                 Text(
-                  content,
+                  widget.content,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-              if (content.isNotEmpty) const SizedBox(height: 10),
-              if (tags.isNotEmpty)
+              if (widget.content.isNotEmpty) const SizedBox(height: 10),
+              if (widget.tags.isNotEmpty)
                 Container(
                   height:
                       Theme.of(context).textTheme.bodyText1!.fontSize! * 2.0,
                   alignment: Alignment.centerLeft,
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: tags.length,
+                    itemCount: widget.tags.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) => TagItem(
-                      tag: tags.elementAt(index),
+                      tag: widget.tags.elementAt(index),
+                      isForSearch: false,
                     ),
                   ),
                 ),
               const SizedBox(height: 10),
               Text(
-                DateFormat('MMM d, h:mm a').format(date),
+                DateFormat('MMM d, h:mm a').format(widget.date),
                 style: TextStyle(
                   color: Theme.of(context).primaryColor.withOpacity(.5),
                   fontSize: Theme.of(context).textTheme.bodyText1!.fontSize!,

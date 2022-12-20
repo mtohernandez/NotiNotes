@@ -9,7 +9,7 @@ class LoginSignupScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: const Text('Login in development'),
+        title: const Text('No information yet.'),
         backgroundColor: Theme.of(context).backgroundColor,
       ),
     );

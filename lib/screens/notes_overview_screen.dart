@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:masonry_grid/masonry_grid.dart';
 import 'package:noti_notes_app/widgets/items/note_item.dart';
 import 'package:provider/provider.dart';
+import 'dart:math' as math;
 
 import '../widgets/navigation/appbar_item.dart';
 import '../widgets/navigation/bottom_navigation_custom_item.dart';
@@ -32,6 +33,52 @@ class NotesOverviewScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (notes.editMode &&
+                  isSearching.isSearching == SearchType.notSearching)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'On edit mode',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    Row(
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            notes.removeSelectedNotes(notes.notesToDelete);
+                            notes.deactivateEditMode();
+                          },
+                          child: Text(
+                            'Delete Selected',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(color: Theme.of(context).errorColor),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            notes.deactivateEditMode();
+                          },
+                          child: Text(
+                            'Cancel',
+                            style:
+                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!
+                                          .color!
+                                          .withOpacity(.5),
+                                    ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               if (isSearching.isSearching == SearchType.searchingByTitle)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -42,19 +89,23 @@ class NotesOverviewScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        isSearching.deactivateSearch();
-                      },
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        minimumSize: const Size(30, 0),
-                      ),
-                      icon: SvgPicture.asset(
-                        'lib/assets/icons/xFlat.svg',
-                        color: Theme.of(context).textTheme.bodyText1!.color,
-                        height: Theme.of(context).textTheme.bodyText1!.fontSize,
+                    Transform.rotate(
+                      angle: 45 * math.pi / 180,
+                      child: IconButton(
+                        onPressed: () {
+                          isSearching.deactivateSearch();
+                        },
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          minimumSize: const Size(30, 0),
+                        ),
+                        icon: SvgPicture.asset(
+                          'lib/assets/icons/plus.svg',
+                          color: Theme.of(context).textTheme.bodyText1!.color,
+                          height:
+                              Theme.of(context).textTheme.bodyText1!.fontSize,
+                        ),
                       ),
                     )
                   ],
@@ -64,50 +115,103 @@ class NotesOverviewScreen extends StatelessWidget {
                   height: Theme.of(context).textTheme.bodyText1!.fontSize,
                 ),
               Expanded(
-                child: CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: MasonryGrid(
-                        column: 2,
-                        crossAxisSpacing: 5,
-                        mainAxisSpacing: 5,
-                        children: [
-                          if (isSearching.isSearching ==
-                              SearchType.notSearching)
-                            ...notes.notes
-                                .map(
-                                  (note) => NoteItem(
-                                    note.tags,
-                                    note.imageFile,
-                                    id: note.id,
-                                    title: note.title,
-                                    content: note.content,
-                                    date: note.dateCreated,
-                                    colorBackground: note.colorBackground,
+                child: isSearching.isSearching == SearchType.notSearching &&
+                        notes.notes.isEmpty
+                    ? Center(
+                        child: Text(
+                          'No notes yet. Create one!',
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color!
+                                        .withOpacity(0.5),
                                   ),
-                                )
-                                .toList(),
-                          if (isSearching.isSearching ==
-                              SearchType.searchingByTitle)
-                            ...notes
-                                .filterByTitle(isSearching.searchQuery)
-                                .map(
-                                  (note) => NoteItem(
-                                    note.tags,
-                                    note.imageFile,
-                                    id: note.id,
-                                    title: note.title,
-                                    content: note.content,
-                                    date: note.dateCreated,
-                                    colorBackground: note.colorBackground,
+                        ),
+                      )
+                    : notes.filterByTitle(isSearching.searchQuery).isEmpty &&
+                            isSearching.isSearching ==
+                                SearchType.searchingByTitle
+                        ? Center(
+                            child: Text(
+                              'No notes found.',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color!
+                                        .withOpacity(0.5),
                                   ),
-                                )
-                                .toList(),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                            ),
+                          )
+                        : CustomScrollView(
+                            slivers: [
+                              SliverToBoxAdapter(
+                                child: MasonryGrid(
+                                  column: 2,
+                                  crossAxisSpacing: 5,
+                                  mainAxisSpacing: 5,
+                                  children: [
+                                    if (isSearching.isSearching ==
+                                        SearchType.notSearching)
+                                      ...notes.notes
+                                          .map(
+                                            (note) => NoteItem(
+                                              note.tags,
+                                              note.imageFile,
+                                              id: note.id,
+                                              title: note.title,
+                                              content: note.content,
+                                              date: note.dateCreated,
+                                              colorBackground:
+                                                  note.colorBackground,
+                                            ),
+                                          )
+                                          .toList(),
+                                    if (isSearching.isSearching ==
+                                        SearchType.searchingByTitle)
+                                      ...notes
+                                          .filterByTitle(
+                                              isSearching.searchQuery)
+                                          .map(
+                                            (note) => NoteItem(
+                                              note.tags,
+                                              note.imageFile,
+                                              id: note.id,
+                                              title: note.title,
+                                              content: note.content,
+                                              date: note.dateCreated,
+                                              colorBackground:
+                                                  note.colorBackground,
+                                            ),
+                                          )
+                                          .toList(),
+                                    if (isSearching.isSearching ==
+                                        SearchType.searchingByTag)
+                                      ...notes
+                                          .filterByTag(isSearching.searchTags)
+                                          .map(
+                                            (note) => NoteItem(
+                                              note.tags,
+                                              note.imageFile,
+                                              id: note.id,
+                                              title: note.title,
+                                              content: note.content,
+                                              date: note.dateCreated,
+                                              colorBackground:
+                                                  note.colorBackground,
+                                            ),
+                                          )
+                                          .toList(),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
               ),
             ],
           ),

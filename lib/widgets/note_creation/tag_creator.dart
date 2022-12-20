@@ -13,7 +13,7 @@ class TagCreator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tagsSize = Theme.of(context).textTheme.bodyText1!.fontSize! * 2.7;
+    final tagsSize = Theme.of(context).textTheme.bodyText1!.fontSize! * 1.5;
 
     return Container(
       padding: const EdgeInsets.only(left: 10),
@@ -37,6 +37,7 @@ class TagCreator extends StatelessWidget {
                   },
                   child: TagItem(
                     tag: allTags.elementAt(index),
+                    isForSearch: false,
                   ),
                 ),
                 itemCount: allTags.length,
@@ -44,6 +45,8 @@ class TagCreator extends StatelessWidget {
             ),
           ),
           IconButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
             padding: EdgeInsets.zero,
             onPressed: () {
               showDialog(
@@ -75,9 +78,17 @@ class TagCreator extends StatelessWidget {
                     ),
                     style: Theme.of(context).textTheme.bodyText1,
                     controller: _tagController,
+                    onSubmitted: (value) {
+                      addTag(_tagController);
+                    },
                   ),
                   actions: [
                     TextButton(
+                      style: const ButtonStyle(
+                        overlayColor: MaterialStatePropertyAll(
+                          Colors.transparent,
+                        ),
+                      ),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -87,6 +98,11 @@ class TagCreator extends StatelessWidget {
                       ),
                     ),
                     TextButton(
+                      style: const ButtonStyle(
+                        overlayColor: MaterialStatePropertyAll(
+                          Colors.transparent,
+                        ),
+                      ),
                       onPressed: () {
                         addTag(_tagController);
                       },

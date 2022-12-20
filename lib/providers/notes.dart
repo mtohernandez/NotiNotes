@@ -6,9 +6,25 @@ import '../models/note.dart';
 
 class Notes with ChangeNotifier {
   final List<Note> _notes = [];
+  bool editMode = false;
+  Set<String> notesToDelete = {};
 
   List<Note> get notes {
     return [..._notes];
+  }
+
+  bool get isEditMode {
+    return editMode;
+  }
+
+  void activateEditMode() {
+    editMode = true;
+    notifyListeners();
+  }
+
+  void deactivateEditMode() {
+    editMode = false;
+    notifyListeners();
   }
 
   void addNote(Note note) {
@@ -19,8 +35,8 @@ class Notes with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeNote(String id) {
-    _notes.removeWhere((note) => note.id == id);
+  void removeSelectedNotes(Set<String> ids) {
+    _notes.removeWhere((note) => ids.contains(note.id));
     notifyListeners();
   }
 
@@ -40,9 +56,17 @@ class Notes with ChangeNotifier {
         .toList();
   }
 
-  List<Note> filterByTag(String tag) {
+  // List<Note> filterByTag(String tag) {
+  //   return _notes
+  //       .where((note) => note.tags.contains(tag) ? true : false)
+  //       .toList();
+  // }
+
+  List<Note> filterByTag(Set<String> tags) {
+    // Since it is a set we can use intersection to find the common elements between the two sets and return a new set with the common elements.
+
     return _notes
-        .where((note) => note.tags.contains(tag) ? true : false)
+        .where((note) => note.tags.intersection(tags).isNotEmpty ? true : false)
         .toList();
   }
 
