@@ -57,15 +57,18 @@ class _NoteItemState extends State<NoteItem> {
       },
       onLongPress: () {
         if (isSearching.isSearching == SearchType.notSearching) {
+          setState(() {
+            isSelected = true;
+          });
           notes.activateEditMode();
         }
       },
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: isSelected
-              ? widget.colorBackground.withOpacity(.5)
-              : widget.colorBackground,
+          color: !isSelected
+              ? widget.colorBackground
+              : widget.colorBackground.withOpacity(.5),
           borderRadius: BorderRadius.circular(30),
         ),
         child: Padding(

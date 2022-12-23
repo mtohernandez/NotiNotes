@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
 import './screens/login_screen.dart';
-import './screens/notes_creation_screen.dart';
 import './screens/notes_overview_screen.dart';
 
 import './providers/notes.dart';
@@ -68,7 +67,6 @@ class MyApp extends StatelessWidget {
         initialRoute: NotesOverviewScreen.routeName,
         routes: {
           NotesOverviewScreen.routeName: (context) => NotesOverviewScreen(),
-          NotesCreationScreen.routeName: (context) => NotesCreationScreen(),
           LoginSignupScreen.routeName: (context) => LoginSignupScreen(),
           NoteViewScreen.routeName: (context) => NoteViewScreen(),
         },

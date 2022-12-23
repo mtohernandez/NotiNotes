@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:noti_notes_app/screens/notes_creation_screen.dart';
+import 'package:noti_notes_app/screens/note_view_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../providers/search.dart';
+import '../../providers/notes.dart';
+import '../../models/note.dart';
 
 class BottomNavigationCustomItem extends StatefulWidget {
   @override
@@ -21,6 +24,21 @@ class _BottomNavigationCustomItemState
     _searchNode.dispose();
     _searchController.dispose();
     super.dispose();
+  }
+
+  String _handleNoteCreation() {
+    final notes = Provider.of<Notes>(context, listen: false);
+    var createdNote = Note(
+      {},
+      null,
+      id: const Uuid().v1(),
+      title: '',
+      content: '',
+      dateCreated: DateTime.now(),
+      colorBackground: Colors.black,
+    );
+    notes.addNote(createdNote);
+    return createdNote.id;
   }
 
   @override
@@ -79,8 +97,10 @@ class _BottomNavigationCustomItemState
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamed(NotesCreationScreen.routeName);
+                  Navigator.of(context).pushNamed(
+                    NoteViewScreen.routeName,
+                    arguments: _handleNoteCreation(),
+                  );
                 },
                 style: IconButton.styleFrom(
                   padding: EdgeInsets.zero,

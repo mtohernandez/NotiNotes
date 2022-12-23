@@ -4,8 +4,20 @@ import 'dart:io';
 
 import '../models/note.dart';
 
+enum SqueezedMetric {
+  superSqueezed,
+  squeeezed,
+  notSqueezed,
+}
+
 class Notes with ChangeNotifier {
   final List<Note> _notes = [];
+  final Map<SqueezedMetric, int> squeezMetrics = {
+    // Testing
+    SqueezedMetric.superSqueezed: 3,
+    SqueezedMetric.squeeezed: 2,
+    SqueezedMetric.notSqueezed: 1,
+  };
   bool editMode = false;
   Set<String> notesToDelete = {};
 

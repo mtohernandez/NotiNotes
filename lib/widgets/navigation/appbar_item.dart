@@ -51,15 +51,15 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
                 'Good ${greeting()}',
                 style: Theme.of(context).textTheme.headline1,
               ),
+              // TODO: Turn this into an icon button and add settings screen
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).pushNamed(LoginSignupScreen.routeName);
                 },
-                child: CircleAvatar(
-                  radius: Theme.of(context).textTheme.headline1!.fontSize! * .6,
-                  backgroundImage: const AssetImage(
-                    'lib/assets/images/Image1.jpg',
-                  ),
+                child: const Icon(
+                  Icons.question_mark,
+                  color: Colors.white,
+                  size: 24,
                 ),
               ),
             ],
