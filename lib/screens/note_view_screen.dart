@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:noti_notes_app/models/note.dart';
-import 'package:noti_notes_app/widgets/note_creation/load_create_note.dart';
+import 'package:noti_notes_app/widgets/note_creation/tag_creator.dart';
 import 'package:provider/provider.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:io';
 
+import '../models/note.dart';
+import '../widgets/note_creation/load_create_note.dart';
+import '../widgets/items/bottom_tools_item.dart';
 import '../widgets/media_grid.dart';
+import '../widgets/items/appbar_note_title.dart';
 import '../../providers/notes.dart';
 
 class NoteViewScreen extends StatefulWidget {
@@ -20,16 +22,16 @@ class NoteViewScreen extends StatefulWidget {
 class _NoteViewScreenState extends State<NoteViewScreen> {
   bool _isInit = true;
   File? img;
-  final ImagePicker _picker = ImagePicker();
 
   var loadedNote = Note(
     {},
+    null,
     null,
     id: const Uuid().v1(),
     title: '',
     content: '',
     dateCreated: DateTime.now(),
-    colorBackground: Colors.black,
+    colorBackground: Colors.pink,
   );
 
   @override
@@ -48,22 +50,7 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
     super.didChangeDependencies();
   }
 
-  Future pickImage(ImageSource source) async {
-    try {
-      final image = await _picker.pickImage(source: source);
-      if (image == null) return;
-      setState(
-        () {
-          img = File(image.path);
-          Navigator.of(context).pop();
-        },
-      );
-    } on Exception catch (e) {
-      Navigator.of(context).pop();
-    }
-  }
-
-  void _openMediaPicker(BuildContext context) {
+  void openMediaPicker(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
@@ -71,7 +58,25 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
       builder: (bctx) {
         return Wrap(
           children: [
-            MediaGrid(pickImage),
+            MediaGrid(
+              Provider.of<Notes>(context, listen: false).pickImage,
+              loadedNote.id,
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void openTagCreator(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (bctx) {
+        return Wrap(
+          children: [
+            TagCreator(loadedNote.id),
           ],
         );
       },
@@ -79,9 +84,8 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
   }
 
   void removeImage() {
-    setState(() {
-      img = null;
-    });
+    Provider.of<Notes>(context, listen: false)
+        .removeImageFromNote(loadedNote.id);
   }
 
   @override
@@ -92,34 +96,27 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).backgroundColor,
-          elevation: 0,
-          title: TextFormField(
-            autofocus: loadedNote.title.isEmpty ? true : false,
-            initialValue: loadedNote.title,
-            style: Theme.of(context).textTheme.headline1,
-            decoration: const InputDecoration(
-              border: InputBorder.none,
+        appBar: AppBarNoteTitle(loadedNote: loadedNote),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+                child: LoadCreateNote(
+                  loadedNote: loadedNote,
+                  openMediaPicker: openMediaPicker,
+                  removeImage: removeImage,
+                  img: img,
+                ),
+              ),
             ),
-            maxLines: 1,
-            onChanged: (value) {
-              loadedNote.title = value;
-              loadedNote.dateCreated = DateTime.now();
-              Provider.of<Notes>(context, listen: false).updateNote(loadedNote);
-            },
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
-            child: LoadCreateNote(
-              loadedNote: loadedNote,
-              openMediaPicker: _openMediaPicker,
-              removeImage: removeImage,
-              img: img,
+            BottomToolsItem(
+              pickImage: openMediaPicker,
+              addTags: openTagCreator,
+              id: loadedNote.id,
             ),
-          ),
+          ],
         ),
       ),
     );

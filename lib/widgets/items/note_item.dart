@@ -35,6 +35,12 @@ class NoteItem extends StatefulWidget {
 class _NoteItemState extends State<NoteItem> {
   var isSelected = false;
 
+  void selectNote() {
+    setState(() {
+      isSelected = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final notes = Provider.of<Notes>(context, listen: false);
@@ -57,18 +63,16 @@ class _NoteItemState extends State<NoteItem> {
       },
       onLongPress: () {
         if (isSearching.isSearching == SearchType.notSearching) {
-          setState(() {
-            isSelected = true;
-          });
           notes.activateEditMode();
+          selectNote();
         }
       },
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: !isSelected
-              ? widget.colorBackground
-              : widget.colorBackground.withOpacity(.5),
+          color: isSelected
+              ? widget.colorBackground.withOpacity(.5)
+              : widget.colorBackground,
           borderRadius: BorderRadius.circular(30),
         ),
         child: Padding(
@@ -122,7 +126,7 @@ class _NoteItemState extends State<NoteItem> {
                 ),
               const SizedBox(height: 10),
               Text(
-                DateFormat('MMM d, h:mm a').format(widget.date),
+                DateFormat('MMM d, yyyy').format(widget.date),
                 style: TextStyle(
                   color: Theme.of(context).primaryColor.withOpacity(.5),
                   fontSize: Theme.of(context).textTheme.bodyText1!.fontSize!,

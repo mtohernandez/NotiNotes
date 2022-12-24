@@ -5,14 +5,17 @@ class Note {
   final String id;
   String title;
   String content;
-  final Set<String> tags;
+  Set<String> tags;
   DateTime dateCreated;
-  final File? imageFile;
-  final Color colorBackground;
+  File? imageFile;
+  Color colorBackground;
+  File? patternImage;
 
   Note(
     this.tags,
-    this.imageFile, {
+    this.imageFile, 
+    this.patternImage,
+    {
     required this.id,
     required this.title,
     required this.content,

@@ -9,7 +9,7 @@ enum SearchType {
 class Search with ChangeNotifier {
   SearchType _isSearching = SearchType.notSearching;
   String _searchQuery = '';
-  Set<String> _searchTags = {};
+  final Set<String> _searchTags = {};
 
   SearchType get isSearching => _isSearching;
   String get searchQuery => _searchQuery;

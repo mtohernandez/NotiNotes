@@ -1,17 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import '../providers/notes.dart';
 
 class MediaGrid extends StatefulWidget {
   final Function pickImage;
-  const MediaGrid(this.pickImage, {super.key});
+  final String id;
+  const MediaGrid(this.pickImage, this.id, {super.key});
 
   @override
   State<MediaGrid> createState() => _MediaGridState();
 }
 
 class _MediaGridState extends State<MediaGrid> {
+  void _showErrorDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: Text('An error occured'),
+          content: Text('Something went wrong'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Text('Okay'))
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final notes = Provider.of<Notes>(context, listen: false);
+
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -24,8 +48,14 @@ class _MediaGridState extends State<MediaGrid> {
         child: Column(
           children: [
             TextButton(
-              onPressed: () {
-                widget.pickImage(ImageSource.gallery);
+              onPressed: () async {
+                try {
+                  final imagePicked =
+                      await widget.pickImage(ImageSource.gallery, widget.id);
+                  notes.addImageToNote(widget.id, imagePicked);
+                } catch (error) {
+                  _showErrorDialog(context);
+                }
               },
               child: Text(
                 'Select from gallery',
@@ -33,8 +63,14 @@ class _MediaGridState extends State<MediaGrid> {
               ),
             ),
             TextButton(
-              onPressed: () {
-                widget.pickImage(ImageSource.camera);
+              onPressed: () async {
+                try {
+                  final imagePicked =
+                      await widget.pickImage(ImageSource.camera, widget.id);
+                  notes.addImageToNote(widget.id, imagePicked);
+                } on Exception catch (error) {
+                  _showErrorDialog(context);
+                }
               },
               child: Text(
                 'Take Image',

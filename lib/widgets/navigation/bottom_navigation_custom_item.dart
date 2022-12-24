@@ -31,6 +31,7 @@ class _BottomNavigationCustomItemState
     var createdNote = Note(
       {},
       null,
+      null,
       id: const Uuid().v1(),
       title: '',
       content: '',
@@ -123,7 +124,10 @@ class _BottomNavigationCustomItemState
                 highlightColor: Colors.transparent,
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  _searchController.clear();
+                  //? Placing the set state here avoids the checkmark from not updating and returning back to the plus icon, small bug
+                  setState(() {
+                    _searchController.clear();
+                  });
                   // isSearching.deactivateSearch();
                   FocusScope.of(context).unfocus();
                 },

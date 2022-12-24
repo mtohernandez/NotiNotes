@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:masonry_grid/masonry_grid.dart';
 import 'package:noti_notes_app/widgets/items/note_item.dart';
 import 'package:provider/provider.dart';
-import 'dart:math' as math;
 
+import '../widgets/items/icon_button_x_item.dart';
 import '../widgets/navigation/appbar_item.dart';
 import '../widgets/navigation/bottom_navigation_custom_item.dart';
 import '../providers/notes.dart';
@@ -89,25 +88,7 @@ class NotesOverviewScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-                    Transform.rotate(
-                      angle: 45 * math.pi / 180,
-                      child: IconButton(
-                        onPressed: () {
-                          isSearching.deactivateSearch();
-                        },
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          minimumSize: const Size(30, 0),
-                        ),
-                        icon: SvgPicture.asset(
-                          'lib/assets/icons/plus.svg',
-                          color: Theme.of(context).textTheme.bodyText1!.color,
-                          height:
-                              Theme.of(context).textTheme.bodyText1!.fontSize,
-                        ),
-                      ),
-                    )
+                    IconButtonXItem(isSearching.deactivateSearch),
                   ],
                 ),
               if (isSearching.isSearching == SearchType.searchingByTitle)
