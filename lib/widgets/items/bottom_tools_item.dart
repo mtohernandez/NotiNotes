@@ -8,20 +8,24 @@ import '../../providers/notes.dart';
 class BottomToolsItem extends StatelessWidget {
   final Function pickImage;
   final Function addTags;
+  Color colorBeforeChange;
   final String id;
   BottomToolsItem({
     required this.pickImage,
     required this.addTags,
     required this.id,
+    required this.colorBeforeChange,
     super.key,
   });
 
   Future<bool> _showColorPicker(BuildContext context) async {
     return ColorPicker(
       onColorChanged: (newColor) {
-        Provider.of<Notes>(context, listen: false)
-            .changeCurrentColor(id, newColor);
+        colorBeforeChange = newColor;
       },
+      actionButtons: const ColorPickerActionButtons(
+        dialogOkButtonLabel: 'SET',
+      ),
       color: Provider.of<Notes>(context, listen: false)
           .findById(id)
           .colorBackground,
@@ -30,7 +34,6 @@ class BottomToolsItem extends StatelessWidget {
       borderRadius: 20,
       spacing: 5,
       wheelDiameter: MediaQuery.of(context).size.width * .5,
-
       heading: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -98,8 +101,12 @@ class BottomToolsItem extends StatelessWidget {
                 },
               ),
               MaterialButton(
-                onPressed: () {
-                  _showColorPicker(context);
+                onPressed: () async {
+                  //? The colorBeforeChange does change the color value inside the ColorPicker
+                  //? If the _showColorPicker is not canceled (false), the colorBeforeChange will not change
+                  if (await _showColorPicker(context)) {
+                    notes.changeCurrentColor(id, colorBeforeChange);
+                  }
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
