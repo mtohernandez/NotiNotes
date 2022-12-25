@@ -22,7 +22,7 @@ class NoteViewScreen extends StatefulWidget {
 class _NoteViewScreenState extends State<NoteViewScreen> {
   bool _isInit = true;
   File? img;
-
+  Note? importedNote;
   var loadedNote = Note(
     {},
     null,
@@ -41,10 +41,31 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
         String noteId = ModalRoute.of(context)!.settings.arguments as String;
 
         if (noteId.isNotEmpty) {
-          loadedNote =
-              Provider.of<Notes>(context, listen: false).findById(noteId);
+          importedNote =
+              Provider.of<Notes>(context, listen: false).findByIdOrNull(noteId);
+          if (importedNote == null) {
+            loadedNote = Note(
+              {},
+              null,
+              null,
+              id: noteId,
+              title: '',
+              content: '',
+              dateCreated: DateTime.now(),
+              colorBackground: Colors.pink,
+            );
+            Provider.of<Notes>(context, listen: false).addNote(loadedNote);
+          } else {
+            loadedNote = importedNote!;
+          }
         }
       }
+      // if (loadedNote.title.isEmpty &&
+      //     loadedNote.content.isEmpty &&
+      //     loadedNote.imageFile == null) {
+      //   Provider.of<Notes>(context, listen: false)
+      //       .removeNoteById(loadedNote.id);
+      // }
       _isInit = false;
     }
     super.didChangeDependencies();

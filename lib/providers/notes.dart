@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:string_similarity/string_similarity.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'dart:io';
+import 'dart:convert';
 
 import '../models/note.dart';
 
@@ -20,14 +23,17 @@ enum ToolingNote {
 }
 
 class Notes with ChangeNotifier {
-  final List<Note> _notes = [];
+  List<Note> _notes = [];
   final ImagePicker _picker = ImagePicker();
+
+  //? TEST
   final Map<SqueezedMetric, int> squeezMetrics = {
     // Testing
     SqueezedMetric.superSqueezed: 3,
     SqueezedMetric.squeeezed: 2,
     SqueezedMetric.notSqueezed: 1,
   };
+
   bool editMode = false;
   Set<String> notesToDelete = {};
 
@@ -58,7 +64,7 @@ class Notes with ChangeNotifier {
       return;
     }
     _notes.add(note);
-    notifyListeners();
+    // notifyListeners();
   }
 
   //? Multiple note deletion
@@ -68,6 +74,10 @@ class Notes with ChangeNotifier {
     notifyListeners();
   }
 
+  void removeNoteById(String id) {
+    _notes.removeWhere((note) => note.id == id);
+    notifyListeners();
+  }
 
   //? Updating single note
 
@@ -80,7 +90,6 @@ class Notes with ChangeNotifier {
       notifyListeners();
     }
   }
-
 
   //? Filtering methods
 
@@ -100,6 +109,10 @@ class Notes with ChangeNotifier {
     return _notes.firstWhere((note) => note.id == id);
   }
 
+  Note? findByIdOrNull(String id) {
+    return _notes.firstWhereOrNull((note) => note.id == id);
+  }
+
   int findIndex(String id) {
     return _notes.indexWhere((note) => note.id == id);
   }
@@ -108,10 +121,10 @@ class Notes with ChangeNotifier {
     return _notes.firstWhere((note) => note.id == id).colorBackground;
   }
 
-
   //? Tooling for note changing
 
-  void toolingNote(String id, ToolingNote tooling, dynamic value, [int index = 0]) {
+  void toolingNote(String id, ToolingNote tooling, dynamic value,
+      [int index = 0]) {
     final noteIndex = findIndex(id);
     if (noteIndex >= 0) {
       if (tooling == ToolingNote.addImage) {

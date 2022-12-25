@@ -43,6 +43,7 @@ class BottomToolsItem extends StatelessWidget {
           ),
         ],
       ),
+      
       enableShadesSelection: false,
       pickersEnabled: const <ColorPickerType, bool>{
         ColorPickerType.accent: false,
@@ -59,6 +60,7 @@ class BottomToolsItem extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
+      
     );
   }
 

@@ -27,19 +27,7 @@ class _BottomNavigationCustomItemState
   }
 
   String _handleNoteCreation() {
-    final notes = Provider.of<Notes>(context, listen: false);
-    var createdNote = Note(
-      {},
-      null,
-      null,
-      id: const Uuid().v1(),
-      title: '',
-      content: '',
-      dateCreated: DateTime.now(),
-      colorBackground: Colors.black,
-    );
-    notes.addNote(createdNote);
-    return createdNote.id;
+    return const Uuid().v1();
   }
 
   @override
