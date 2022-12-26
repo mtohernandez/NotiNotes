@@ -45,6 +45,10 @@ class Notes with ChangeNotifier {
     return [..._notes];
   }
 
+  int get notesCount {
+    return _notes.length;
+  }
+
   bool get isEditMode {
     return editMode;
   }
@@ -187,7 +191,7 @@ class Notes with ChangeNotifier {
     }
   }
 
-  void addImageToNote(String id, File image) {
+  void addImageToNote(String id, File? image) {
     toolingNote(id, ToolingNote.addImage, image);
   }
 
@@ -208,13 +212,6 @@ class Notes with ChangeNotifier {
   }
 
   //? Future methods
-
-  Future<File?> pickImage(ImageSource source, String id) async {
-    final image = await _picker.pickImage(source: source);
-    if (image == null) return null;
-    final imageFromPath = File(image.path);
-    return imageFromPath;
-  }
 
    void disposeBox(Box box) {
     box.close();

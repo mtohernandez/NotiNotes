@@ -71,6 +71,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - lib/assets/images/Image1.jpg
+    - lib/assets/images/noProfilePicture.png
     - lib/assets/icons/plus.svg
     - lib/assets/icons/check.svg
     - lib/assets/icons/x.svg
@@ -80,6 +81,8 @@ flutter:
     - lib/assets/icons/task.svg
     - lib/assets/icons/notification.svg
     - lib/assets/icons/user.svg
+    - lib/assets/icons/mic.svg
+    - lib/assets/icons/notedrop.svg
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

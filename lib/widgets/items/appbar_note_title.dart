@@ -18,10 +18,12 @@ class AppBarNoteTitle extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Theme.of(context).backgroundColor,
       elevation: 0,
       title: TextFormField(
+        maxLength: 20,
         autofocus: loadedNote.title.isEmpty ? true : false,
         initialValue: loadedNote.title,
         style: Theme.of(context).textTheme.headline1,
         decoration: InputDecoration(
+            counterText: '',
             border: InputBorder.none,
             hintText: 'Title',
             hintStyle: Theme.of(context).textTheme.headline1!.copyWith(
@@ -41,7 +43,7 @@ class AppBarNoteTitle extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  // KToolbarHeight, this constant because of the use of the appbar to get the same size 
+  // KToolbarHeight, this constant because of the use of the appbar to get the same size
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);

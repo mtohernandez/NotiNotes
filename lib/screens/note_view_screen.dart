@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:noti_notes_app/providers/photo_picker.dart';
 import 'package:noti_notes_app/widgets/note_creation/tag_creator.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -23,6 +24,8 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
   bool _isInit = true;
   File? img;
   Note? importedNote;
+  PhotoPicker photoPicker = PhotoPicker();
+
   var loadedNote = Note(
     {},
     null,
@@ -70,7 +73,7 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
     }
     super.didChangeDependencies();
   }
-
+  
   void openMediaPicker(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -80,8 +83,9 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
         return Wrap(
           children: [
             MediaGrid(
-              Provider.of<Notes>(context, listen: false).pickImage,
+              photoPicker.pickImage,
               loadedNote.id,
+              false,
             ),
           ],
         );

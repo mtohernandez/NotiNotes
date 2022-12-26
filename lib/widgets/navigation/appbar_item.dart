@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:noti_notes_app/screens/login_screen.dart';
-import 'package:noti_notes_app/widgets/items/tag_item.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../screens/information_screen.dart';
+import '../../screens/user_info_screen.dart';
+import '../../widgets/items/tag_item.dart';
 
 import '../../providers/notes.dart';
 
@@ -68,7 +70,7 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context)
-                            .pushNamed(LoginSignupScreen.routeName);
+                            .pushNamed(UserInfoScreen.routeName);
                       },
                       child: SvgPicture.asset(
                         'lib/assets/icons/user.svg',
@@ -79,7 +81,7 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context)
-                            .pushNamed(LoginSignupScreen.routeName);
+                            .pushNamed(InformationScreen.routeName);
                       },
                       child: const Icon(
                         Icons.question_mark,

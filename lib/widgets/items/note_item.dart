@@ -63,6 +63,8 @@ class _NoteItemState extends State<NoteItem> {
     return Text(
       widget.content,
       style: Theme.of(context).textTheme.bodyText1,
+      maxLines: 4,
+      overflow: TextOverflow.ellipsis,
     );
   }
 

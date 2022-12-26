@@ -4,12 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import './screens/login_screen.dart';
+import 'screens/information_screen.dart';
 import './screens/notes_overview_screen.dart';
+import './screens/user_info_screen.dart';
 
+import './providers/user.dart';
 import './providers/notes.dart';
 import './providers/search.dart';
-import 'providers/data_base.dart';
+import './providers/data_base.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
@@ -71,6 +73,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (_) => UserData(),
+        ),
+        ChangeNotifierProvider(
           create: (_) => notes,
         ),
         ChangeNotifierProvider(
@@ -101,6 +106,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               fontSize: 30,
               fontWeight: FontWeight.w700,
             ),
+            headline3: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+            ),
+            headline4: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+            ),
             bodyText1: const TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -117,8 +132,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         routes: {
           NotesOverviewScreen.routeName: (context) =>
               const NotesOverviewScreen(),
-          LoginSignupScreen.routeName: (context) => const LoginSignupScreen(),
+          InformationScreen.routeName: (context) => const InformationScreen(),
           NoteViewScreen.routeName: (context) => const NoteViewScreen(),
+          UserInfoScreen.routeName: (context) => UserInfoScreen(),
         },
       ),
     );
