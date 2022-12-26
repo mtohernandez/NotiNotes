@@ -78,6 +78,8 @@ flutter:
     - lib/assets/icons/hashtag.svg
     - lib/assets/icons/image.svg
     - lib/assets/icons/task.svg
+    - lib/assets/icons/notification.svg
+    - lib/assets/icons/user.svg
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

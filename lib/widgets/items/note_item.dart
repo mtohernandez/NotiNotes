@@ -35,6 +35,63 @@ class NoteItem extends StatefulWidget {
 class _NoteItemState extends State<NoteItem> {
   var isSelected = false;
 
+  Widget _buildHeroImage() {
+    return Hero(
+      tag: 'noteImage${widget.id}',
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.1,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          image: DecorationImage(
+            image: FileImage(widget.imageFile!),
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTitle() {
+    return Text(
+      widget.title,
+      style: Theme.of(context).textTheme.headline2,
+    );
+  }
+
+  Widget _buildContent() {
+    return Text(
+      widget.content,
+      style: Theme.of(context).textTheme.bodyText1,
+    );
+  }
+
+  Widget _buildTags() {
+    return Container(
+      height: Theme.of(context).textTheme.bodyText1!.fontSize! * 2.0,
+      alignment: Alignment.centerLeft,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: widget.tags.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) => TagItem(
+          tag: widget.tags.elementAt(index),
+          isForSearch: false,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDate() {
+    return Text(
+      DateFormat('MMM d, yyyy').format(widget.date),
+      style: TextStyle(
+        color: Theme.of(context).primaryColor.withOpacity(.5),
+        fontSize: Theme.of(context).textTheme.bodyText1!.fontSize!,
+      ),
+    );
+  }
+
   void selectNote() {
     setState(() {
       isSelected = true;
@@ -45,6 +102,8 @@ class _NoteItemState extends State<NoteItem> {
   Widget build(BuildContext context) {
     final notes = Provider.of<Notes>(context, listen: false);
     final isSearching = Provider.of<Search>(context, listen: false);
+    const noteSeparator = SizedBox(height: 10);
+
     return GestureDetector(
       onTap: () {
         if (!notes.editMode) {
@@ -81,57 +140,15 @@ class _NoteItemState extends State<NoteItem> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // This code right here
-              if (widget.imageFile != null)
-                Hero(
-                  tag: 'noteImage${widget.id}',
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
-                        image: FileImage(widget.imageFile!),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-              if (widget.imageFile != null) const SizedBox(height: 5),
-              if (widget.title.isNotEmpty)
-                Text(
-                  widget.title,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-              if (widget.title.isNotEmpty) const SizedBox(height: 10),
-              if (widget.content.isNotEmpty)
-                Text(
-                  widget.content,
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              if (widget.content.isNotEmpty) const SizedBox(height: 10),
-              if (widget.tags.isNotEmpty)
-                Container(
-                  height:
-                      Theme.of(context).textTheme.bodyText1!.fontSize! * 2.0,
-                  alignment: Alignment.centerLeft,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: widget.tags.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => TagItem(
-                      tag: widget.tags.elementAt(index),
-                      isForSearch: false,
-                    ),
-                  ),
-                ),
-              const SizedBox(height: 10),
-              Text(
-                DateFormat('MMM d, yyyy').format(widget.date),
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor.withOpacity(.5),
-                  fontSize: Theme.of(context).textTheme.bodyText1!.fontSize!,
-                ),
-              ),
+              if (widget.imageFile != null) _buildHeroImage(),
+              if (widget.imageFile != null) noteSeparator,
+              if (widget.title.isNotEmpty) _buildTitle(),
+              if (widget.title.isNotEmpty) noteSeparator,
+              if (widget.content.isNotEmpty) _buildContent(),
+              if (widget.content.isNotEmpty) noteSeparator,
+              if (widget.tags.isNotEmpty) _buildTags(),
+              if (widget.tags.isNotEmpty) noteSeparator,
+              _buildDate(),
             ],
           ),
         ),

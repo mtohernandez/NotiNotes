@@ -84,18 +84,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           fontFamily: 'SF Pro Display',
           primaryColor: Colors.white,
           backgroundColor: const Color(0xff1D1D1D),
-          colorScheme: ColorScheme.fromSwatch().copyWith(
+          colorScheme: ColorScheme.fromSwatch(
+                  // primarySwatch: Colors.grey,
+                  )
+              .copyWith(
             secondary: const Color(0xff1D1D1D),
           ),
           textTheme: TextTheme(
             headline1: const TextStyle(
               color: Colors.white,
-              fontSize: 30,
+              fontSize: 25,
               fontWeight: FontWeight.w700,
             ),
             headline2: const TextStyle(
               color: Colors.white,
-              fontSize: 32,
+              fontSize: 30,
               fontWeight: FontWeight.w700,
             ),
             bodyText1: const TextStyle(
@@ -112,7 +115,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ),
         home: const NotesOverviewScreen(),
         routes: {
-          NotesOverviewScreen.routeName: (context) => const NotesOverviewScreen(),
+          NotesOverviewScreen.routeName: (context) =>
+              const NotesOverviewScreen(),
           LoginSignupScreen.routeName: (context) => const LoginSignupScreen(),
           NoteViewScreen.routeName: (context) => const NoteViewScreen(),
         },

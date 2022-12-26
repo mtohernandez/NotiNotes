@@ -43,7 +43,6 @@ class BottomToolsItem extends StatelessWidget {
           ),
         ],
       ),
-      
       enableShadesSelection: false,
       pickersEnabled: const <ColorPickerType, bool>{
         ColorPickerType.accent: false,
@@ -60,7 +59,6 @@ class BottomToolsItem extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      
     );
   }
 
@@ -77,6 +75,13 @@ class BottomToolsItem extends StatelessWidget {
                 icon: SvgPicture.asset(
                   'lib/assets/icons/task.svg',
                   color: Theme.of(context).primaryColor.withOpacity(.5),
+                ),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: SvgPicture.asset(
+                  'lib/assets/icons/notification.svg',
+                  color: Theme.of(context).primaryColor.withOpacity(.2), // Because of the current color which is white
                 ),
                 onPressed: () {},
               ),

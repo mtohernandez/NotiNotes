@@ -22,7 +22,7 @@ class _TagItemState extends State<TagItem> {
   @override
   Widget build(BuildContext context) {
     final isSearching = Provider.of<Search>(context);
-    
+
     return GestureDetector(
       onTap: () {
         if (widget.isForSearch) {
@@ -40,12 +40,17 @@ class _TagItemState extends State<TagItem> {
         margin: const EdgeInsets.only(right: 5),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
-          color:
-              isSelected ? Theme.of(context).primaryColor : Colors.transparent,
-          border: Border.all(
-            color: Theme.of(context).primaryColor.withOpacity(.5),
-            width: 1,
-          ),
+          color: isSelected
+              ? Theme.of(context).primaryColor
+              : widget.isForSearch
+                  ? Colors.grey
+                  : Colors.transparent,
+          border: widget.isForSearch
+              ? Border.all(width: 0)
+              : Border.all(
+                  color: Theme.of(context).primaryColor.withOpacity(.5),
+                  width: 1,
+                ),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
@@ -54,7 +59,11 @@ class _TagItemState extends State<TagItem> {
               ? Theme.of(context).textTheme.bodyText1!.copyWith(
                     color: Theme.of(context).backgroundColor,
                   )
-              : Theme.of(context).textTheme.bodyText1,
+              : widget.isForSearch
+                  ? Theme.of(context).textTheme.bodyText1!.copyWith(
+                        color: Theme.of(context).backgroundColor,
+                      )
+                  : Theme.of(context).textTheme.bodyText1,
         ),
       ),
     );
