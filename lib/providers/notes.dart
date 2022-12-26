@@ -69,6 +69,7 @@ class Notes with ChangeNotifier {
     }
     for (var note in notesBox.values) {
       var noteDecoded = jsonDecode(note);
+      print(noteDecoded['colorBackground']);
       _notes.add(
         Note(
           noteDecoded['tags'].cast<String>().toSet(),
@@ -112,7 +113,7 @@ class Notes with ChangeNotifier {
 
   Future<void> removeSelectedNotes(Set<String> ids) async {
     _notes.removeWhere((note) => ids.contains(note.id));
-    for (var id in ids)  {
+    for (var id in ids) {
       await notesBox.delete(id);
     }
     notifyListeners();
