@@ -9,7 +9,7 @@ import './screens/notes_overview_screen.dart';
 
 import './providers/notes.dart';
 import './providers/search.dart';
-import 'providers/database.dart';
+import 'providers/data_base.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
@@ -112,9 +112,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ),
         home: const NotesOverviewScreen(),
         routes: {
-          NotesOverviewScreen.routeName: (context) => NotesOverviewScreen(),
-          LoginSignupScreen.routeName: (context) => LoginSignupScreen(),
-          NoteViewScreen.routeName: (context) => NoteViewScreen(),
+          NotesOverviewScreen.routeName: (context) => const NotesOverviewScreen(),
+          LoginSignupScreen.routeName: (context) => const LoginSignupScreen(),
+          NoteViewScreen.routeName: (context) => const NoteViewScreen(),
         },
       ),
     );

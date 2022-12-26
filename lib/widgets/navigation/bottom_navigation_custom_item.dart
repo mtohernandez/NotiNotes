@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../providers/search.dart';
-import '../../providers/notes.dart';
-import '../../models/note.dart';
 
 class BottomNavigationCustomItem extends StatefulWidget {
+  const BottomNavigationCustomItem({super.key});
+
   @override
   State<BottomNavigationCustomItem> createState() =>
       _BottomNavigationCustomItemState();

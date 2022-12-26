@@ -51,7 +51,6 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
                 'Good ${greeting()}',
                 style: Theme.of(context).textTheme.headline1,
               ),
-              // TODO: Turn this into an icon button and add settings screen
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).pushNamed(LoginSignupScreen.routeName);

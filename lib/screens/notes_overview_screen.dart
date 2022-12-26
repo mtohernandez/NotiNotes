@@ -197,7 +197,7 @@ class NotesOverviewScreen extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: BottomNavigationCustomItem(),
+        bottomNavigationBar: const BottomNavigationCustomItem(),
       ),
     );
   }

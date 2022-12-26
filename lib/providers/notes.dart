@@ -3,12 +3,10 @@ import 'package:string_similarity/string_similarity.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'dart:convert';
 
 import '../models/note.dart';
-import './dataBase.dart';
 
 enum SqueezedMetric {
   superSqueezed,
@@ -69,7 +67,6 @@ class Notes with ChangeNotifier {
     }
     for (var note in notesBox.values) {
       var noteDecoded = jsonDecode(note);
-      print(noteDecoded['colorBackground']);
       _notes.add(
         Note(
           noteDecoded['tags'].cast<String>().toSet(),

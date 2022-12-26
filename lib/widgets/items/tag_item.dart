@@ -6,7 +6,7 @@ import '../../providers/search.dart';
 class TagItem extends StatefulWidget {
   final String tag;
   final bool isForSearch;
-  TagItem({
+  const TagItem({
     super.key,
     required this.tag,
     required this.isForSearch,

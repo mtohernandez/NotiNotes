@@ -18,14 +18,14 @@ class _MediaGridState extends State<MediaGrid> {
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          title: Text('An error occured'),
-          content: Text('Something went wrong'),
+          title: const Text('An error occured'),
+          content: const Text('Something went wrong'),
           actions: [
             TextButton(
                 onPressed: () {
                   Navigator.of(ctx).pop();
                 },
-                child: Text('Okay'))
+                child: const Text('Okay'))
           ],
         );
       },
