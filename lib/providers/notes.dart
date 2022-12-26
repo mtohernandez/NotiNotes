@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:string_similarity/string_similarity.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'dart:convert';
 
 import '../models/note.dart';
+import './dataBase.dart';
 
 enum SqueezedMetric {
   superSqueezed,
@@ -25,6 +27,10 @@ enum ToolingNote {
 class Notes with ChangeNotifier {
   List<Note> _notes = [];
   final ImagePicker _picker = ImagePicker();
+
+  Box notesBox;
+
+  Notes(this.notesBox);
 
   //? TEST
   final Map<SqueezedMetric, int> squeezMetrics = {
@@ -57,6 +63,40 @@ class Notes with ChangeNotifier {
     notifyListeners();
   }
 
+  void loadNotesFromDataBase() {
+    if (notesBox.values.isEmpty) {
+      return;
+    }
+    for (var note in notesBox.values) {
+      var noteDecoded = jsonDecode(note);
+      _notes.add(
+        Note(
+          noteDecoded['tags'].cast<String>().toSet(),
+          noteDecoded['imageFile'] != null
+              ? File(noteDecoded['imageFile'])
+              : null,
+          noteDecoded['patternImage'] != null
+              ? File(noteDecoded['patternImage'])
+              : null,
+          id: noteDecoded['id'],
+          title: noteDecoded['title'],
+          content: noteDecoded['content'],
+          dateCreated: DateTime.parse(noteDecoded['dateCreated']),
+          colorBackground: Color(noteDecoded['colorBackground']),
+        ),
+      );
+    }
+    _notes = _notes.reversed.toList();
+    notifyListeners();
+  }
+
+  void updateNotesOnDataBase(List<Note> notes) {
+    for (var note in notes) {
+      notesBox.put(note.id, jsonEncode(note.toJson()));
+    }
+    // notifyListeners();
+  }
+
   //? Note creation
 
   void addNote(Note note) {
@@ -64,18 +104,23 @@ class Notes with ChangeNotifier {
       return;
     }
     _notes.add(note);
+    // updateNotesOnDataBase(_notes);
     // notifyListeners();
   }
 
   //? Multiple note deletion
 
-  void removeSelectedNotes(Set<String> ids) {
+  Future<void> removeSelectedNotes(Set<String> ids) async {
     _notes.removeWhere((note) => ids.contains(note.id));
+    for (var id in ids)  {
+      await notesBox.delete(id);
+    }
     notifyListeners();
   }
 
-  void removeNoteById(String id) {
+  Future<void> removeNoteById(String id) async {
     _notes.removeWhere((note) => note.id == id);
+    await notesBox.delete(id);
     notifyListeners();
   }
 
@@ -89,6 +134,7 @@ class Notes with ChangeNotifier {
       _notes[noteIndex] = noteUpdated;
       notifyListeners();
     }
+    updateNotesOnDataBase(_notes);
   }
 
   //? Filtering methods

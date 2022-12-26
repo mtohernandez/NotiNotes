@@ -2,31 +2,75 @@ import 'package:flutter/material.dart';
 import 'package:noti_notes_app/screens/note_view_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import './screens/login_screen.dart';
 import './screens/notes_overview_screen.dart';
 
 import './providers/notes.dart';
 import './providers/search.dart';
+import 'providers/database.dart';
 
-void main() {
+void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       systemNavigationBarColor: Color(0xff1D1D1D),
     ),
   );
-  runApp(const MyApp());
+
+  WidgetsFlutterBinding.ensureInitialized();
+  NotesDataBase notesDataBase = NotesDataBase();
+  String notesBoxName = 'notes';
+  await Hive.initFlutter();
+  await Hive.openBox(notesBoxName);
+  Box notesBox = notesDataBase.initBox(notesBoxName);
+
+  runApp(MyApp(notesBox));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  final Box notesBox;
+  const MyApp(this.notesBox, {super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  late Notes notes;
+  //? The box needs to be disposed after closing the app
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    notes = Notes(widget.notesBox);
+    notes.loadNotesFromDataBase();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    notes.updateNotesOnDataBase(notes.notes);
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) {
+      notes.updateNotesOnDataBase(notes.notes);
+    }
+
+    super.didChangeAppLifecycleState(state);
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => Notes(),
+          create: (_) => notes,
         ),
         ChangeNotifierProvider(
           create: (_) => Search(),
