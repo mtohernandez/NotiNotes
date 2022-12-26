@@ -51,6 +51,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void dispose() {
     notes.updateNotesOnDataBase(notes.notes);
+    notes.disposeBox(widget.notesBox);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

@@ -218,4 +218,8 @@ class Notes with ChangeNotifier {
     final imageFromPath = File(image.path);
     return imageFromPath;
   }
+
+   void disposeBox(Box box) {
+    box.close();
+  }
 }

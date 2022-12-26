@@ -7,8 +7,5 @@ class NotesDataBase {
     Box notesBox = Hive.box(boxName);
     return notesBox;
   }
-
-  static disposeBox(Box box) {
-    box.close();
-  }
+  
 }
