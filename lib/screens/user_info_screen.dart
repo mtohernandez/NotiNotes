@@ -23,17 +23,28 @@ class UserInfoScreen extends StatelessWidget {
   }
 
   Widget _buildMostUsedTags(BuildContext context, Set<String> allTags) {
-    return SizedBox(
-      height: Theme.of(context).textTheme.bodyText1!.fontSize! * 2.0,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) => TagItem(
-          tag: allTags.elementAt(index),
-          isForSearch: false,
-        ),
-        itemCount: allTags.length,
-      ),
-    );
+    return allTags.isNotEmpty
+        ? SizedBox(
+            height: Theme.of(context).textTheme.bodyText1!.fontSize! * 2.0,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) => TagItem(
+                tag: allTags.elementAt(index),
+                isForSearch: false,
+              ),
+              itemCount: allTags.length,
+            ),
+          )
+        : Text(
+            'No tags yet.',
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color:
+                      Theme.of(context).textTheme.bodyText1!.color!.withOpacity(
+                            .5,
+                          ),
+                  fontStyle: FontStyle.italic,
+                ),
+          );
   }
 
   Widget _buildNoteOptions(

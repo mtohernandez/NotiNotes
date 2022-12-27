@@ -83,6 +83,9 @@ flutter:
     - lib/assets/icons/user.svg
     - lib/assets/icons/mic.svg
     - lib/assets/icons/notedrop.svg
+    - lib/assets/icons/camera.svg
+    - lib/assets/icons/gallery.svg
+    - lib/assets/icons/removeUser.svg
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

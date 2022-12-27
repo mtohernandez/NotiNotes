@@ -7,6 +7,7 @@ import '../../screens/user_info_screen.dart';
 import '../../widgets/items/tag_item.dart';
 
 import '../../providers/notes.dart';
+import '../../providers/user.dart';
 
 class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
   final double size;
@@ -21,20 +22,10 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  String greeting() {
-    var hour = DateTime.now().hour;
-    if (hour < 12) {
-      return 'Morning';
-    }
-    if (hour < 17) {
-      return 'Afternoon';
-    }
-    return 'Evening';
-  }
-
   @override
   Widget build(BuildContext context) {
     final notes = Provider.of<Notes>(context);
+    final user = Provider.of<UserData>(context, listen: false);
 
     Set<String> allTags = importTags(notes);
 
@@ -62,20 +53,35 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Good ${greeting()}',
+                  user.greetingToUser,
                   style: Theme.of(context).textTheme.headline1,
                 ),
                 Row(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(UserInfoScreen.routeName);
-                      },
-                      child: SvgPicture.asset(
-                        'lib/assets/icons/user.svg',
-                        color: Colors.white,
-                      ),
+                    Consumer<UserData>(
+                      builder: (context, user, child) =>
+                          user.curentUserData.profilePicture != null
+                              ? GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .pushNamed(UserInfoScreen.routeName);
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage: FileImage(
+                                        user.curentUserData.profilePicture!),
+                                  ),
+                                )
+                              : GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .pushNamed(UserInfoScreen.routeName);
+                                  },
+                                  child: SvgPicture.asset(
+                                    'lib/assets/icons/user.svg',
+                                    color: Colors.white,
+                                  ),
+                                ),
                     ),
                     const SizedBox(width: 20),
                     GestureDetector(

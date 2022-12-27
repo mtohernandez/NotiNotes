@@ -63,7 +63,7 @@ class LoadCreateNote extends StatelessWidget {
           keyboardType: TextInputType.multiline,
           initialValue: loadedNote.content,
           style: Theme.of(context).textTheme.bodyText1,
-          textInputAction: TextInputAction.done,
+          textInputAction: TextInputAction.newline,
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: 'Add content here...',

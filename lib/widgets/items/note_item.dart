@@ -94,6 +94,16 @@ class _NoteItemState extends State<NoteItem> {
     );
   }
 
+  Widget _buildEmptyNote() {
+    return Text(
+      'You left this note empty...',
+      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            fontStyle: FontStyle.italic,
+            color: Theme.of(context).primaryColor.withOpacity(.5),
+          ),
+    );
+  }
+
   void selectNote() {
     setState(() {
       isSelected = true;
@@ -141,7 +151,10 @@ class _NoteItemState extends State<NoteItem> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // This code right here
+              if (widget.imageFile == null &&
+                  widget.title.isEmpty &&
+                  widget.content.isEmpty)
+                _buildEmptyNote(),
               if (widget.imageFile != null) _buildHeroImage(),
               if (widget.imageFile != null) noteSeparator,
               if (widget.title.isNotEmpty) _buildTitle(),

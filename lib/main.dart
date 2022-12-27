@@ -21,18 +21,22 @@ void main() async {
   );
 
   WidgetsFlutterBinding.ensureInitialized();
-  NotesDataBase notesDataBase = NotesDataBase();
+  DataBase dataBase = DataBase();
   String notesBoxName = 'notes';
+  String userBoxName = 'user';
   await Hive.initFlutter();
   await Hive.openBox(notesBoxName);
-  Box notesBox = notesDataBase.initBox(notesBoxName);
+  await Hive.openBox(userBoxName);
+  Box notesBox = dataBase.initBox(notesBoxName);
+  Box userBox = dataBase.initBox(userBoxName);
 
-  runApp(MyApp(notesBox));
+  runApp(MyApp(notesBox, userBox));
 }
 
 class MyApp extends StatefulWidget {
   final Box notesBox;
-  const MyApp(this.notesBox, {super.key});
+  final Box userBox;
+  const MyApp(this.notesBox, this.userBox, {super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -40,20 +44,26 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   late Notes notes;
+  late UserData userData;
+
   //? The box needs to be disposed after closing the app
 
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     notes = Notes(widget.notesBox);
+    userData = UserData(widget.userBox);
     notes.loadNotesFromDataBase();
+    userData.loadUserFromDataBase();
     super.initState();
   }
 
   @override
   void dispose() {
     notes.updateNotesOnDataBase(notes.notes);
+    userData.saveUserToDataBase(userData.curentUserData);
     notes.disposeBox(widget.notesBox);
+    userData.disposeBox(widget.userBox);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -63,6 +73,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (state == AppLifecycleState.inactive ||
         state == AppLifecycleState.paused) {
       notes.updateNotesOnDataBase(notes.notes);
+      userData.saveUserToDataBase(userData.curentUserData);
     }
 
     super.didChangeAppLifecycleState(state);
@@ -73,7 +84,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => UserData(),
+          create: (_) => userData,
         ),
         ChangeNotifierProvider(
           create: (_) => notes,

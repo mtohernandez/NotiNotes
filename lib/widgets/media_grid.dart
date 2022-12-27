@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/photo_picker.dart';
 import '../providers/notes.dart';
 import '../providers/user.dart';
 
@@ -30,10 +29,11 @@ class _MediaGridState extends State<MediaGrid> {
               style: Theme.of(context).textTheme.bodyText1),
           actions: [
             TextButton(
-                onPressed: () {
-                  Navigator.of(ctx).pop();
-                },
-                child: const Text('Okay'))
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+              child: const Text('Okay'),
+            )
           ],
         );
       },
@@ -52,17 +52,37 @@ class _MediaGridState extends State<MediaGrid> {
     }
   }
 
-  Widget _buildImageSelection(BuildContext context, String title, Notes notes, ImageSource source, SvgPicture icon,
-      bool isForUser, UserData user) {
+  Widget _buildImageSelection(
+      BuildContext context,
+      String title,
+      Notes notes,
+      ImageSource source,
+      SvgPicture icon,
+      bool isForUser,
+      UserData user,
+      bool isDeletion) {
     return GestureDetector(
-      onTap: (){
-        _showImagePicker(context, notes, source, isForUser, user);},
+      onTap: () {
+        isDeletion
+            ? user.removeProfilePicture()
+            : _showImagePicker(context, notes, source, isForUser, user);
+      },
       child: Container(
-        color: Colors.red,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Theme.of(context).primaryColor.withOpacity(.1),
+        ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             icon,
-            Text(title),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
           ],
         ),
       ),
@@ -76,7 +96,7 @@ class _MediaGridState extends State<MediaGrid> {
 
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.2,
+      // height: MediaQuery.of(context).size.height * 0.15,
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
         borderRadius: const BorderRadius.only(
@@ -85,13 +105,40 @@ class _MediaGridState extends State<MediaGrid> {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: GridView.count(
-          crossAxisCount: 2,
+          crossAxisCount: 3,
+          crossAxisSpacing: 5,
+          childAspectRatio: 50 / 30,
+          shrinkWrap: true,
           children: [
-            Container(
-              color: Colors.red,
+            _buildImageSelection(
+              context,
+              'From gallery',
+              notes,
+              ImageSource.gallery,
+              SvgPicture.asset('lib/assets/icons/gallery.svg'),
+              true,
+              user,
+              false,
             ),
-            Container(
-              color: Colors.red,
+            _buildImageSelection(
+              context,
+              'Take it yourself',
+              notes,
+              ImageSource.camera,
+              SvgPicture.asset('lib/assets/icons/camera.svg'),
+              true,
+              user,
+              false,
+            ),
+            _buildImageSelection(
+              context,
+              'Remove image',
+              notes,
+              ImageSource.gallery,
+              SvgPicture.asset('lib/assets/icons/removeUser.svg'),
+              true,
+              user,
+              true,
             ),
           ],
         ),
