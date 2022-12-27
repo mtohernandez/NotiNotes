@@ -52,9 +52,18 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  user.greetingToUser,
-                  style: Theme.of(context).textTheme.headline1,
+                Expanded(
+                  child: FittedBox(
+                    alignment: Alignment.centerLeft,
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      user.greetingToUser,
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
                 ),
                 Row(
                   children: [

@@ -53,17 +53,18 @@ class _MediaGridState extends State<MediaGrid> {
   }
 
   Widget _buildImageSelection(
-      BuildContext context,
-      String title,
-      Notes notes,
-      ImageSource source,
-      SvgPicture icon,
-      bool isForUser,
-      UserData user,
-      bool isDeletion) {
+    BuildContext context,
+    String title,
+    Notes notes,
+    ImageSource source,
+    SvgPicture icon,
+    bool isForUser,
+    UserData user,
+    bool isDeletion,
+  ) {
     return GestureDetector(
       onTap: () {
-        isDeletion
+        isDeletion && isForUser
             ? user.removeProfilePicture()
             : _showImagePicker(context, notes, source, isForUser, user);
       },
@@ -105,7 +106,7 @@ class _MediaGridState extends State<MediaGrid> {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: GridView.count(
-          crossAxisCount: 3,
+          crossAxisCount: widget.isForUser ? 3 : 2,
           crossAxisSpacing: 5,
           childAspectRatio: 50 / 30,
           shrinkWrap: true,
@@ -116,7 +117,7 @@ class _MediaGridState extends State<MediaGrid> {
               notes,
               ImageSource.gallery,
               SvgPicture.asset('lib/assets/icons/gallery.svg'),
-              true,
+              widget.isForUser,
               user,
               false,
             ),
@@ -126,20 +127,21 @@ class _MediaGridState extends State<MediaGrid> {
               notes,
               ImageSource.camera,
               SvgPicture.asset('lib/assets/icons/camera.svg'),
-              true,
+              widget.isForUser,
               user,
               false,
             ),
-            _buildImageSelection(
-              context,
-              'Remove image',
-              notes,
-              ImageSource.gallery,
-              SvgPicture.asset('lib/assets/icons/removeUser.svg'),
-              true,
-              user,
-              true,
-            ),
+            if (widget.isForUser)
+              _buildImageSelection(
+                context,
+                'Remove image',
+                notes,
+                ImageSource.gallery,
+                SvgPicture.asset('lib/assets/icons/removeUser.svg'),
+                true,
+                user,
+                true,
+              ),
           ],
         ),
       ),

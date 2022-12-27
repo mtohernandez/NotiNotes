@@ -100,7 +100,7 @@ class NotesOverviewScreen extends StatelessWidget {
                         notes.notes.isEmpty
                     ? Center(
                         child: Text(
-                          'No notes yet. Create one!',
+                          'No notes yet. Press + to create one!',
                           style:
                               Theme.of(context).textTheme.bodyText1!.copyWith(
                                     color: Theme.of(context)

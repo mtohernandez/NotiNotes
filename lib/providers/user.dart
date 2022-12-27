@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -15,8 +16,7 @@ class User {
 
   User(
     this.profilePicture,
-    this.id,
-    {
+    this.id, {
     required this.name,
     required this.bornDate,
   });
@@ -39,13 +39,15 @@ class UserData with ChangeNotifier {
     bornDate: DateTime.now(),
   );
 
+  var _greetingToUser = 'NotiNotes'; // Default greeting
+
   Box userBox;
 
   UserData(this.userBox);
 
   User get curentUserData => currentUser;
 
-  String get greetingToUser => _randomGreetings(currentUser);
+  String get greetingToUser => _greetingToUser;
 
   String greeting() {
     var hour = DateTime.now().hour;
@@ -58,21 +60,43 @@ class UserData with ChangeNotifier {
     return 'Evening';
   }
 
-  String _randomGreetings(User user) {
-    var greetings = [
+  void randomGreetings(User user) {
+    var currentDay = DateFormat('EEEE').format(DateTime.now());
+    var greetings = [];
+
+    greetings = [
       'Good ${greeting()}',
       'Today is the day.',
       '${user.name == '' ? 'User' : user.name.toLowerCase()}, glad you\'re back.',
       'You\'re doing great.',
       'Good ${greeting()} ${user.name == '' ? 'User' : user.name.toLowerCase()}',
       'Plans for the weekend?',
-      '${user.name == '' ? 'User' : user.name.toLowerCase()} is the best.',
+      '${user.name == '' ? 'User' : user.name.toLowerCase()}, did you shower?',
       'Tonight\'s the night.',
       'This is your notinotes.',
     ];
+
+    if (currentDay == 'Monday') {
+      greetings = [
+        'Another monday, ugh...',
+        'Starting the week.',
+        'Let\'s get things done.',
+        '${user.name == '' ? 'User' : user.name.toLowerCase()}, you\'ll crush it.',
+      ];
+    }
+
+    if (currentDay == 'Tuesday') {
+      greetings = [
+        'Tuesday, not monday.',
+        'Taco tuesday?',
+        'today is... not monday!',
+        '${user.name == '' ? 'User' : user.name.toLowerCase()}, feeling good?',
+      ];
+    }
+
     var random = Random();
     var element = greetings[random.nextInt(greetings.length)];
-    return element;
+    _greetingToUser = element;
   }
 
   void updateProfilePicture(File? profilePicture) {

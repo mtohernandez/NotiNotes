@@ -55,6 +55,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     userData = UserData(widget.userBox);
     notes.loadNotesFromDataBase();
     userData.loadUserFromDataBase();
+    if (userData.curentUserData.name != '') {
+      userData.randomGreetings(userData.curentUserData);
+    }
     super.initState();
   }
 
