@@ -7,6 +7,7 @@ import 'dart:io';
 
 import '../models/note.dart';
 import '../widgets/note_creation/load_create_note.dart';
+import '../widgets/items/todo_list_tool.dart';
 import '../widgets/items/bottom_tools_item.dart';
 import '../widgets/media_grid.dart';
 import '../widgets/items/appbar_note_title.dart';
@@ -20,15 +21,18 @@ class NoteViewScreen extends StatefulWidget {
   State<NoteViewScreen> createState() => _NoteViewScreenState();
 }
 
-class _NoteViewScreenState extends State<NoteViewScreen> {
+class _NoteViewScreenState extends State<NoteViewScreen> with SingleTickerProviderStateMixin{
   bool _isInit = true;
   File? img;
   Note? importedNote;
   PhotoPicker photoPicker = PhotoPicker();
+  late TabController _tabController;
 
   var loadedNote = Note(
     {},
     null,
+    null,
+    [],
     null,
     id: const Uuid().v1(),
     title: '',
@@ -36,6 +40,12 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
     dateCreated: DateTime.now(),
     colorBackground: Colors.pink,
   );
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+    super.initState();  
+  }
 
   @override
   void didChangeDependencies() {
@@ -50,6 +60,8 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
             loadedNote = Note(
               {},
               null,
+              null,
+              [],
               null,
               id: noteId,
               title: '',
@@ -73,7 +85,7 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
     }
     super.didChangeDependencies();
   }
-  
+
   void openMediaPicker(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -124,23 +136,30 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
         appBar: AppBarNoteTitle(loadedNote: loadedNote),
         body: Stack(
           children: [
-            SingleChildScrollView(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
-                child: LoadCreateNote(
-                  loadedNote: loadedNote,
-                  openMediaPicker: openMediaPicker,
-                  removeImage: removeImage,
-                  img: img,
+            TabBarView(
+              controller: _tabController,
+              children: [
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30.0, vertical: 10),
+                    child: LoadCreateNote(
+                      loadedNote: loadedNote,
+                      openMediaPicker: openMediaPicker,
+                      removeImage: removeImage,
+                      img: img,
+                    ),
+                  ),
                 ),
-              ),
+                TodoListTool(loadedNote.id),
+              ],
             ),
             BottomToolsItem(
               pickImage: openMediaPicker,
               addTags: openTagCreator,
               id: loadedNote.id,
               colorBeforeChange: loadedNote.colorBackground,
+              tabController: _tabController,
             ),
           ],
         ),

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
-
 class Note {
-  
   final String id;
   String title;
   String content;
   Set<String> tags;
   DateTime dateCreated;
+  DateTime? reminder;
   File? imageFile;
   Color colorBackground;
   File? patternImage;
-  
+  List<Map<String, dynamic>> todoList;
 
   Map<String, dynamic> toJson() {
     return {
@@ -21,27 +20,20 @@ class Note {
       'content': title.isEmpty ? '' : content,
       'tags': tags.toList(),
       'dateCreated': dateCreated.toIso8601String(),
+      'reminder': reminder?.toIso8601String() ?? '',
       'colorBackground': colorBackground.value,
       'imageFile': imageFile?.path,
       'patternImage': patternImage?.path,
+      'todoList': todoList,
     };
   }
 
-  Note.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        title = json['title'],
-        content = json['content'],
-        tags = json['tags'].cast<String>().toSet(),
-        dateCreated = DateTime.parse(json['dateCreated']),
-        colorBackground = Color(json['colorBackground']),
-        imageFile = json['imageFile'] != null ? File(json['imageFile']) : null,
-        patternImage = json['patternImage'] != null ? File(json['patternImage']) : null;
-
-
   Note(
     this.tags,
-    this.imageFile, 
+    this.imageFile,
     this.patternImage,
+    this.todoList, 
+    this.reminder,
     {
     required this.id,
     required this.title,

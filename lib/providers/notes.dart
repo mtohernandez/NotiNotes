@@ -65,7 +65,7 @@ class Notes with ChangeNotifier {
     notifyListeners();
   }
 
-  void loadNotesFromDataBase() {
+  void loadNotesFromDataBase()  {
     if (notesBox.values.isEmpty) {
       return;
     }
@@ -79,6 +79,10 @@ class Notes with ChangeNotifier {
               : null,
           noteDecoded['patternImage'] != null
               ? File(noteDecoded['patternImage'])
+              : null,
+          noteDecoded['todoList'].cast<Map<String, dynamic>>(),
+          noteDecoded['reminder'] != ''
+              ? DateTime.parse(noteDecoded['reminder'])
               : null,
           id: noteDecoded['id'],
           title: noteDecoded['title'],
@@ -209,6 +213,41 @@ class Notes with ChangeNotifier {
 
   void changeCurrentColor(String id, Color color) {
     toolingNote(id, ToolingNote.color, color);
+  }
+
+  void toggleTask(String id, int index) {
+    final noteIndex = findIndex(id);
+    if (noteIndex >= 0) {
+      _notes[noteIndex].todoList[index]['isChecked'] = !_notes[noteIndex].todoList[index]['isChecked'];
+      notifyListeners();
+    }
+  }
+
+  void addTask(String id) {
+    final noteIndex = findIndex(id);
+    if (noteIndex >= 0) {
+      _notes[noteIndex].todoList.add({
+        'content': '',
+        'isChecked': false,
+      });
+      notifyListeners();
+    }
+  }
+
+  void removeTask(String id, int index) {
+    final noteIndex = findIndex(id);
+    if (noteIndex >= 0) {
+      _notes[noteIndex].todoList.removeAt(index);
+      notifyListeners();
+    }
+  }
+
+  void updateTask(String id, int index, String content) {
+    final noteIndex = findIndex(id);
+    if (noteIndex >= 0) {
+      _notes[noteIndex].todoList[index]['content'] = content;
+      notifyListeners();
+    }
   }
 
   //? Future methods

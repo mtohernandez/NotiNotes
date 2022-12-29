@@ -10,11 +10,13 @@ class BottomToolsItem extends StatelessWidget {
   final Function addTags;
   Color colorBeforeChange;
   final String id;
+  final TabController tabController;
   BottomToolsItem({
     required this.pickImage,
     required this.addTags,
     required this.id,
     required this.colorBeforeChange,
+    required this.tabController,
     super.key,
   });
 
@@ -73,15 +75,27 @@ class BottomToolsItem extends StatelessWidget {
             children: [
               IconButton(
                 icon: SvgPicture.asset(
-                  'lib/assets/icons/task.svg',
-                  color: Theme.of(context).primaryColor.withOpacity(.5),
+                  'lib/assets/icons/brush.svg',
+                  color: Theme.of(context).primaryColor.withOpacity(.2),
                 ),
                 onPressed: () {},
               ),
               IconButton(
                 icon: SvgPicture.asset(
+                  'lib/assets/icons/task.svg',
+                  color: notes.findById(id).todoList.isNotEmpty
+                      ? Theme.of(context).primaryColor
+                      : Theme.of(context).primaryColor.withOpacity(.5),
+                ),
+                onPressed: () {
+                  tabController.animateTo(1);
+                },
+              ),
+              IconButton(
+                icon: SvgPicture.asset(
                   'lib/assets/icons/notification.svg',
-                  color: Theme.of(context).primaryColor.withOpacity(.2), // Because of the current color which is white
+                  color: Theme.of(context).primaryColor.withOpacity(
+                      .2), // Because of the current color which is white
                 ),
                 onPressed: () {},
               ),
