@@ -3,14 +3,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/items/icon_button_x_item.dart';
+
 import '../providers/notes.dart';
 import '../providers/user.dart';
 
 class MediaGrid extends StatefulWidget {
   final Function pickImage;
   final String id;
+  final String title;
+  final String subtitle;
   final bool isForUser;
-  const MediaGrid(this.pickImage, this.id, this.isForUser, {super.key});
+  const MediaGrid(this.pickImage, this.id, this.isForUser, { required this.title, required this.subtitle, super.key});
 
   @override
   State<MediaGrid> createState() => _MediaGridState();
@@ -94,6 +98,7 @@ class _MediaGridState extends State<MediaGrid> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserData>(context, listen: false);
     final notes = Provider.of<Notes>(context, listen: false);
+    final exitCreator = Navigator.of(context).pop;
 
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -105,43 +110,72 @@ class _MediaGridState extends State<MediaGrid> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: GridView.count(
-          crossAxisCount: widget.isForUser ? 3 : 2,
-          crossAxisSpacing: 5,
-          childAspectRatio: 50 / 30,
-          shrinkWrap: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildImageSelection(
-              context,
-              'From gallery',
-              notes,
-              ImageSource.gallery,
-              SvgPicture.asset('lib/assets/icons/gallery.svg'),
-              widget.isForUser,
-              user,
-              false,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+                IconButtonXItem(exitCreator),
+              ],
             ),
-            _buildImageSelection(
-              context,
-              'Take it yourself',
-              notes,
-              ImageSource.camera,
-              SvgPicture.asset('lib/assets/icons/camera.svg'),
-              widget.isForUser,
-              user,
-              false,
+            Text(
+              widget.subtitle,
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    // Using copyWith to change the opacity of the text
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .color!
+                        .withOpacity(.5),
+                  ),
             ),
-            if (widget.isForUser)
-              _buildImageSelection(
-                context,
-                'Remove image',
-                notes,
-                ImageSource.gallery,
-                SvgPicture.asset('lib/assets/icons/removeUser.svg'),
-                true,
-                user,
-                true,
-              ),
+            const SizedBox(
+              height: 20,
+            ),
+            GridView.count(
+              crossAxisCount: widget.isForUser ? 3 : 2,
+              crossAxisSpacing: 5,
+              childAspectRatio: 50 / 30,
+              shrinkWrap: true,
+              children: [
+                _buildImageSelection(
+                  context,
+                  'From gallery',
+                  notes,
+                  ImageSource.gallery,
+                  SvgPicture.asset('lib/assets/icons/gallery.svg'),
+                  widget.isForUser,
+                  user,
+                  false,
+                ),
+                _buildImageSelection(
+                  context,
+                  'Take it yourself',
+                  notes,
+                  ImageSource.camera,
+                  SvgPicture.asset('lib/assets/icons/camera.svg'),
+                  widget.isForUser,
+                  user,
+                  false,
+                ),
+                if (widget.isForUser)
+                  _buildImageSelection(
+                    context,
+                    'Remove image',
+                    notes,
+                    ImageSource.gallery,
+                    SvgPicture.asset('lib/assets/icons/removeUser.svg'),
+                    true,
+                    user,
+                    true,
+                  ),
+              ],
+            ),
           ],
         ),
       ),

@@ -105,20 +105,24 @@ class TagCreator extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Add your tags (double tap on one to remove)',
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      // Using copyWith to change the opacity of the text
-                      color: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .color!
-                          .withOpacity(.5),
-                    ),
+                'Add tags',
+                style: Theme.of(context).textTheme.headline1,
               ),
               IconButtonXItem(exitCreator),
             ],
           ),
-          const SizedBox(height: 10),
+          Text(
+            'Double tap on one to remove.',
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  // Using copyWith to change the opacity of the text
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .color!
+                      .withOpacity(.5),
+                ),
+          ),
+          const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.only(left: 10),
             decoration: BoxDecoration(
@@ -163,8 +167,7 @@ class TagCreator extends StatelessWidget {
                     icon: SvgPicture.asset(
                       'lib/assets/icons/plus.svg',
                       color: Theme.of(context).primaryColor.withOpacity(.5),
-                      height: tagsSize,
-                      width: tagsSize,
+                      height: tagsSize * 0.9,
                     ),
                   ),
                 ],

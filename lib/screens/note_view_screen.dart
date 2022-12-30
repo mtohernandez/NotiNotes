@@ -98,6 +98,8 @@ class _NoteViewScreenState extends State<NoteViewScreen> with SingleTickerProvid
               photoPicker.pickImage,
               loadedNote.id,
               false,
+              title: 'Add Image',
+              subtitle: 'It will be shown at the top of the note.',
             ),
           ],
         );

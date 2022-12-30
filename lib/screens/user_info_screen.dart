@@ -94,6 +94,8 @@ class UserInfoScreen extends StatelessWidget {
               photoPicker.pickImage,
               '',
               true,
+              title: 'Choose profile picture',
+              subtitle: 'You can remove it too.',
             ),
           ],
         );
