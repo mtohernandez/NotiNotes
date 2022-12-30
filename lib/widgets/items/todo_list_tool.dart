@@ -5,9 +5,22 @@ import 'package:provider/provider.dart';
 
 import '../../providers/notes.dart';
 
-class TodoListTool extends StatelessWidget {
+class TodoListTool extends StatefulWidget {
   final String id;
   TodoListTool(this.id, {super.key});
+
+  @override
+  State<TodoListTool> createState() => _TodoListToolState();
+}
+
+class _TodoListToolState extends State<TodoListTool> {
+  final FocusScopeNode _focusScopeNode = FocusScopeNode();
+
+  @override
+  void dispose() {
+    _focusScopeNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +33,7 @@ class TodoListTool extends StatelessWidget {
           TextFormField(
             maxLength: 25,
             initialValue: 'To do:',
+            textInputAction: TextInputAction.done,
             style: Theme.of(context).textTheme.headline2,
             decoration: InputDecoration(
               counter: const SizedBox
@@ -40,53 +54,70 @@ class TodoListTool extends StatelessWidget {
           Expanded(
             child: Consumer<Notes>(
               builder: (context, notes, child) {
-                return Column(
-                  children: [
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: notes.findById(id).todoList.length,
-                      // itemCount: todoList.length,
-                      itemBuilder: ((context, index) {
-                        return TodoItem(
-                          id: id,
-                          notesProvider: notes,
-                          indexTask: index,
-                          title: notes.findById(id).todoList[index]['content'],
-                          isChecked: notes.findById(id).todoList[index]
-                              ['isChecked'],
-                        );
-                      }),
-                    ),
-                    const SizedBox(height: 10),
-                    MaterialButton(
-                      onPressed: () {
-                        notes.addTask(id);
-                      },
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            'lib/assets/icons/plus.svg',
-                            height:
-                                Theme.of(context).textTheme.bodyText1!.fontSize,
-                            color:
-                                Theme.of(context).primaryColor.withOpacity(.5),
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Add a task',
-                            style:
-                                Theme.of(context).textTheme.bodyText1!.copyWith(
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .color!
-                                          .withOpacity(0.5),
-                                    ),
-                          ),
-                        ],
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      FocusScope(
+                        node: _focusScopeNode,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: notes.findById(widget.id).todoList.length,
+                          // itemCount: todoList.length,
+                          itemBuilder: ((context, index) {
+                            return TodoItem(
+                              id: widget.id,
+                              notesProvider: notes,
+                              indexTask: index,
+                              fullLength:
+                                  notes.findById(widget.id).todoList.length,
+                              title: notes.findById(widget.id).todoList[index]
+                                  ['content'],
+                              isChecked: notes
+                                  .findById(widget.id)
+                                  .todoList[index]['isChecked'],
+                              focusScopeNode: _focusScopeNode,
+                            );
+                          }),
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 10),
+                      MaterialButton(
+                        onPressed: () {
+                          notes.addTask(widget.id);
+                        },
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              'lib/assets/icons/plus.svg',
+                              height: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .fontSize,
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(.5),
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              'Add a task',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color!
+                                        .withOpacity(0.5),
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 100),
+                    ],
+                  ),
                 );
               },
             ),

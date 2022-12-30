@@ -65,7 +65,7 @@ class Notes with ChangeNotifier {
     notifyListeners();
   }
 
-  void loadNotesFromDataBase()  {
+  void loadNotesFromDataBase() {
     if (notesBox.values.isEmpty) {
       return;
     }
@@ -218,7 +218,8 @@ class Notes with ChangeNotifier {
   void toggleTask(String id, int index) {
     final noteIndex = findIndex(id);
     if (noteIndex >= 0) {
-      _notes[noteIndex].todoList[index]['isChecked'] = !_notes[noteIndex].todoList[index]['isChecked'];
+      _notes[noteIndex].todoList[index]['isChecked'] =
+          !_notes[noteIndex].todoList[index]['isChecked'];
       notifyListeners();
     }
   }
@@ -252,7 +253,7 @@ class Notes with ChangeNotifier {
 
   //? Future methods
 
-   void disposeBox(Box box) {
+  void disposeBox(Box box) {
     box.close();
   }
 }

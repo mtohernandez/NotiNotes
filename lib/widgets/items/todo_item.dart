@@ -3,33 +3,64 @@ import 'package:flutter/services.dart';
 
 import '../../providers/notes.dart';
 
-class TodoItem extends StatelessWidget {
+class TodoItem extends StatefulWidget {
   final Notes notesProvider;
   final String id;
   final int indexTask;
+  final int fullLength;
   final String title;
   final bool isChecked;
-  TodoItem({
+  final FocusScopeNode focusScopeNode;
+  const TodoItem({
     required this.id,
     required this.notesProvider,
     required this.indexTask,
+    required this.fullLength,
     required this.title,
     required this.isChecked,
+    required this.focusScopeNode,
     super.key,
   });
 
-  // final keyBoardNode = FocusNode();
-  // final textNode = FocusNode();
+  @override
+  State<TodoItem> createState() => _TodoItemState();
+}
+
+class _TodoItemState extends State<TodoItem> {
+  late final TextEditingController textController;
+  late final FocusNode textNode;
+  late final FocusNode keyBoardNode;
 
   @override
-  Widget build(BuildContext context) {
-    final textController = TextEditingController.fromValue(
+  void initState() {
+    textNode = FocusNode(
+      descendantsAreFocusable: true,
+    );
+    keyBoardNode = FocusNode();
+    textController = TextEditingController.fromValue(
       TextEditingValue(
-        text: title,
-        selection: TextSelection.collapsed(offset: title.length),
+        text: widget.title,
+        selection: TextSelection.collapsed(offset: widget.title.length),
       ),
     );
+    if (widget.indexTask == widget.fullLength - 1 &&
+        textController.text.isEmpty) {
+      widget.focusScopeNode.requestFocus(textNode);
+    }
+    super.initState();
+  }
 
+  @override
+  void dispose() {
+    textController.dispose();
+    textNode.dispose();
+    keyBoardNode.dispose();
+    super.dispose();
+  }
+
+  // final keyBoardNode = FocusNode();
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: IconButton(
@@ -38,9 +69,9 @@ class TodoItem extends StatelessWidget {
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             minimumSize: MaterialStateProperty.all(const Size(30, 0))),
         onPressed: () {
-          notesProvider.toggleTask(id, indexTask);
+          widget.notesProvider.toggleTask(widget.id, widget.indexTask);
         },
-        icon: !isChecked
+        icon: !widget.isChecked
             ? Icon(
                 Icons.check_box_outline_blank,
                 color: Theme.of(context).primaryColor,
@@ -51,21 +82,24 @@ class TodoItem extends StatelessWidget {
               ),
       ),
       title: RawKeyboardListener(
-        onKey: (value) {
-          if (textController.text.isEmpty &&
-              (value.logicalKey == LogicalKeyboardKey.backspace ||
-                  value.logicalKey == LogicalKeyboardKey.delete)) {
-            notesProvider.removeTask(id, indexTask);
-            FocusScope.of(context).unfocus();
-            // FocusScope.of(context).requestFocus(keyBoardNode.ancestors.last);
+        focusNode: keyBoardNode,
+        onKey: (event) {
+          if (event.isKeyPressed(LogicalKeyboardKey.backspace) &&
+              textController.text.isEmpty) {
+            // widget.focusScopeNode.requestFocus(textNode.ancestors.first);
+            widget.notesProvider.removeTask(widget.id, widget.indexTask);
+            // keyBoardNode.unfocus();
+            // keyBoardNode.previousFocus();
           }
         },
-        focusNode: FocusNode(),
         child: TextFormField(
           // initialValue: title,
+          // autofocus: true,
           controller: textController,
+          focusNode: textNode,
+          textInputAction: TextInputAction.next,
           // focusNode: textNode,
-          style: !isChecked
+          style: !widget.isChecked
               ? Theme.of(context).textTheme.bodyText1
               : Theme.of(context).textTheme.bodyText1!.copyWith(
                     decoration: TextDecoration.lineThrough,
@@ -82,7 +116,16 @@ class TodoItem extends StatelessWidget {
                       .withOpacity(0.5),
                 ),
           ),
-          onChanged: (value) => notesProvider.updateTask(id, indexTask, value),
+          onChanged: (value) => widget.notesProvider
+              .updateTask(widget.id, widget.indexTask, value),
+          onFieldSubmitted: (value) {
+            if (widget.indexTask == widget.fullLength - 1) {
+              widget.notesProvider.addTask(widget.id);
+              // widget.focusScopeNode.nextFocus();
+            } else {
+              widget.focusScopeNode.nextFocus();
+            }
+          },
         ),
       ),
     );

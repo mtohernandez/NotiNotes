@@ -19,7 +19,7 @@ class AppBarNoteTitle extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       title: TextFormField(
         maxLength: 20,
-        autofocus: loadedNote.title.isEmpty ? true : false,
+        autofocus: loadedNote.title.isEmpty && loadedNote.content.isEmpty && loadedNote.imageFile == null ? true : false,
         initialValue: loadedNote.title,
         style: Theme.of(context).textTheme.headline1,
         decoration: InputDecoration(

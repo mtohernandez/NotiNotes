@@ -68,7 +68,8 @@ class BottomToolsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
-      child: SizedBox(
+      child: Container(
+        color: Theme.of(context).backgroundColor,
         child: Consumer<Notes>(
           builder: (ctx, notes, _) => Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
