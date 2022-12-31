@@ -30,7 +30,7 @@ class _TagItemState extends State<TagItem> {
   @override
   Widget build(BuildContext context) {
     final isSearching = Provider.of<Search>(context);
-    const borderColor = Color.fromARGB(255, 173, 173, 173);
+    const borderColor = Color.fromARGB(255, 46, 46, 46);
 
     return GestureDetector(
       onTap: () {
@@ -56,17 +56,23 @@ class _TagItemState extends State<TagItem> {
                   : widget.backgroundColor,
           shape: StadiumBorder(
             side: BorderSide(
-              color: widget.isForSearch ? borderColor : Colors.white,
+              color: widget.isForSearch
+                  ? !isSelected
+                      ? borderColor
+                      : Colors.white
+                  : Colors.white,
               width: 1.0,
             ),
           ),
           label: Text(
             widget.tag,
             style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  fontWeight:
+                      widget.isForSearch ? FontWeight.bold : FontWeight.normal,
                   color: isSelected
                       ? Colors.black
                       : widget.isForSearch
-                          ? Theme.of(context).backgroundColor
+                          ? Theme.of(context).primaryColor
                           : Theme.of(context).textTheme.bodyText1!.color,
                 ),
           ),

@@ -69,7 +69,7 @@ class _TagCreatorManagerState extends State<TagCreatorManager> {
               ],
             ),
             Text(
-              'Press \'Space\' to create the tag.',
+              'For fast creation add a comma after each tag.',
               style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     // Using copyWith to change the opacity of the text
                     color: Theme.of(context)
@@ -88,12 +88,13 @@ class _TagCreatorManagerState extends State<TagCreatorManager> {
                     length: _values.length,
                     controller: _textEditingController,
                     focusNode: _focusNode,
-                    delimiters: [',', ' '],
+                    delimiters: [','],
                     hasAddButton: false,
                     resetTextOnSubmitted: true,
                     // This is set to grey just to illustrate the `textStyle` prop
                     textStyle: const TextStyle(color: Colors.grey),
                     onSubmitted: (outstandingValue) {
+                      if(outstandingValue.isEmpty) return;
                       setState(() {
                         _values.add(outstandingValue);
                       });

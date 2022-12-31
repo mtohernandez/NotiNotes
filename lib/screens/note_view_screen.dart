@@ -163,6 +163,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
               pickImage: openMediaPicker,
               addTags: openTagCreator,
               id: loadedNote.id,
+              colorBeforeChange: loadedNote.colorBackground, //! TO FIX
               tabController: _tabController,
             ),
           ],
