@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:noti_notes_app/helpers/photo_picker.dart';
 import 'package:string_similarity/string_similarity.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:collection/collection.dart';
 import 'dart:io';
@@ -24,7 +24,7 @@ enum ToolingNote {
 
 class Notes with ChangeNotifier {
   List<Note> _notes = [];
-  final ImagePicker _picker = ImagePicker();
+  // final ImagePicker _picker = ImagePicker();
 
   Box notesBox;
 
@@ -125,6 +125,9 @@ class Notes with ChangeNotifier {
   }
 
   Future<void> removeNoteById(String id) async {
+    findById(id).imageFile != null
+        ? PhotoPicker.removeImage(findById(id).imageFile!)
+        : null;
     _notes.removeWhere((note) => note.id == id);
     await notesBox.delete(id);
     notifyListeners();
@@ -182,6 +185,7 @@ class Notes with ChangeNotifier {
       if (tooling == ToolingNote.addImage) {
         _notes[noteIndex].imageFile = File(value.path);
       } else if (tooling == ToolingNote.removeImage) {
+        PhotoPicker.removeImage(_notes[noteIndex].imageFile!);
         _notes[noteIndex].imageFile = value;
       } else if (tooling == ToolingNote.addTag) {
         _notes[noteIndex].tags.add(value);

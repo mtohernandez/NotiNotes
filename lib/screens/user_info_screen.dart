@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:noti_notes_app/providers/photo_picker.dart';
+import 'package:noti_notes_app/helpers/photo_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/items/tag_item.dart';
@@ -11,9 +11,7 @@ import '../providers/user.dart';
 
 class UserInfoScreen extends StatelessWidget {
   static const routeName = '/user-info';
-  UserInfoScreen({super.key});
-
-  PhotoPicker photoPicker = PhotoPicker();
+  const UserInfoScreen({super.key});
 
   Set<String> importMostUsedTags(Notes notes) {
     return notes.notes.fold(
@@ -93,9 +91,9 @@ class UserInfoScreen extends StatelessWidget {
       context: context,
       builder: (bctx) {
         return Wrap(
-          children: [
+          children: const [
             MediaGrid(
-              photoPicker.pickImage,
+              PhotoPicker.pickImage,
               '',
               true,
               title: 'Choose profile picture',

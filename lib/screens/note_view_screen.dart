@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noti_notes_app/providers/photo_picker.dart';
+import 'package:noti_notes_app/helpers/photo_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:io';
@@ -28,7 +28,6 @@ class _NoteViewScreenState extends State<NoteViewScreen>
   bool _isInit = true;
   File? img;
   Note? importedNote;
-  PhotoPicker photoPicker = PhotoPicker();
   late TabController _tabController;
 
   var loadedNote = Note(
@@ -98,7 +97,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
         return Wrap(
           children: [
             MediaGrid(
-              photoPicker.pickImage,
+              PhotoPicker.pickImage,
               loadedNote.id,
               false,
               title: 'Add Image',
@@ -164,7 +163,6 @@ class _NoteViewScreenState extends State<NoteViewScreen>
               pickImage: openMediaPicker,
               addTags: openTagCreator,
               id: loadedNote.id,
-              colorBeforeChange: loadedNote.colorBackground,
               tabController: _tabController,
             ),
           ],
