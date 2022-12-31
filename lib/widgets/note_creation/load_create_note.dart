@@ -32,11 +32,18 @@ class LoadCreateNote extends StatelessWidget {
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.2,
                       width: double.infinity,
-                      color: Theme.of(context).backgroundColor,
-                      child: Image.file(
-                        loadedNote.imageFile!,
-                        fit: BoxFit.cover,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                          image: FileImage(loadedNote.imageFile!),
+                          fit: BoxFit.cover,
+                        ),
                       ),
+                      // color: Theme.of(context).backgroundColor,
+                      // child: Image.file(
+                      //   loadedNote.imageFile!,
+                      //   fit: BoxFit.cover,
+                      // ),
                     ),
                   ),
                   Positioned(

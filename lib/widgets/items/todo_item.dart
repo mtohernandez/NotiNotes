@@ -88,7 +88,7 @@ class _TodoItemState extends State<TodoItem> {
               textController.text.isEmpty) {
             // widget.focusScopeNode.requestFocus(textNode.ancestors.first);
             widget.notesProvider.removeTask(widget.id, widget.indexTask);
-            // keyBoardNode.unfocus();
+            keyBoardNode.unfocus();
             // keyBoardNode.previousFocus();
           }
         },

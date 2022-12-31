@@ -18,7 +18,7 @@ class TagCreator extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(30),
         ),
         backgroundColor: Theme.of(context).backgroundColor,
         title: Text(
