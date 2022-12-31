@@ -56,6 +56,7 @@ class _TodoListToolState extends State<TodoListTool> {
               builder: (context, notes, child) {
                 return SingleChildScrollView(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       FocusScope(
                         node: _focusScopeNode,
@@ -82,37 +83,35 @@ class _TodoListToolState extends State<TodoListTool> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      MaterialButton(
+                      TextButton.icon(
+                        style: ButtonStyle(
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          padding: MaterialStateProperty.all(
+                            const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
+                          ),
+                        ),
                         onPressed: () {
                           notes.addTask(widget.id);
                         },
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              'lib/assets/icons/plus.svg',
-                              height: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .fontSize,
-                              color: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(.5),
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              'Add a task',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .copyWith(
+                        icon: SvgPicture.asset(
+                          'lib/assets/icons/plus.svg',
+                          height:
+                              Theme.of(context).textTheme.bodyText1!.fontSize,
+                          color: Theme.of(context).primaryColor.withOpacity(.5),
+                        ),
+                        label: Text(
+                          'Add a task',
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
                                     color: Theme.of(context)
                                         .textTheme
                                         .bodyText1!
                                         .color!
                                         .withOpacity(0.5),
                                   ),
-                            ),
-                          ],
                         ),
                       ),
                       const SizedBox(height: 100),

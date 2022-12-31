@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:math' as math;
 
 class IconButtonXItem extends StatelessWidget {
-  final Function doSomething;
+  final Function? doSomething;
   const IconButtonXItem(this.doSomething, {super.key});
 
   @override
@@ -12,7 +12,7 @@ class IconButtonXItem extends StatelessWidget {
       angle: 45 * math.pi / 180,
       child: IconButton(
         onPressed: () {
-          doSomething();
+          doSomething!();
         },
         style: TextButton.styleFrom(
           padding: EdgeInsets.zero,

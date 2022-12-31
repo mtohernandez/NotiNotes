@@ -77,8 +77,12 @@ class _NoteItemState extends State<NoteItem> {
         itemCount: widget.tags.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) => TagItem(
+          null,
+          0,
           tag: widget.tags.elementAt(index),
           isForSearch: false,
+          isForCreation: false,
+          backgroundColor: widget.colorBackground, // Note background
         ),
       ),
     );

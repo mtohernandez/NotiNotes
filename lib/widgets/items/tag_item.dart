@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:noti_notes_app/widgets/items/icon_button_x_item.dart';
 import 'package:provider/provider.dart';
+import 'dart:math' as math;
 
 import '../../providers/search.dart';
 
 class TagItem extends StatefulWidget {
   final String tag;
   final bool isForSearch;
-  const TagItem({
-    super.key,
-    required this.tag,
-    required this.isForSearch,
-  });
+  final bool isForCreation;
+  final Function? onDelete;
+  final int index;
+  final Color backgroundColor;
+  const TagItem(this.onDelete, this.index,
+      {super.key,
+      required this.tag,
+      required this.isForSearch,
+      required this.isForCreation,
+      required this.backgroundColor});
 
   @override
   State<TagItem> createState() => _TagItemState();
@@ -38,32 +46,37 @@ class _TagItemState extends State<TagItem> {
       },
       child: Container(
         margin: const EdgeInsets.only(right: 5),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        decoration: BoxDecoration(
-          color: isSelected
+        child: Chip(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          backgroundColor: isSelected
               ? Theme.of(context).primaryColor
               : widget.isForSearch
-                  ? Colors.grey
-                  : Colors.transparent,
-          border: widget.isForSearch
-              ? Border.all(width: 0)
-              : Border.all(
-                  color: Theme.of(context).primaryColor.withOpacity(.5),
-                  width: 1,
+                  ? const Color.fromARGB(255, 204, 204, 204)
+                  : widget.backgroundColor,
+          shape: const StadiumBorder(
+              side: BorderSide(color: Colors.white, width: 1.0)),
+          label: Text(
+            widget.tag,
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: isSelected
+                      ? Colors.black
+                      : widget.isForSearch
+                          ? Theme.of(context).backgroundColor
+                          : Theme.of(context).textTheme.bodyText1!.color,
                 ),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Text(
-          widget.tag,
-          style: isSelected
-              ? Theme.of(context).textTheme.bodyText1!.copyWith(
-                    color: Theme.of(context).backgroundColor,
-                  )
-              : widget.isForSearch
-                  ? Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: Theme.of(context).backgroundColor,
-                      )
-                  : Theme.of(context).textTheme.bodyText1,
+          ),
+          deleteIcon: widget.isForCreation
+              ? Transform.rotate(
+                  angle: 45 * math.pi / 180,
+                  child: SvgPicture.asset(
+                    'lib/assets/icons/plus.svg',
+                    height: Theme.of(context).textTheme.bodyText1!.fontSize,
+                  ),
+                )
+              : null,
+          onDeleted: widget.isForCreation
+              ? () => widget.onDelete!(widget.index)
+              : null,
         ),
       ),
     );

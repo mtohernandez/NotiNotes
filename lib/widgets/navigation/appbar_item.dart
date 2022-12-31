@@ -115,8 +115,12 @@ class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => TagItem(
+                    null,
+                    0,
                     tag: allTags.elementAt(index),
                     isForSearch: true,
+                    isForCreation: false,
+                    backgroundColor: Theme.of(context).backgroundColor, // Does not matter
                   ),
                   itemCount: allTags.length,
                 ),

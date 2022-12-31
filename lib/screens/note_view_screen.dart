@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:noti_notes_app/providers/photo_picker.dart';
-import 'package:noti_notes_app/widgets/note_creation/tag_creator.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:io';
 
-import '../models/note.dart';
+import '../widgets/note_creation/tag_creator_manager.dart';
 import '../widgets/note_creation/load_create_note.dart';
 import '../widgets/items/todo_list_tool.dart';
 import '../widgets/items/bottom_tools_item.dart';
 import '../widgets/media_grid.dart';
 import '../widgets/items/appbar_note_title.dart';
+
+import '../models/note.dart';
+
 import '../../providers/notes.dart';
 
 class NoteViewScreen extends StatefulWidget {
@@ -21,7 +23,8 @@ class NoteViewScreen extends StatefulWidget {
   State<NoteViewScreen> createState() => _NoteViewScreenState();
 }
 
-class _NoteViewScreenState extends State<NoteViewScreen> with SingleTickerProviderStateMixin{
+class _NoteViewScreenState extends State<NoteViewScreen>
+    with SingleTickerProviderStateMixin {
   bool _isInit = true;
   File? img;
   Note? importedNote;
@@ -44,7 +47,7 @@ class _NoteViewScreenState extends State<NoteViewScreen> with SingleTickerProvid
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
-    super.initState();  
+    super.initState();
   }
 
   @override
@@ -115,7 +118,8 @@ class _NoteViewScreenState extends State<NoteViewScreen> with SingleTickerProvid
       builder: (bctx) {
         return Wrap(
           children: [
-            TagCreator(loadedNote.id),
+            // TagCreator(loadedNote.id),
+            TagCreatorManager(loadedNote.id),
           ],
         );
       },

@@ -29,8 +29,12 @@ class UserInfoScreen extends StatelessWidget {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => TagItem(
+                null,
+                0,
                 tag: allTags.elementAt(index),
                 isForSearch: false,
+                isForCreation: false,
+                backgroundColor: Theme.of(context).backgroundColor,
               ),
               itemCount: allTags.length,
             ),
