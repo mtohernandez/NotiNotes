@@ -17,7 +17,7 @@ class BottomToolsItem extends StatelessWidget {
     required this.colorBeforeChange, //! TO FIX
     required this.id,
     required this.tabController,
-    super.key,
+    super.key, 
   });
 
   // void _showColorPicker(BuildContext context) {

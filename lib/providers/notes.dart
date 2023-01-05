@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:noti_notes_app/helpers/database_helper.dart';
 import 'package:noti_notes_app/helpers/photo_picker.dart';
 import 'package:string_similarity/string_similarity.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:collection/collection.dart';
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 
 import '../models/note.dart';
 
@@ -24,11 +24,6 @@ enum ToolingNote {
 
 class Notes with ChangeNotifier {
   List<Note> _notes = [];
-  // final ImagePicker _picker = ImagePicker();
-
-  Box notesBox;
-
-  Notes(this.notesBox);
 
   //? TEST
   final Map<SqueezedMetric, int> squeezMetrics = {
@@ -65,42 +60,32 @@ class Notes with ChangeNotifier {
     notifyListeners();
   }
 
-  void loadNotesFromDataBase() {
-    if (notesBox.values.isEmpty) {
-      return;
-    }
-    for (var note in notesBox.values) {
-      var noteDecoded = jsonDecode(note);
-      _notes.add(
-        Note(
-          noteDecoded['tags'].cast<String>().toSet(),
-          noteDecoded['imageFile'] != null
-              ? File(noteDecoded['imageFile'])
-              : null,
-          noteDecoded['patternImage'] != null
-              ? File(noteDecoded['patternImage'])
-              : null,
-          noteDecoded['todoList'].cast<Map<String, dynamic>>(),
-          noteDecoded['reminder'] != ''
-              ? DateTime.parse(noteDecoded['reminder'])
-              : null,
-          id: noteDecoded['id'],
-          title: noteDecoded['title'],
-          content: noteDecoded['content'],
-          dateCreated: DateTime.parse(noteDecoded['dateCreated']),
-          colorBackground: Color(noteDecoded['colorBackground']),
-        ),
-      );
-    }
-    _notes = _notes.reversed.toList();
-    notifyListeners();
-  }
 
-  void updateNotesOnDataBase(List<Note> notes) {
-    for (var note in notes) {
-      notesBox.put(note.id, jsonEncode(note.toJson()));
-    }
-    // notifyListeners();
+  //? Load the notes from the database
+
+  Future<void> loadNotesFromDataBase() async {
+    final dataList = await DbHelper.getData(DbHelper.notesTable, DbHelper.databaseNotes());
+    _notes = dataList.map((note) => 
+        Note(
+          jsonDecode(note['tags']).cast<String>().toSet(),
+          note['imageFile'] != null
+              ? File(note['imageFile'])
+              : null,
+          note['patternImage'] != null
+              ? File(note['patternImage'])
+              : null,
+          jsonDecode(note['todoList']).cast<Map<String, dynamic>>(),
+          note['reminder'] != ''
+              ? DateTime.parse(note['reminder'])
+              : null,
+          id: note['id'],
+          title: note['title'],
+          content: note['content'],
+          dateCreated: DateTime.parse(note['dateCreated']),
+          colorBackground: Color(note['colorBackground']),
+        ),
+      ).toList();
+    notifyListeners();
   }
 
   //? Note creation
@@ -110,7 +95,7 @@ class Notes with ChangeNotifier {
       return;
     }
     _notes.add(note);
-    // updateNotesOnDataBase(_notes);
+    DbHelper.insert(DbHelper.notesTable, note.toJson(), DbHelper.databaseNotes());
     // notifyListeners();
   }
 
@@ -119,17 +104,19 @@ class Notes with ChangeNotifier {
   Future<void> removeSelectedNotes(Set<String> ids) async {
     _notes.removeWhere((note) => ids.contains(note.id));
     for (var id in ids) {
-      await notesBox.delete(id);
+      await DbHelper.delete(DbHelper.notesTable, id, DbHelper.databaseNotes());
     }
     notifyListeners();
   }
+
+  //? Single note deletion
 
   Future<void> removeNoteById(String id) async {
     findById(id).imageFile != null
         ? PhotoPicker.removeImage(findById(id).imageFile!)
         : null;
     _notes.removeWhere((note) => note.id == id);
-    await notesBox.delete(id);
+    await DbHelper.delete(DbHelper.notesTable, id, DbHelper.databaseNotes());
     notifyListeners();
   }
 
@@ -143,7 +130,20 @@ class Notes with ChangeNotifier {
       _notes[noteIndex] = noteUpdated;
       notifyListeners();
     }
-    updateNotesOnDataBase(_notes);
+    DbHelper.update(DbHelper.notesTable, noteUpdated.toJson(), DbHelper.databaseNotes());
+  }
+
+  //? Updating multiple notes
+
+  void updateNotesToDataBase(List<Note> notesUpdated) {
+    for (var note in notesUpdated) {
+      final noteIndex = _notes.indexWhere((note) => note.id == note.id);
+      if (noteIndex >= 0) {
+        _notes[noteIndex] = note;
+        notifyListeners();
+      }
+      DbHelper.update(DbHelper.notesTable, note.toJson(), DbHelper.databaseNotes());
+    }
   }
 
   //? Filtering methods
@@ -253,11 +253,5 @@ class Notes with ChangeNotifier {
       _notes[noteIndex].todoList[index]['content'] = content;
       notifyListeners();
     }
-  }
-
-  //? Future methods
-
-  void disposeBox(Box box) {
-    box.close();
   }
 }

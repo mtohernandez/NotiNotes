@@ -1,35 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
-import 'dart:convert';
+import 'package:noti_notes_app/helpers/database_helper.dart';
 import 'dart:io';
 import 'dart:math';
-
 import 'package:uuid/uuid.dart';
 
-class User {
-  String id = const Uuid().v4();
-  String name;
-  DateTime bornDate;
-  // String favoriteColor;
-  File? profilePicture;
-
-  User(
-    this.profilePicture,
-    this.id, {
-    required this.name,
-    required this.bornDate,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'bornDate': bornDate.toIso8601String(),
-      'profilePicture': profilePicture?.path,
-    };
-  }
-}
+import '../models/user.dart';
 
 class UserData with ChangeNotifier {
   User currentUser = User(
@@ -40,10 +16,6 @@ class UserData with ChangeNotifier {
   );
 
   var _greetingToUser = 'NotiNotes'; // Default greeting
-
-  Box userBox;
-
-  UserData(this.userBox);
 
   User get curentUserData => currentUser;
 
@@ -114,44 +86,40 @@ class UserData with ChangeNotifier {
     notifyListeners();
   }
 
-  //TODO add updateBornDate
+  // After the app is initialized the user is inserted into the database
 
-  // void updateFavoriteColor(String favoriteColor) {
-  //   currentUser.favoriteColor = favoriteColor;
-  //   notifyListeners();
-  // }
+  Future<void> loadUserFromDataBase() async {
+    final dataList = await DbHelper.getData(DbHelper.userTable, DbHelper.databaseUser());
 
-  void loadUserFromDataBase() {
-    if (userBox.values.isEmpty) {
-      return;
+    if (dataList.isEmpty) {
+      saveUserToDataBase(currentUser);
+    } else {
+      currentUser = User(
+        File(dataList[0]['profilePicture']),
+        dataList[0]['id'],
+        name: dataList[0]['name'],
+        bornDate: DateTime.parse(dataList[0]['bornDate']),
+      );
     }
-
-    var userDecoded = jsonDecode(userBox.values.first);
-    currentUser = User(
-      userDecoded['profilePicture'] != null
-          ? File(userDecoded['profilePicture'])
-          : null,
-      userDecoded['id'],
-      // userDecoded['favoriteColor'],
-      name: userDecoded['name'],
-      bornDate: DateTime.parse(
-        userDecoded['bornDate'],
-      ),
-    );
 
     notifyListeners();
   }
 
   void saveUserToDataBase(User currentUser) {
-    userBox.put(
-      'userFromDevice',
-      jsonEncode(
-        currentUser.toJson(),
-      ),
-    );
+    DbHelper.insert(DbHelper.userTable, {
+      'id': currentUser.id,
+      'name': currentUser.name,
+      'bornDate': currentUser.bornDate.toIso8601String(),
+      'profilePicture': currentUser.profilePicture?.path,
+    }, DbHelper.databaseUser());
   }
 
-  void disposeBox(Box box) {
-    box.close();
+  void updateUserToDataBase(User currentUser) {
+    DbHelper.update(DbHelper.userTable, {
+      'id': currentUser.id,
+      'name': currentUser.name,
+      'bornDate': currentUser.bornDate.toIso8601String(),
+      'profilePicture': currentUser.profilePicture?.path,
+    }, DbHelper.databaseUser());
   }
 }

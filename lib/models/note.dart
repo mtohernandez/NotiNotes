@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'dart:io';
 
 class Note {
@@ -18,13 +19,13 @@ class Note {
       'id': id,
       'title': title.isEmpty ? '' : title,
       'content': title.isEmpty ? '' : content,
-      'tags': tags.toList(),
+      'tags': jsonEncode(tags.toList()),
       'dateCreated': dateCreated.toIso8601String(),
       'reminder': reminder?.toIso8601String() ?? '',
       'colorBackground': colorBackground.value,
-      'imageFile': imageFile?.path,
-      'patternImage': patternImage?.path,
-      'todoList': todoList,
+      'imageFile': imageFile == null ? '' : imageFile?.path,
+      'patternImage': patternImage == null ? '' : patternImage?.path,
+      'todoList': jsonEncode(todoList.toList()),
     };
   }
 
@@ -32,9 +33,8 @@ class Note {
     this.tags,
     this.imageFile,
     this.patternImage,
-    this.todoList, 
-    this.reminder,
-    {
+    this.todoList,
+    this.reminder, {
     required this.id,
     required this.title,
     required this.content,
