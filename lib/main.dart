@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:noti_notes_app/helpers/database_helper.dart';
 import 'package:noti_notes_app/screens/note_view_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 import 'screens/information_screen.dart';
 import './screens/notes_overview_screen.dart';
 import './screens/user_info_screen.dart';
 
-import './providers/user.dart';
+import 'providers/user_data.dart';
 import './providers/notes.dart';
 import './providers/search.dart';
-import './providers/data_base.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
@@ -21,22 +20,15 @@ void main() async {
   );
 
   WidgetsFlutterBinding.ensureInitialized();
-  DataBase dataBase = DataBase();
-  String notesBoxName = 'notes';
-  String userBoxName = 'user';
-  await Hive.initFlutter();
-  await Hive.openBox(notesBoxName);
-  await Hive.openBox(userBoxName);
-  Box notesBox = dataBase.initBox(notesBoxName);
-  Box userBox = dataBase.initBox(userBoxName);
 
-  runApp(MyApp(notesBox, userBox));
+  await DbHelper.initBox(DbHelper.notesBoxName);
+  await DbHelper.initBox(DbHelper.userBoxName);
+  
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  final Box notesBox;
-  final Box userBox;
-  const MyApp(this.notesBox, this.userBox, {super.key});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -51,8 +43,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
-    notes = Notes(widget.notesBox);
-    userData = UserData(widget.userBox);
+    notes = Notes();
+    userData = UserData();
     notes.loadNotesFromDataBase();
     userData.loadUserFromDataBase();
     if (userData.curentUserData.name != '') {
@@ -68,8 +60,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void dispose() {
     notes.updateNotesOnDataBase(notes.notes);
     userData.saveUserToDataBase(userData.curentUserData);
-    notes.disposeBox(widget.notesBox);
-    userData.disposeBox(widget.userBox);
+    DbHelper.closeBox(DbHelper.notesBoxName);
+    DbHelper.closeBox(DbHelper.userBoxName);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

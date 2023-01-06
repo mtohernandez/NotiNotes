@@ -1,35 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:noti_notes_app/helpers/database_helper.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
 import 'package:uuid/uuid.dart';
 
-class User {
-  String id = const Uuid().v4();
-  String name;
-  DateTime bornDate;
-  // String favoriteColor;
-  File? profilePicture;
-
-  User(
-    this.profilePicture,
-    this.id, {
-    required this.name,
-    required this.bornDate,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'bornDate': bornDate.toIso8601String(),
-      'profilePicture': profilePicture?.path,
-    };
-  }
-}
+import '../models/user.dart';
 
 class UserData with ChangeNotifier {
   User currentUser = User(
@@ -40,10 +18,6 @@ class UserData with ChangeNotifier {
   );
 
   var _greetingToUser = 'NotiNotes'; // Default greeting
-
-  Box userBox;
-
-  UserData(this.userBox);
 
   User get curentUserData => currentUser;
 
@@ -122,6 +96,7 @@ class UserData with ChangeNotifier {
   // }
 
   void loadUserFromDataBase() {
+    Box userBox = DbHelper.getBox(DbHelper.userBoxName);
     if (userBox.values.isEmpty) {
       return;
     }
@@ -143,7 +118,8 @@ class UserData with ChangeNotifier {
   }
 
   void saveUserToDataBase(User currentUser) {
-    userBox.put(
+    DbHelper.insertUpdateData(
+      DbHelper.userBoxName,
       'userFromDevice',
       jsonEncode(
         currentUser.toJson(),

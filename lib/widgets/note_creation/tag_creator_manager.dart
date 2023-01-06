@@ -97,6 +97,7 @@ class _TagCreatorManagerState extends State<TagCreatorManager> {
                       if(outstandingValue.isEmpty) return;
                       setState(() {
                         _values.add(outstandingValue);
+                        notes.addTagToNote(outstandingValue, widget.id);
                       });
                     },
                     inputDecoration: InputDecoration(

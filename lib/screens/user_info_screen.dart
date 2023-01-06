@@ -7,7 +7,7 @@ import '../widgets/items/tag_item.dart';
 import '../widgets/media_grid.dart';
 
 import '../providers/notes.dart';
-import '../providers/user.dart';
+import '../providers/user_data.dart';
 
 class UserInfoScreen extends StatelessWidget {
   static const routeName = '/user-info';

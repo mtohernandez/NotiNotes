@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:noti_notes_app/helpers/database_helper.dart';
 import 'package:noti_notes_app/helpers/photo_picker.dart';
 import 'package:string_similarity/string_similarity.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -25,10 +26,6 @@ enum ToolingNote {
 class Notes with ChangeNotifier {
   List<Note> _notes = [];
   // final ImagePicker _picker = ImagePicker();
-
-  Box notesBox;
-
-  Notes(this.notesBox);
 
   //? TEST
   final Map<SqueezedMetric, int> squeezMetrics = {
@@ -66,6 +63,7 @@ class Notes with ChangeNotifier {
   }
 
   void loadNotesFromDataBase() {
+    final notesBox = DbHelper.getBox(DbHelper.notesBoxName);
     if (notesBox.values.isEmpty) {
       return;
     }
@@ -92,13 +90,13 @@ class Notes with ChangeNotifier {
         ),
       );
     }
-    _notes = _notes.reversed.toList();
+    // _notes = _notes.reversed.toList(); This idk if it actually works
     notifyListeners();
   }
 
   void updateNotesOnDataBase(List<Note> notes) {
     for (var note in notes) {
-      notesBox.put(note.id, jsonEncode(note.toJson()));
+      DbHelper.insertUpdateData(DbHelper.notesBoxName, note.id, jsonEncode(note.toJson()));
     }
     // notifyListeners();
   }
@@ -110,8 +108,6 @@ class Notes with ChangeNotifier {
       return;
     }
     _notes.add(note);
-    // updateNotesOnDataBase(_notes);
-    // notifyListeners();
   }
 
   //? Multiple note deletion
@@ -119,7 +115,7 @@ class Notes with ChangeNotifier {
   Future<void> removeSelectedNotes(Set<String> ids) async {
     _notes.removeWhere((note) => ids.contains(note.id));
     for (var id in ids) {
-      await notesBox.delete(id);
+      DbHelper.deleteData(DbHelper.notesBoxName, id);
     }
     notifyListeners();
   }
@@ -129,7 +125,7 @@ class Notes with ChangeNotifier {
         ? PhotoPicker.removeImage(findById(id).imageFile!)
         : null;
     _notes.removeWhere((note) => note.id == id);
-    await notesBox.delete(id);
+    DbHelper.deleteData(DbHelper.notesBoxName, id);
     notifyListeners();
   }
 
@@ -255,9 +251,4 @@ class Notes with ChangeNotifier {
     }
   }
 
-  //? Future methods
-
-  void disposeBox(Box box) {
-    box.close();
-  }
 }

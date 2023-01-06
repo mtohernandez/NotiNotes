@@ -7,7 +7,7 @@ import '../../screens/user_info_screen.dart';
 import '../../widgets/items/tag_item.dart';
 
 import '../../providers/notes.dart';
-import '../../providers/user.dart';
+import '../../providers/user_data.dart';
 
 class AppBarItemTop extends StatelessWidget implements PreferredSizeWidget {
   final double size;

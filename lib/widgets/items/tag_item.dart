@@ -48,7 +48,7 @@ class _TagItemState extends State<TagItem> {
       child: Container(
         margin: const EdgeInsets.only(right: 5),
         child: Chip(
-          padding: const EdgeInsets.symmetric(horizontal: 2),
+          // padding: const EdgeInsets.symmetric(horizontal: 2),
           backgroundColor: isSelected
               ? Theme.of(context).primaryColor
               : widget.isForSearch
