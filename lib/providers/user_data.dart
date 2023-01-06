@@ -127,7 +127,4 @@ class UserData with ChangeNotifier {
     );
   }
 
-  void disposeBox(Box box) {
-    box.close();
-  }
 }

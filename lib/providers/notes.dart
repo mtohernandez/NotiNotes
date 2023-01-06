@@ -251,4 +251,20 @@ class Notes with ChangeNotifier {
     }
   }
 
+  // Co pilot did this
+  Set<String> getMostUsetTags() {
+    final tags = <String, int>{};
+    for (var note in _notes) {
+      for (var tag in note.tags) {
+        if (tags.containsKey(tag)) {
+          tags[tag] = tags[tag]! + 1;
+        } else {
+          tags[tag] = 1;
+        }
+      }
+    }
+    final mostUsedTags = tags.entries.toList();
+    mostUsedTags.sort((a, b) => b.value.compareTo(a.value));
+    return mostUsedTags.take(5).map((e) => e.key).toSet();
+  }
 }

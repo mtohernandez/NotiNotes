@@ -20,8 +20,12 @@ class UserInfoScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMostUsedTags(BuildContext context, Set<String> allTags) {
-    return allTags.isNotEmpty
+  Widget _buildMostUsedTags(BuildContext context) {
+    // Get a set<string> of the most used tags
+    final mostUsedTags =
+        Provider.of<Notes>(context, listen: false).getMostUsetTags();
+
+    return mostUsedTags.isNotEmpty
         ? SizedBox(
             height: Theme.of(context).textTheme.bodyText1!.fontSize! * 2.0,
             child: ListView.builder(
@@ -29,12 +33,12 @@ class UserInfoScreen extends StatelessWidget {
               itemBuilder: (context, index) => TagItem(
                 null,
                 0,
-                tag: allTags.elementAt(index),
+                tag: mostUsedTags.elementAt(index),
                 isForSearch: false,
                 isForCreation: false,
                 backgroundColor: Theme.of(context).backgroundColor,
               ),
-              itemCount: allTags.length,
+              itemCount: mostUsedTags.length,
             ),
           )
         : Text(
@@ -170,14 +174,15 @@ class UserInfoScreen extends StatelessWidget {
                             border: InputBorder.none,
                             hintText: 'Your name',
                             hintStyle: Theme.of(context).textTheme.headline1,
-                            counter: const SizedBox(
-                              height: 10,
-                            ),
+                            counter: const SizedBox.shrink(),
                           ),
                           onChanged: (name) {
                             user.updateName(name);
                           },
                         ),
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       // Text(
                       //   'Favorite Color: ${user.curentUserData.favoriteColor}',
@@ -201,8 +206,7 @@ class UserInfoScreen extends StatelessWidget {
               ),
               Consumer<Notes>(
                 builder: (context, notesData, child) {
-                  final allTags = importMostUsedTags(notesData);
-                  return _buildMostUsedTags(context, allTags);
+                  return _buildMostUsedTags(context);
                 },
               ),
               const SizedBox(
