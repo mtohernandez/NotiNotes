@@ -71,7 +71,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
               dateCreated: DateTime.now(),
               colorBackground: Colors.pink,
             );
-            Provider.of<Notes>(context, listen: false).addNote(loadedNote);
+            Future.wait([Provider.of<Notes>(context, listen: false).addNote(loadedNote)]);
           } else {
             loadedNote = importedNote!;
           }

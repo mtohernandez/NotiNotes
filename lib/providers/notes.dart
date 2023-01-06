@@ -60,42 +60,43 @@ class Notes with ChangeNotifier {
     notifyListeners();
   }
 
-
   //? Load the notes from the database
 
   Future<void> loadNotesFromDataBase() async {
-    final dataList = await DbHelper.getData(DbHelper.notesTable, DbHelper.databaseNotes());
-    _notes = dataList.map((note) => 
-        Note(
-          jsonDecode(note['tags']).cast<String>().toSet(),
-          note['imageFile'] != null
-              ? File(note['imageFile'])
-              : null,
-          note['patternImage'] != null
-              ? File(note['patternImage'])
-              : null,
-          jsonDecode(note['todoList']).cast<Map<String, dynamic>>(),
-          note['reminder'] != ''
-              ? DateTime.parse(note['reminder'])
-              : null,
-          id: note['id'],
-          title: note['title'],
-          content: note['content'],
-          dateCreated: DateTime.parse(note['dateCreated']),
-          colorBackground: Color(note['colorBackground']),
-        ),
-      ).toList();
+    final dataList =
+        await DbHelper.getData(DbHelper.notesTable, DbHelper.databaseNotes());
+    _notes.addAll(dataList
+        .map(
+          (note) => Note(
+            jsonDecode(note['tags']).cast<String>().toSet(),
+            note['imageFile'] != null && note['imageFile'] != ''
+                ? File(note['imageFile'])
+                : null,
+            note['patternImage'] != null && note['patternImage'] != ''
+                ? File(note['patternImage'])
+                : null,
+            jsonDecode(note['todoList']).cast<Map<String, dynamic>>(),
+            note['reminder'] != '' ? DateTime.parse(note['reminder']) : null,
+            id: note['id'],
+            title: note['title'],
+            content: note['content'],
+            dateCreated: DateTime.parse(note['dateCreated']),
+            colorBackground: Color(int.parse(note['colorBackground'])),
+          ),
+        )
+        .toList());
     notifyListeners();
   }
 
   //? Note creation
 
-  void addNote(Note note) {
+  Future<void> addNote(Note note) async {
     if (note.id.isEmpty) {
       return;
     }
     _notes.add(note);
-    DbHelper.insert(DbHelper.notesTable, note.toJson(), DbHelper.databaseNotes());
+    await DbHelper.insert(
+        DbHelper.notesTable, note.toJson(), DbHelper.databaseNotes());
     // notifyListeners();
   }
 
@@ -130,7 +131,8 @@ class Notes with ChangeNotifier {
       _notes[noteIndex] = noteUpdated;
       notifyListeners();
     }
-    DbHelper.update(DbHelper.notesTable, noteUpdated.toJson(), DbHelper.databaseNotes());
+    DbHelper.update(
+        DbHelper.notesTable, noteUpdated.toJson(), DbHelper.databaseNotes());
   }
 
   //? Updating multiple notes
@@ -142,7 +144,8 @@ class Notes with ChangeNotifier {
         _notes[noteIndex] = note;
         notifyListeners();
       }
-      DbHelper.update(DbHelper.notesTable, note.toJson(), DbHelper.databaseNotes());
+      DbHelper.update(
+          DbHelper.notesTable, note.toJson(), DbHelper.databaseNotes());
     }
   }
 

@@ -95,7 +95,7 @@ class UserData with ChangeNotifier {
       saveUserToDataBase(currentUser);
     } else {
       currentUser = User(
-        File(dataList[0]['profilePicture']),
+        dataList[0]['profilePicture'] != null && dataList[0]['profilePicture'] != '' ? File(dataList[0]['profilePicture']) : null,
         dataList[0]['id'],
         name: dataList[0]['name'],
         bornDate: DateTime.parse(dataList[0]['bornDate']),

@@ -39,6 +39,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     notes = Notes();
     userData = UserData();
+    Future.wait([
+      notes.loadNotesFromDataBase(),
+      userData.loadUserFromDataBase(),
+    ]);
     super.initState();
   }
 
@@ -47,102 +51,93 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    notes.updateNotesToDataBase(notes.notes);
-    userData.updateUserToDataBase(userData.curentUserData);
+    // notes.updateNotesToDataBase(notes.notes);
+    // userData.updateUserToDataBase(userData.curentUserData);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
-  // These do work
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   if (state == AppLifecycleState.inactive ||
+  //       state == AppLifecycleState.paused ||
+  //       state == AppLifecycleState.detached) {
+  //     notes.updateNotesToDataBase(notes.notes);
+  //     userData.saveUserToDataBase(userData.curentUserData);
+  //   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.inactive ||
-        state == AppLifecycleState.paused || state == AppLifecycleState.detached) {
-      notes.updateNotesToDataBase(notes.notes);
-      userData.saveUserToDataBase(userData.curentUserData);
-    }
-
-    super.didChangeAppLifecycleState(state);
-  }
+  //   super.didChangeAppLifecycleState(state);
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Future.wait([
-        notes.loadNotesFromDataBase(),
-        userData.loadUserFromDataBase(),
-      ]),
-      builder: (context, snapshot) {
-        return MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (_) => userData,
-            ),
-            ChangeNotifierProvider(
-              create: (_) => notes,
-            ),
-            ChangeNotifierProvider(
-              create: (_) => Search(),
-            ),
-          ],
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'NotiNotes',
-            theme: ThemeData(
-              fontFamily: 'SF Pro Display',
-              primaryColor: Colors.white,
-              backgroundColor: const Color(0xff1D1D1D),
-              colorScheme: ColorScheme.fromSwatch(
-                      // primarySwatch: Colors.grey,
-                      )
-                  .copyWith(
-                secondary: const Color(0xff1D1D1D),
-              ),
-              textTheme: TextTheme(
-                headline1: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w700,
-                ),
-                headline2: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
-                ),
-                headline3: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                ),
-                headline4: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                ),
-                bodyText1: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-                bodyText2: TextStyle(
-                  color: Theme.of(context).colorScheme.secondary,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-            home: const NotesOverviewScreen(),
-            routes: {
-              NotesOverviewScreen.routeName: (context) =>
-                  const NotesOverviewScreen(),
-              InformationScreen.routeName: (context) => const InformationScreen(),
-              NoteViewScreen.routeName: (context) => const NoteViewScreen(),
-              UserInfoScreen.routeName: (context) => UserInfoScreen(),
-            },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => userData,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => notes,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Search(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'NotiNotes',
+        theme: ThemeData(
+          fontFamily: 'SF Pro Display',
+          primaryColor: Colors.white,
+          backgroundColor: const Color(0xff1D1D1D),
+          colorScheme: ColorScheme.fromSwatch(
+                  // primarySwatch: Colors.grey,
+                  )
+              .copyWith(
+            secondary: const Color(0xff1D1D1D),
           ),
-        );
-      }
+          textTheme: TextTheme(
+            headline1: const TextStyle(
+              color: Colors.white,
+              fontSize: 25,
+              fontWeight: FontWeight.w700,
+            ),
+            headline2: const TextStyle(
+              color: Colors.white,
+              fontSize: 30,
+              fontWeight: FontWeight.w700,
+            ),
+            headline3: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+            ),
+            headline4: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+            ),
+            bodyText1: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+            bodyText2: TextStyle(
+              color: Theme.of(context).colorScheme.secondary,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+        home: const NotesOverviewScreen(),
+        routes: {
+          NotesOverviewScreen.routeName: (context) =>
+              const NotesOverviewScreen(),
+          InformationScreen.routeName: (context) => const InformationScreen(),
+          NoteViewScreen.routeName: (context) => const NoteViewScreen(),
+          UserInfoScreen.routeName: (context) => UserInfoScreen(),
+        },
+      ),
     );
   }
 }

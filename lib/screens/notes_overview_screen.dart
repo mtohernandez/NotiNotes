@@ -27,7 +27,7 @@ class NotesOverviewScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBarItemTop(appBarSize),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: Padding(
+        body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
