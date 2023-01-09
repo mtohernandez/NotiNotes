@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:noti_notes_app/helpers/color_picker.dart';
 import 'package:noti_notes_app/helpers/photo_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -40,7 +41,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
     title: '',
     content: '',
     dateCreated: DateTime.now(),
-    colorBackground: Colors.pink,
+    colorBackground: ColorPicker.defaultColor,
   );
 
   @override

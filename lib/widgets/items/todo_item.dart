@@ -88,8 +88,8 @@ class _TodoItemState extends State<TodoItem> {
               textController.text.isEmpty) {
             // widget.focusScopeNode.requestFocus(textNode.ancestors.first);
             widget.notesProvider.removeTask(widget.id, widget.indexTask);
-            keyBoardNode.unfocus();
-            // keyBoardNode.previousFocus();
+            // keyBoardNode.unfocus();
+            FocusScope.of(context).unfocus();
           }
         },
         child: TextFormField(
@@ -122,8 +122,6 @@ class _TodoItemState extends State<TodoItem> {
             if (widget.indexTask == widget.fullLength - 1) {
               widget.notesProvider.addTask(widget.id);
               // widget.focusScopeNode.nextFocus();
-            } else {
-              widget.focusScopeNode.nextFocus();
             }
           },
         ),

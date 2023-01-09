@@ -35,6 +35,7 @@ dependencies:
   intl: ^0.18.0
   masonry_grid: ^1.0.0
   flutter_svg: ^1.1.6
+  flutter_svg_provider: ^1.0.3
   uuid: ^3.0.6
   string_similarity: ^2.0.0
   image_picker: ^0.8.6
@@ -73,7 +74,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lib/assets/images/Image1.jpg
     - lib/assets/images/noProfilePicture.png
     - lib/assets/icons/plus.svg
     - lib/assets/icons/check.svg
@@ -90,6 +90,13 @@ flutter:
     - lib/assets/icons/gallery.svg
     - lib/assets/icons/removeUser.svg
     - lib/assets/icons/brush.svg
+    - lib/assets/images/patterns/polygons.png
+    - lib/assets/images/patterns/pureNoisePNG.png
+    - lib/assets/images/patterns/splashesPNG.png
+    - lib/assets/images/patterns/upScaleWavesPNG.png
+    - lib/assets/images/patterns/wavesRegulatedPNG.png
+    - lib/assets/images/patterns/wavesUnregulatedPNG.png
+    - lib/assets/images/patterns/klaeidoscope.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

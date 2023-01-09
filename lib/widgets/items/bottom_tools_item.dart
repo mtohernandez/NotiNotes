@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:noti_notes_app/widgets/note_creation/color_picker_creator.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/notes.dart';
@@ -20,59 +21,65 @@ class BottomToolsItem extends StatelessWidget {
     super.key,
   });
 
-  // void _showColorPicker(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return AlertDialog(
-  //         content: Text('Color picker'),
-  //       );
-  //     },
-  //   );
-  // }
-  Future<bool> _showColorPicker(BuildContext context) async {
-    return ColorPicker(
-      onColorChanged: (newColor) {
-        colorBeforeChange = newColor;
-      },
-      actionButtons: const ColorPickerActionButtons(
-        dialogOkButtonLabel: 'SET',
-      ),
-      color: Provider.of<Notes>(context, listen: false)
-          .findById(id)
-          .colorBackground,
-      width: 40,
-      height: 40,
-      borderRadius: 20,
-      spacing: 5,
-      wheelDiameter: MediaQuery.of(context).size.width * .5,
-      heading: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            'Select a color',
-            style: Theme.of(context).textTheme.headline1,
+  void _showColorPicker(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        scrollable: true,
+        backgroundColor: Theme.of(context).backgroundColor,
+        content: ColorPickerCreator(id),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(30),
           ),
-        ],
-      ),
-      enableShadesSelection: false,
-      pickersEnabled: const <ColorPickerType, bool>{
-        ColorPickerType.accent: false,
-        ColorPickerType.primary: true,
-        ColorPickerType.custom: true,
-        ColorPickerType.wheel: true,
-      },
-    ).showPickerDialog(
-      context,
-      constraints: BoxConstraints.tightFor(
-          width: MediaQuery.of(context).size.width * .5,
-          height: MediaQuery.of(context).size.height * .45),
-      backgroundColor: Theme.of(context).backgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        ),
       ),
     );
   }
+
+  // Future<bool> _showColorPicker(BuildContext context) async {
+  //   return ColorPicker(
+  //     onColorChanged: (newColor) {
+  //       colorBeforeChange = newColor;
+  //     },
+  //     actionButtons: const ColorPickerActionButtons(
+  //       dialogOkButtonLabel: 'SET',
+  //     ),
+  //     color: Provider.of<Notes>(context, listen: false)
+  //         .findById(id)
+  //         .colorBackground,
+  //     width: 40,
+  //     height: 40,
+  //     borderRadius: 20,
+  //     spacing: 5,
+  //     wheelDiameter: MediaQuery.of(context).size.width * .5,
+  //     heading: Row(
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       children: [
+  //         Text(
+  //           'Select a color',
+  //           style: Theme.of(context).textTheme.headline1,
+  //         ),
+  //       ],
+  //     ),
+  //     enableShadesSelection: false,
+  //     pickersEnabled: const <ColorPickerType, bool>{
+  //       ColorPickerType.accent: false,
+  //       ColorPickerType.primary: true,
+  //       ColorPickerType.custom: true,
+  //       ColorPickerType.wheel: true,
+  //     },
+  //   ).showPickerDialog(
+  //     context,
+  //     constraints: BoxConstraints.tightFor(
+  //         width: MediaQuery.of(context).size.width * .5,
+  //         height: MediaQuery.of(context).size.height * .45),
+  //     backgroundColor: Theme.of(context).backgroundColor,
+  //     shape: RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.circular(20),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -136,10 +143,10 @@ class BottomToolsItem extends StatelessWidget {
                 onPressed: () async {
                   //? The colorBeforeChange does change the color value inside the ColorPicker
                   //? If the _showColorPicker is not canceled (false), the colorBeforeChange will not change
-                  if (await _showColorPicker(context)) {
-                    notes.changeCurrentColor(id, colorBeforeChange);
-                  }
-                  // _showColorPicker(context);
+                  // if (await _showColorPicker(context)) {
+                  //   notes.changeCurrentColor(id, colorBeforeChange);
+                  // }
+                  _showColorPicker(context);
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),

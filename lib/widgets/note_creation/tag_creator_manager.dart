@@ -88,7 +88,7 @@ class _TagCreatorManagerState extends State<TagCreatorManager> {
                     length: _values.length,
                     controller: _textEditingController,
                     focusNode: _focusNode,
-                    delimiters: [','],
+                    delimiters: const [','],
                     hasAddButton: false,
                     resetTextOnSubmitted: true,
                     // This is set to grey just to illustrate the `textStyle` prop

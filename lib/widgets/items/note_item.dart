@@ -155,28 +155,43 @@ class _NoteItemState extends State<NoteItem> {
           color: isSelected
               ? widget.colorBackground.withOpacity(.5)
               : widget.colorBackground,
+          // color: Colors.black,
           borderRadius: BorderRadius.circular(30),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (widget.imageFile == null &&
-                  widget.title.isEmpty &&
-                  widget.content.isEmpty)
-                _buildEmptyNote(),
-              if (widget.imageFile != null) _buildHeroImage(),
-              if (widget.imageFile != null) noteSeparator,
-              if (widget.title.isNotEmpty) _buildTitle(),
-              if (widget.title.isNotEmpty) noteSeparator,
-              if (widget.content.isNotEmpty) _buildContent(),
-              if (widget.content.isNotEmpty) noteSeparator,
-              if (widget.tags.isNotEmpty) _buildTags(),
-              if (widget.tags.isNotEmpty) noteSeparator,
-              _buildDate(),
-            ],
-          ),
+        child: Stack(
+          children: [
+            // This is how to add the pattern image
+            // ClipRRect(
+            //   borderRadius: BorderRadius.circular(30),
+            //   child: Image.asset(
+            //     'lib/assets/images/patterns/polygons.png',
+            //     color: widget.colorBackground,
+            //     fit: BoxFit.cover,
+            //   ),
+            // ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (widget.imageFile == null &&
+                      widget.title.isEmpty &&
+                      widget.content.isEmpty)
+                    _buildEmptyNote(),
+                  if (widget.imageFile != null) _buildHeroImage(),
+                  if (widget.imageFile != null) noteSeparator,
+                  if (widget.title.isNotEmpty) _buildTitle(),
+                  if (widget.title.isNotEmpty) noteSeparator,
+                  if (widget.content.isNotEmpty) _buildContent(),
+                  if (widget.content.isNotEmpty) noteSeparator,
+                  if (widget.tags.isNotEmpty) _buildTags(),
+                  if (widget.tags.isNotEmpty) noteSeparator,
+                  _buildDate(),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
