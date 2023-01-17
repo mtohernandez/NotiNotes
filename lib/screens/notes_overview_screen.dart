@@ -144,6 +144,7 @@ class NotesOverviewScreen extends StatelessWidget {
                                             (note) => NoteItem(
                                               note.tags,
                                               note.imageFile,
+                                              note.patternImage,
                                               id: note.id,
                                               title: note.title,
                                               content: note.content,
@@ -162,6 +163,7 @@ class NotesOverviewScreen extends StatelessWidget {
                                             (note) => NoteItem(
                                               note.tags,
                                               note.imageFile,
+                                               note.patternImage,
                                               id: note.id,
                                               title: note.title,
                                               content: note.content,
@@ -179,6 +181,7 @@ class NotesOverviewScreen extends StatelessWidget {
                                             (note) => NoteItem(
                                               note.tags,
                                               note.imageFile,
+                                              note.patternImage,
                                               id: note.id,
                                               title: note.title,
                                               content: note.content,

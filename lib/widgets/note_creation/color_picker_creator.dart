@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as convertion;
+import 'package:noti_notes_app/helpers/asset_converter.dart';
 import 'package:noti_notes_app/helpers/color_picker.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
@@ -20,12 +21,14 @@ class ColorPickerCreator extends StatefulWidget {
 
 class _ColorPickerCreatorState extends State<ColorPickerCreator> {
   late Color selectedColor;
+  late File? selectedPattern;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     selectedColor = Provider.of<Notes>(context).findColor(widget.id);
+    selectedPattern = Provider.of<Notes>(context).findPatternImage(widget.id);
   }
 
   @override
@@ -160,18 +163,29 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                   children: [
                     ...ColorPicker.patterns
                         .map(
-                          (pattern) => Container(
-                            margin: const EdgeInsets.only(right: 5),
-                            width: circleShape,
-                            height: circleShape,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: pattern,
-                                fit: BoxFit.cover,
+                          (pattern) => GestureDetector(
+                            onTap: () async {
+                              if (selectedPattern == pattern) {
+                                return;
+                              }else{
+                                  selectedPattern = await AssetConverter.getImageFileFromAssets(pattern); // Fix this
+                                setState(() {}); // Force to update
+                                notes.changeCurrentPattern(widget.id, selectedPattern);
+                              }
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 5),
+                              width: circleShape,
+                              height: circleShape,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(pattern),
+                                  fit: BoxFit.cover,
+                                ),
+                                color: Colors.black,
+                                // borderRadius: BorderRadius.circular(10),
+                                shape: BoxShape.circle,
                               ),
-                              color: Colors.black,
-                              // borderRadius: BorderRadius.circular(10),
-                              shape: BoxShape.circle,
                             ),
                           ),
                         )

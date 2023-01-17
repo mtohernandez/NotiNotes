@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import 'dart:io';
 
 class ColorPicker {
   static Color defaultColor = const Color(0xffEF233C);
@@ -16,28 +17,27 @@ class ColorPicker {
 
   static void updateColors() {}
 
-  static final List<ImageProvider<Object>> patterns = [
-    const AssetImage(
+  static final List<String> patterns = [
+
       'lib/assets/images/patterns/polygons.png',
-    ),
-    const AssetImage(
+
+
       'lib/assets/images/patterns/pureNoisePNG.png',
-    ),
-    const AssetImage(
+
       'lib/assets/images/patterns/splashesPNG.png',
-    ),
-    const AssetImage(
+
+
       'lib/assets/images/patterns/upScaleWavesPNG.png',
-    ),
-    const AssetImage(
+ 
+
       'lib/assets/images/patterns/wavesRegulatedPNG.png',
-    ),
-    const AssetImage(
+
+
       'lib/assets/images/patterns/wavesUnregulatedPNG.png',
-    ),
-    const AssetImage(
+
+
       'lib/assets/images/patterns/klaeidoscope.png',
-    ),
+
   ];
 
   static final List<Color> fontColors = [

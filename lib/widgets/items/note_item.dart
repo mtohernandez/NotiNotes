@@ -14,12 +14,14 @@ class NoteItem extends StatefulWidget {
   final String content;
   final Set<String> tags;
   final File? imageFile;
+  final File? patternImage;
   final DateTime date;
   Color colorBackground;
 
   NoteItem(
     this.tags,
-    this.imageFile, {
+    this.imageFile, 
+    this.patternImage,{
     super.key,
     required this.id,
     required this.title,
@@ -161,14 +163,14 @@ class _NoteItemState extends State<NoteItem> {
         child: Stack(
           children: [
             // This is how to add the pattern image
-            // ClipRRect(
-            //   borderRadius: BorderRadius.circular(30),
-            //   child: Image.asset(
-            //     'lib/assets/images/patterns/polygons.png',
-            //     color: widget.colorBackground,
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: Image.asset(
+                widget.patternImage!.path,
+                color: widget.colorBackground,
+                fit: BoxFit.cover,
+              ),
+            ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),

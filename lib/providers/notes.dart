@@ -21,6 +21,7 @@ enum ToolingNote {
   addImage,
   removeImage,
   color,
+  patternImage,
 }
 
 class Notes with ChangeNotifier {
@@ -96,7 +97,8 @@ class Notes with ChangeNotifier {
 
   void updateNotesOnDataBase(List<Note> notes) {
     for (var note in notes) {
-      DbHelper.insertUpdateData(DbHelper.notesBoxName, note.id, jsonEncode(note.toJson()));
+      DbHelper.insertUpdateData(
+          DbHelper.notesBoxName, note.id, jsonEncode(note.toJson()));
     }
     // notifyListeners();
   }
@@ -172,6 +174,10 @@ class Notes with ChangeNotifier {
     return _notes.firstWhere((note) => note.id == id).colorBackground;
   }
 
+  File? findPatternImage(String id) {
+    return _notes.firstWhere((note) => note.id == id).patternImage;
+  }
+
   //? Tooling for note changing
 
   void toolingNote(String id, ToolingNote tooling, dynamic value,
@@ -189,6 +195,8 @@ class Notes with ChangeNotifier {
         _notes[noteIndex].tags.remove(_notes[noteIndex].tags.elementAt(index));
       } else if (tooling == ToolingNote.color) {
         _notes[noteIndex].colorBackground = value;
+      }else if (tooling == ToolingNote.patternImage) {
+        _notes[noteIndex].patternImage = value;
       }
 
       notifyListeners();
@@ -213,6 +221,10 @@ class Notes with ChangeNotifier {
 
   void changeCurrentColor(String id, Color color) {
     toolingNote(id, ToolingNote.color, color);
+  }
+
+  void changeCurrentPattern(String id, File? pattern) {
+    toolingNote(id, ToolingNote.patternImage, pattern);
   }
 
   void toggleTask(String id, int index) {
