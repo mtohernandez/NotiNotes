@@ -11,6 +11,7 @@ import '../widgets/items/todo_list_tool.dart';
 import '../widgets/items/bottom_tools_item.dart';
 import '../widgets/media_grid.dart';
 import '../widgets/items/appbar_note_title.dart';
+import '../widgets/note_creation/display_selector.dart';
 
 import '../models/note.dart';
 
@@ -42,6 +43,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
     content: '',
     dateCreated: DateTime.now(),
     colorBackground: ColorPicker.defaultColor,
+    fontColor: ColorPicker.defaultFontColor,
   );
 
   @override
@@ -70,7 +72,8 @@ class _NoteViewScreenState extends State<NoteViewScreen>
               title: '',
               content: '',
               dateCreated: DateTime.now(),
-              colorBackground: Colors.pink,
+              colorBackground: ColorPicker.defaultColor,
+              fontColor: ColorPicker.defaultFontColor,
             );
             Provider.of<Notes>(context, listen: false).addNote(loadedNote);
           } else {
@@ -126,6 +129,21 @@ class _NoteViewScreenState extends State<NoteViewScreen>
     );
   }
 
+  void openDisplayMode(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (bctx) {
+        return Wrap(
+          children: [
+            DisplaySelector(loadedNote.id),
+          ],
+        );
+      },
+    );
+  }
+
   void removeImage() {
     Provider.of<Notes>(context, listen: false)
         .removeImageFromNote(loadedNote.id);
@@ -163,6 +181,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
             BottomToolsItem(
               pickImage: openMediaPicker,
               addTags: openTagCreator,
+              displayMode: openDisplayMode,
               id: loadedNote.id,
               colorBeforeChange: loadedNote.colorBackground, //! TO FIX
               tabController: _tabController,

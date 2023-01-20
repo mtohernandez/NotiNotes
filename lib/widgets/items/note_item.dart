@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:noti_notes_app/helpers/color_picker.dart';
 import 'dart:io';
 import 'package:provider/provider.dart';
 
 import '../../providers/search.dart';
 import '../../screens/note_view_screen.dart';
 import '../../providers/notes.dart';
+import '../items/todo_item.dart';
 import 'tag_item.dart';
 
 class NoteItem extends StatefulWidget {
@@ -13,21 +15,25 @@ class NoteItem extends StatefulWidget {
   final String title;
   final String content;
   final Set<String> tags;
+  final List<Map<String, dynamic>> todoList;
   final File? imageFile;
-  final File? patternImage;
+  final String? patternImage;
   final DateTime date;
   Color colorBackground;
+  Color fontColor;
 
   NoteItem(
     this.tags,
-    this.imageFile, 
-    this.patternImage,{
+    this.imageFile,
+    this.patternImage,
+    this.todoList, {
     super.key,
     required this.id,
     required this.title,
     required this.content,
     required this.date,
     required this.colorBackground,
+    required this.fontColor,
   });
 
   @override
@@ -36,6 +42,13 @@ class NoteItem extends StatefulWidget {
 
 class _NoteItemState extends State<NoteItem> {
   var isSelected = false;
+  late Notes notes;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    notes = Provider.of<Notes>(context, listen: false);
+  }
 
   Widget _buildHeroImage() {
     return Hero(
@@ -57,16 +70,43 @@ class _NoteItemState extends State<NoteItem> {
   Widget _buildTitle() {
     return Text(
       widget.title,
-      style: Theme.of(context).textTheme.headline2,
+      style: Theme.of(context)
+          .textTheme
+          .headline2!
+          .copyWith(color: widget.fontColor),
     );
   }
 
   Widget _buildContent() {
     return Text(
       widget.content,
-      style: Theme.of(context).textTheme.bodyText1,
+      style: Theme.of(context)
+          .textTheme
+          .bodyText1!
+          .copyWith(color: widget.fontColor),
       maxLines: 4,
       overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Widget _buildTodoList() {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.1,
+      alignment: Alignment.topLeft,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: widget.todoList.length,
+        itemBuilder: (context, index) => TodoItem(
+          isForNote: true,
+          id: widget.id,
+          notesProvider: notes,
+          indexTask: index,
+          fullLength: notes.findById(widget.id).todoList.length,
+          title: notes.findById(widget.id).todoList[index]['content'],
+          isChecked: notes.findById(widget.id).todoList[index]['isChecked'],
+          focusScopeNode: null,
+        ),
+      ),
     );
   }
 
@@ -94,7 +134,7 @@ class _NoteItemState extends State<NoteItem> {
     return Text(
       DateFormat('MMM d, yyyy').format(widget.date),
       style: TextStyle(
-        color: Theme.of(context).primaryColor.withOpacity(.5),
+        color: widget.fontColor.withOpacity(.5),
         fontSize: Theme.of(context).textTheme.bodyText1!.fontSize!,
       ),
     );
@@ -115,12 +155,6 @@ class _NoteItemState extends State<NoteItem> {
         ),
       ],
     );
-  }
-
-  void selectNote() {
-    setState(() {
-      isSelected = true;
-    });
   }
 
   @override
@@ -146,14 +180,26 @@ class _NoteItemState extends State<NoteItem> {
         }
       },
       onLongPress: () {
+        // Here i need toy to use the notes to delete array instead of the bool variable, just use it to check if the note is selected or not
         if (isSearching.isSearching == SearchType.notSearching) {
           notes.activateEditMode();
-          selectNote();
+          isSelected = true;
+          setState(() {});
         }
       },
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
+          image: widget.patternImage != null
+              ? DecorationImage(
+                  image: AssetImage(widget.patternImage!),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    ColorPicker.darken(widget.colorBackground, 0.1),
+                    BlendMode.srcATop,
+                  ),
+                )
+              : null,
           color: isSelected
               ? widget.colorBackground.withOpacity(.5)
               : widget.colorBackground,
@@ -162,15 +208,6 @@ class _NoteItemState extends State<NoteItem> {
         ),
         child: Stack(
           children: [
-            // This is how to add the pattern image
-            ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: Image.asset(
-                widget.patternImage!.path,
-                color: widget.colorBackground,
-                fit: BoxFit.cover,
-              ),
-            ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
@@ -187,6 +224,7 @@ class _NoteItemState extends State<NoteItem> {
                   if (widget.title.isNotEmpty) noteSeparator,
                   if (widget.content.isNotEmpty) _buildContent(),
                   if (widget.content.isNotEmpty) noteSeparator,
+                  if (widget.todoList.isNotEmpty) _buildTodoList(),
                   if (widget.tags.isNotEmpty) _buildTags(),
                   if (widget.tags.isNotEmpty) noteSeparator,
                   _buildDate(),

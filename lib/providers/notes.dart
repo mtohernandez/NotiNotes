@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:noti_notes_app/helpers/database_helper.dart';
 import 'package:noti_notes_app/helpers/photo_picker.dart';
 import 'package:string_similarity/string_similarity.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+// import 'package:hive_flutter/hive_flutter.dart';
 import 'package:collection/collection.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -22,6 +22,7 @@ enum ToolingNote {
   removeImage,
   color,
   patternImage,
+  fontColor,
 }
 
 class Notes with ChangeNotifier {
@@ -76,9 +77,7 @@ class Notes with ChangeNotifier {
           noteDecoded['imageFile'] != null
               ? File(noteDecoded['imageFile'])
               : null,
-          noteDecoded['patternImage'] != null
-              ? File(noteDecoded['patternImage'])
-              : null,
+          noteDecoded['patternImage'],
           noteDecoded['todoList'].cast<Map<String, dynamic>>(),
           noteDecoded['reminder'] != ''
               ? DateTime.parse(noteDecoded['reminder'])
@@ -88,6 +87,8 @@ class Notes with ChangeNotifier {
           content: noteDecoded['content'],
           dateCreated: DateTime.parse(noteDecoded['dateCreated']),
           colorBackground: Color(noteDecoded['colorBackground']),
+          fontColor: Color(noteDecoded['fontColor']),
+          displayMode: DisplayMode.values[noteDecoded['displayMode']],
         ),
       );
     }
@@ -174,8 +175,12 @@ class Notes with ChangeNotifier {
     return _notes.firstWhere((note) => note.id == id).colorBackground;
   }
 
-  File? findPatternImage(String id) {
-    return _notes.firstWhere((note) => note.id == id).patternImage;
+  Color findFontColor(String id) {
+    return _notes.firstWhere((note) => note.id == id).fontColor;
+  }
+
+  String? findPatternImage(String id) {
+    return _notes.firstWhereOrNull((note) => note.id == id)!.patternImage;
   }
 
   //? Tooling for note changing
@@ -195,8 +200,10 @@ class Notes with ChangeNotifier {
         _notes[noteIndex].tags.remove(_notes[noteIndex].tags.elementAt(index));
       } else if (tooling == ToolingNote.color) {
         _notes[noteIndex].colorBackground = value;
-      }else if (tooling == ToolingNote.patternImage) {
+      } else if (tooling == ToolingNote.patternImage) {
         _notes[noteIndex].patternImage = value;
+      } else if (tooling == ToolingNote.fontColor) {
+        _notes[noteIndex].fontColor = value;
       }
 
       notifyListeners();
@@ -223,8 +230,12 @@ class Notes with ChangeNotifier {
     toolingNote(id, ToolingNote.color, color);
   }
 
-  void changeCurrentPattern(String id, File? pattern) {
+  void changeCurrentPattern(String id, String? pattern) {
     toolingNote(id, ToolingNote.patternImage, pattern);
+  }
+
+  void changeCurrentFontColor(String id, Color color) {
+    toolingNote(id, ToolingNote.fontColor, color);
   }
 
   void toggleTask(String id, int index) {

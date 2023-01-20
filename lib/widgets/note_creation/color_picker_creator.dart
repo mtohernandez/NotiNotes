@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart' as convertion;
-import 'package:noti_notes_app/helpers/asset_converter.dart';
 import 'package:noti_notes_app/helpers/color_picker.dart';
 import 'package:provider/provider.dart';
-import 'dart:io';
 
 import '../../widgets/items/icon_button_x_item.dart';
 
 import '../../providers/notes.dart';
-import '../../models/note.dart';
 
 class ColorPickerCreator extends StatefulWidget {
   final String id;
@@ -21,7 +16,8 @@ class ColorPickerCreator extends StatefulWidget {
 
 class _ColorPickerCreatorState extends State<ColorPickerCreator> {
   late Color selectedColor;
-  late File? selectedPattern;
+  late Color selectedFontColor;
+  late String? selectedPattern;
 
   @override
   void didChangeDependencies() {
@@ -29,6 +25,7 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
 
     selectedColor = Provider.of<Notes>(context).findColor(widget.id);
     selectedPattern = Provider.of<Notes>(context).findPatternImage(widget.id);
+    selectedFontColor = Provider.of<Notes>(context).findFontColor(widget.id);
   }
 
   @override
@@ -167,10 +164,12 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                             onTap: () async {
                               if (selectedPattern == pattern) {
                                 return;
-                              }else{
-                                  selectedPattern = await AssetConverter.getImageFileFromAssets(pattern); // Fix this
-                                setState(() {}); // Force to update
-                                notes.changeCurrentPattern(widget.id, selectedPattern);
+                              } else {
+                                setState(() {
+                                  selectedPattern = pattern;
+                                }); // Force to update
+                                notes.changeCurrentPattern(
+                                    widget.id, selectedPattern);
                               }
                             },
                             child: Container(
@@ -185,6 +184,12 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                                 color: Colors.black,
                                 // borderRadius: BorderRadius.circular(10),
                                 shape: BoxShape.circle,
+                                border: selectedPattern == pattern
+                                    ? Border.all(
+                                        color: Colors.white,
+                                        width: 2,
+                                      )
+                                    : null,
                               ),
                             ),
                           ),
@@ -206,7 +211,7 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                 style: Theme.of(context).textTheme.headline3,
               ),
               Text(
-                'Default is white, Try something different.',
+                'Default is white, try something different.',
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
                       color: Theme.of(context)
                           .textTheme
@@ -239,14 +244,33 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                     ),
                     ...ColorPicker.fontColors
                         .map(
-                          (color) => Container(
-                            margin: const EdgeInsets.only(right: 5),
-                            width: circleShape,
-                            height: circleShape,
-                            decoration: BoxDecoration(
-                              color: color,
-                              // borderRadius: BorderRadius.circular(10),
-                              shape: BoxShape.circle,
+                          (color) => GestureDetector(
+                            onTap: () {
+                              if (color == selectedFontColor) {
+                                return;
+                              } else {
+                                setState(() {
+                                  selectedFontColor = color;
+                                });
+                                notes.changeCurrentFontColor(
+                                    widget.id, selectedFontColor);
+                              }
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 5),
+                              width: circleShape,
+                              height: circleShape,
+                              decoration: BoxDecoration(
+                                color: color,
+                                // borderRadius: BorderRadius.circular(10),
+                                shape: BoxShape.circle,
+                                border: color == selectedFontColor
+                                    ? Border.all(
+                                        color: Colors.white,
+                                        width: 2,
+                                      )
+                                    : null,
+                              ),
                             ),
                           ),
                         )

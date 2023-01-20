@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../providers/notes.dart';
 
@@ -10,7 +11,8 @@ class TodoItem extends StatefulWidget {
   final int fullLength;
   final String title;
   final bool isChecked;
-  final FocusScopeNode focusScopeNode;
+  final FocusScopeNode? focusScopeNode;
+  final bool isForNote;
   const TodoItem({
     required this.id,
     required this.notesProvider,
@@ -19,6 +21,7 @@ class TodoItem extends StatefulWidget {
     required this.title,
     required this.isChecked,
     required this.focusScopeNode,
+    required this.isForNote,
     super.key,
   });
 
@@ -34,7 +37,7 @@ class _TodoItemState extends State<TodoItem> {
   @override
   void initState() {
     textNode = FocusNode(
-      descendantsAreFocusable: true,
+      descendantsAreFocusable: true, // I dont really know what this does
     );
     keyBoardNode = FocusNode();
     textController = TextEditingController.fromValue(
@@ -45,7 +48,9 @@ class _TodoItemState extends State<TodoItem> {
     );
     if (widget.indexTask == widget.fullLength - 1 &&
         textController.text.isEmpty) {
-      widget.focusScopeNode.requestFocus(textNode);
+      if (widget.focusScopeNode != null) {
+        widget.focusScopeNode!.requestFocus(textNode);
+      }
     }
     super.initState();
   }
@@ -61,70 +66,96 @@ class _TodoItemState extends State<TodoItem> {
   // final keyBoardNode = FocusNode();
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: IconButton(
-        style: ButtonStyle(
-            padding: MaterialStateProperty.all(EdgeInsets.zero),
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            minimumSize: MaterialStateProperty.all(const Size(30, 0))),
-        onPressed: () {
-          widget.notesProvider.toggleTask(widget.id, widget.indexTask);
-        },
-        icon: !widget.isChecked
-            ? Icon(
-                Icons.check_box_outline_blank,
-                color: Theme.of(context).primaryColor,
-              )
-            : Icon(
-                Icons.check_box,
-                color: Theme.of(context).primaryColor,
-              ),
-      ),
-      title: RawKeyboardListener(
-        focusNode: keyBoardNode,
-        onKey: (event) {
-          if (event.isKeyPressed(LogicalKeyboardKey.backspace) &&
-              textController.text.isEmpty) {
-            // widget.focusScopeNode.requestFocus(textNode.ancestors.first);
-            widget.notesProvider.removeTask(widget.id, widget.indexTask);
-            // keyBoardNode.unfocus();
-            FocusScope.of(context).unfocus();
-          }
-        },
-        child: TextFormField(
-          // initialValue: title,
-          // autofocus: true,
-          controller: textController,
-          focusNode: textNode,
-          textInputAction: TextInputAction.next,
-          // focusNode: textNode,
-          style: !widget.isChecked
-              ? Theme.of(context).textTheme.bodyText1
-              : Theme.of(context).textTheme.bodyText1!.copyWith(
-                    decoration: TextDecoration.lineThrough,
+    final colorTodo = widget.isForNote
+        ? widget.notesProvider.findById(widget.id).fontColor
+        : Theme.of(context).primaryColor;
+
+    final heightContainer = widget.isForNote
+        ? Theme.of(context).textTheme.bodyText1!.fontSize! * 2.0
+        : Theme.of(context).textTheme.bodyText1!.fontSize! * 2.5;
+
+    return Container(
+      width: double.infinity,
+      height: heightContainer,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        // contentPadding: EdgeInsets.zero,
+        children: [
+          IconButton(
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(
+              minWidth: 24,
+              minHeight: 24,
+            ),
+            onPressed: () {
+              widget.notesProvider.toggleTask(widget.id, widget.indexTask);
+            },
+            icon: !widget.isChecked
+                ? SvgPicture.asset(
+                    'lib/assets/icons/checkUnchecked.svg',
+                    color: colorTodo,
+                  )
+                : SvgPicture.asset(
+                    'lib/assets/icons/checkChecked.svg',
+                    color: colorTodo,
                   ),
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.zero,
-            border: InputBorder.none,
-            hintText: 'Add content...',
-            hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  color: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .color!
-                      .withOpacity(0.5),
-                ),
           ),
-          onChanged: (value) => widget.notesProvider
-              .updateTask(widget.id, widget.indexTask, value),
-          onFieldSubmitted: (value) {
-            if (widget.indexTask == widget.fullLength - 1) {
-              widget.notesProvider.addTask(widget.id);
-              // widget.focusScopeNode.nextFocus();
-            }
-          },
-        ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: RawKeyboardListener(
+              focusNode: keyBoardNode,
+              onKey: (event) {
+                if (event.isKeyPressed(LogicalKeyboardKey.backspace) &&
+                    textController.text.isEmpty) {
+                  // widget.focusScopeNode.requestFocus(textNode.ancestors.first);
+                  widget.notesProvider.removeTask(widget.id, widget.indexTask);
+                  // keyBoardNode.unfocus();
+                  FocusScope.of(context).unfocus();
+                }
+              },
+              child: TextFormField(
+                // initialValue: title,
+                // autofocus: true,
+
+                enabled: !widget.isForNote,
+                controller: textController,
+                focusNode: textNode,
+                textInputAction: TextInputAction.next,
+                // focusNode: textNode,
+                style: !widget.isChecked
+                    ? Theme.of(context).textTheme.bodyText1!.copyWith(
+                          color: colorTodo,
+                        )
+                    : Theme.of(context).textTheme.bodyText1!.copyWith(
+                          color: colorTodo,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                decoration: InputDecoration(
+                  isDense: true, // WHAT
+                  contentPadding: EdgeInsets.zero,
+                  border: InputBorder.none,
+                  hintText: 'Add content...',
+                  hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .color!
+                            .withOpacity(0.5),
+                      ),
+                ),
+                onChanged: (value) => widget.notesProvider
+                    .updateTask(widget.id, widget.indexTask, value),
+                onFieldSubmitted: (value) {
+                  if (widget.indexTask == widget.fullLength - 1) {
+                    widget.notesProvider.addTask(widget.id);
+                    // widget.focusScopeNode.nextFocus();
+                  }
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

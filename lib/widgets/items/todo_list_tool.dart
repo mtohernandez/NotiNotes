@@ -67,6 +67,7 @@ class _TodoListToolState extends State<TodoListTool> {
                           // itemCount: todoList.length,
                           itemBuilder: ((context, index) {
                             return TodoItem(
+                              isForNote: false,
                               id: widget.id,
                               notesProvider: notes,
                               indexTask: index,

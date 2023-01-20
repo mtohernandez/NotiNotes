@@ -9,12 +9,14 @@ import '../../providers/notes.dart';
 class BottomToolsItem extends StatelessWidget {
   final Function pickImage;
   final Function addTags;
+  final Function displayMode;
   final String id;
   Color colorBeforeChange; //! TO FIX
   final TabController tabController;
   BottomToolsItem({
     required this.pickImage,
     required this.addTags,
+    required this.displayMode,
     required this.colorBeforeChange, //! TO FIX
     required this.id,
     required this.tabController,
@@ -96,7 +98,9 @@ class BottomToolsItem extends StatelessWidget {
                   'lib/assets/icons/brush.svg',
                   color: Theme.of(context).primaryColor.withOpacity(.2),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  displayMode(context);
+                },
               ),
               IconButton(
                 icon: SvgPicture.asset(

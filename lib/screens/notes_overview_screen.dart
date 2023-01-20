@@ -145,12 +145,14 @@ class NotesOverviewScreen extends StatelessWidget {
                                               note.tags,
                                               note.imageFile,
                                               note.patternImage,
+                                              note.todoList,
                                               id: note.id,
                                               title: note.title,
                                               content: note.content,
                                               date: note.dateCreated,
                                               colorBackground:
                                                   note.colorBackground,
+                                              fontColor: note.fontColor,
                                             ),
                                           )
                                           .toList(),
@@ -163,13 +165,15 @@ class NotesOverviewScreen extends StatelessWidget {
                                             (note) => NoteItem(
                                               note.tags,
                                               note.imageFile,
-                                               note.patternImage,
+                                              note.patternImage,
+                                              note.todoList,
                                               id: note.id,
                                               title: note.title,
                                               content: note.content,
                                               date: note.dateCreated,
                                               colorBackground:
                                                   note.colorBackground,
+                                              fontColor: note.fontColor,
                                             ),
                                           )
                                           .toList(),
@@ -182,12 +186,14 @@ class NotesOverviewScreen extends StatelessWidget {
                                               note.tags,
                                               note.imageFile,
                                               note.patternImage,
+                                              note.todoList,
                                               id: note.id,
                                               title: note.title,
                                               content: note.content,
                                               date: note.dateCreated,
                                               colorBackground:
                                                   note.colorBackground,
+                                              fontColor: note.fontColor,
                                             ),
                                           )
                                           .toList(),

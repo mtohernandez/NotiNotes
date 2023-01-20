@@ -77,6 +77,8 @@ flutter:
     - lib/assets/images/noProfilePicture.png
     - lib/assets/icons/plus.svg
     - lib/assets/icons/check.svg
+    - lib/assets/icons/checkUnchecked.svg
+    - lib/assets/icons/checkChecked.svg
     - lib/assets/icons/x.svg
     - lib/assets/icons/xFlat.svg
     - lib/assets/icons/hashtag.svg
@@ -90,6 +92,10 @@ flutter:
     - lib/assets/icons/gallery.svg
     - lib/assets/icons/removeUser.svg
     - lib/assets/icons/brush.svg
+    - lib/assets/icons/contentDisplay.svg
+    - lib/assets/icons/imageDisplay.svg
+    - lib/assets/icons/normalDisplay.svg
+    - lib/assets/icons/todolistDisplay.svg
     - lib/assets/images/patterns/polygons.png
     - lib/assets/images/patterns/pureNoisePNG.png
     - lib/assets/images/patterns/splashesPNG.png
