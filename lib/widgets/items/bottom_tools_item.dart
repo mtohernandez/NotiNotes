@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:noti_notes_app/models/note.dart';
 import 'package:noti_notes_app/widgets/note_creation/color_picker_creator.dart';
 import 'package:provider/provider.dart';
 
@@ -96,7 +97,9 @@ class BottomToolsItem extends StatelessWidget {
               IconButton(
                 icon: SvgPicture.asset(
                   'lib/assets/icons/brush.svg',
-                  color: Theme.of(context).primaryColor.withOpacity(.2),
+                  color: notes.findById(id).displayMode != DisplayMode.normal
+                      ? Theme.of(context).primaryColor.withOpacity(.5)
+                      : Theme.of(context).primaryColor.withOpacity(.2),
                 ),
                 onPressed: () {
                   displayMode(context);

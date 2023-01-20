@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:noti_notes_app/helpers/color_picker.dart';
+import 'package:noti_notes_app/models/note.dart';
 import 'dart:io';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,7 @@ class NoteItem extends StatefulWidget {
   final File? imageFile;
   final String? patternImage;
   final DateTime date;
+  final DisplayMode displayMode;
   Color colorBackground;
   Color fontColor;
 
@@ -34,6 +36,7 @@ class NoteItem extends StatefulWidget {
     required this.date,
     required this.colorBackground,
     required this.fontColor,
+    required this.displayMode,
   });
 
   @override
@@ -218,14 +221,26 @@ class _NoteItemState extends State<NoteItem> {
                       widget.title.isEmpty &&
                       widget.content.isEmpty)
                     _buildEmptyNote(),
-                  if (widget.imageFile != null) _buildHeroImage(),
-                  if (widget.imageFile != null) noteSeparator,
+                  if (widget.imageFile != null &&
+                      widget.displayMode == DisplayMode.withImage)
+                    _buildHeroImage(),
+                  if (widget.imageFile != null &&
+                      widget.displayMode == DisplayMode.withImage)
+                    noteSeparator,
                   if (widget.title.isNotEmpty) _buildTitle(),
                   if (widget.title.isNotEmpty) noteSeparator,
-                  if (widget.content.isNotEmpty) _buildContent(),
-                  if (widget.content.isNotEmpty) noteSeparator,
-                  if (widget.todoList.isNotEmpty) _buildTodoList(),
-                  if (widget.tags.isNotEmpty) _buildTags(),
+                  if (widget.content.isNotEmpty &&
+                      widget.displayMode != DisplayMode.withoutContent)
+                    _buildContent(),
+                  if (widget.content.isNotEmpty &&
+                      widget.displayMode != DisplayMode.withoutContent)
+                    noteSeparator,
+                  if (widget.todoList.isNotEmpty &&
+                      widget.displayMode == DisplayMode.withTodoList)
+                    _buildTodoList(),
+                  if (widget.tags.isNotEmpty &&
+                      widget.displayMode == DisplayMode.withTodoList)
+                    _buildTags(),
                   if (widget.tags.isNotEmpty) noteSeparator,
                   _buildDate(),
                 ],

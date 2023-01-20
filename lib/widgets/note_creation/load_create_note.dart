@@ -39,11 +39,6 @@ class LoadCreateNote extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      // color: Theme.of(context).backgroundColor,
-                      // child: Image.file(
-                      //   loadedNote.imageFile!,
-                      //   fit: BoxFit.cover,
-                      // ),
                     ),
                   ),
                   Positioned(

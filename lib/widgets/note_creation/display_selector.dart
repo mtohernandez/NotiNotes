@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:noti_notes_app/helpers/display_helper.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/notes.dart';
 
 import '../../widgets/items/icon_button_x_item.dart';
+import '../../models/note.dart';
 
-class DisplaySelector extends StatefulWidget {
+class DisplaySelector extends StatelessWidget {
   final String id;
-  const DisplaySelector(this.id, {super.key});
-
-  @override
-  State<DisplaySelector> createState() => _DisplaySelectorState();
-}
-
-class _DisplaySelectorState extends State<DisplaySelector> {
-  void exitCreator() {
-    Navigator.of(context).pop();
-  }
+  final DisplayMode displayMode;
+  const DisplaySelector(this.id, this.displayMode, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    final notes = Provider.of<Notes>(context);
+
+    exitCreator() {
+      Navigator.of(context).pop();
+    }
+
     return Container(
       padding: EdgeInsets.only(
           left: 30,
@@ -24,6 +28,7 @@ class _DisplaySelectorState extends State<DisplaySelector> {
           top: 20,
           bottom: MediaQuery.of(context).viewInsets.bottom),
       width: MediaQuery.of(context).size.width,
+      // height: MediaQuery.of(context).size.height * 0.4,
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
         borderRadius: const BorderRadius.only(
@@ -42,7 +47,53 @@ class _DisplaySelectorState extends State<DisplaySelector> {
               IconButtonXItem(exitCreator),
             ],
           ),
-          // Display selector here
+          const SizedBox(height: 20),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ...DisplayModes.displayModes
+                    .map((e) => GestureDetector(
+                          onTap: () {
+                            notes.changeCurrentDisplay(id, e['display']);
+                          },
+                          child: Opacity(
+                            opacity:
+                                notes.findById(id).displayMode == e['display']
+                                    ? 1
+                                    : 0.5,
+                            child: SvgPicture.asset(
+                              e['asset'],
+                            ),
+                          ),
+                        ))
+                    .toList(),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          Center(
+            child: Text(
+              DisplayModes.getDisplayMode(
+                  notes.findById(id).displayMode)['display']!,
+              style: Theme.of(context).textTheme.headline1,
+            ),
+          ),
+          Center(
+            child: Text(
+              DisplayModes.getDisplayMode(
+                  notes.findById(id).displayMode)['description']!,
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .color!
+                        .withOpacity(0.5),
+                  ),
+            ),
+          ),
+          const SizedBox(height: 20),
         ],
       ),
     );

@@ -23,7 +23,7 @@ class UserInfoScreen extends StatelessWidget {
   Widget _buildMostUsedTags(BuildContext context) {
     // Get a set<string> of the most used tags
     final mostUsedTags =
-        Provider.of<Notes>(context, listen: false).getMostUsetTags();
+        Provider.of<Notes>(context, listen: false).getMostUsedTags();
 
     return mostUsedTags.isNotEmpty
         ? SizedBox(

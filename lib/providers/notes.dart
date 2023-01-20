@@ -9,12 +9,6 @@ import 'dart:convert';
 
 import '../models/note.dart';
 
-enum SqueezedMetric {
-  superSqueezed,
-  squeeezed,
-  notSqueezed,
-}
-
 enum ToolingNote {
   addTag,
   removeTag,
@@ -23,20 +17,11 @@ enum ToolingNote {
   color,
   patternImage,
   fontColor,
+  displayMode,
 }
 
 class Notes with ChangeNotifier {
   List<Note> _notes = [];
-  // final ImagePicker _picker = ImagePicker();
-
-  //? TEST
-  final Map<SqueezedMetric, int> squeezMetrics = {
-    // Testing
-    SqueezedMetric.superSqueezed: 3,
-    SqueezedMetric.squeeezed: 2,
-    SqueezedMetric.notSqueezed: 1,
-  };
-
   bool editMode = false;
   Set<String> notesToDelete = {};
 
@@ -63,6 +48,8 @@ class Notes with ChangeNotifier {
     editMode = false;
     notifyListeners();
   }
+
+  //? Load all notes from database
 
   void loadNotesFromDataBase() {
     final notesBox = DbHelper.getBox(DbHelper.notesBoxName);
@@ -113,7 +100,21 @@ class Notes with ChangeNotifier {
     _notes.add(note);
   }
 
-  //? Multiple note deletion
+  //? Note Searching
+
+  Note findById(String id) {
+    return _notes.firstWhere((note) => note.id == id);
+  }
+
+  Note? findByIdOrNull(String id) {
+    return _notes.firstWhereOrNull((note) => note.id == id);
+  }
+
+  int findIndex(String id) {
+    return _notes.indexWhere((note) => note.id == id);
+  }
+
+  //? Note deletion
 
   Future<void> removeSelectedNotes(Set<String> ids) async {
     _notes.removeWhere((note) => ids.contains(note.id));
@@ -132,12 +133,12 @@ class Notes with ChangeNotifier {
     notifyListeners();
   }
 
-  //? Updating single note
+  //? Note Updating
 
   void updateNote(
     Note noteUpdated,
   ) {
-    final noteIndex = _notes.indexWhere((note) => note.id == noteUpdated.id);
+    final noteIndex = findIndex(noteUpdated.id);
     if (noteIndex >= 0) {
       _notes[noteIndex] = noteUpdated;
       notifyListeners();
@@ -157,18 +158,6 @@ class Notes with ChangeNotifier {
     return _notes
         .where((note) => note.tags.intersection(tags).isNotEmpty ? true : false)
         .toList();
-  }
-
-  Note findById(String id) {
-    return _notes.firstWhere((note) => note.id == id);
-  }
-
-  Note? findByIdOrNull(String id) {
-    return _notes.firstWhereOrNull((note) => note.id == id);
-  }
-
-  int findIndex(String id) {
-    return _notes.indexWhere((note) => note.id == id);
   }
 
   Color findColor(String id) {
@@ -204,6 +193,8 @@ class Notes with ChangeNotifier {
         _notes[noteIndex].patternImage = value;
       } else if (tooling == ToolingNote.fontColor) {
         _notes[noteIndex].fontColor = value;
+      } else if (tooling == ToolingNote.displayMode) {
+        _notes[noteIndex].displayMode = value;
       }
 
       notifyListeners();
@@ -236,6 +227,10 @@ class Notes with ChangeNotifier {
 
   void changeCurrentFontColor(String id, Color color) {
     toolingNote(id, ToolingNote.fontColor, color);
+  }
+
+  void changeCurrentDisplay(String id, DisplayMode mode) {
+    toolingNote(id, ToolingNote.displayMode, mode);
   }
 
   void toggleTask(String id, int index) {
@@ -275,7 +270,7 @@ class Notes with ChangeNotifier {
   }
 
   // Co pilot did this
-  Set<String> getMostUsetTags() {
+  Set<String> getMostUsedTags() {
     final tags = <String, int>{};
     for (var note in _notes) {
       for (var tag in note.tags) {

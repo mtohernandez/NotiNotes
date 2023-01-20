@@ -137,7 +137,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
       builder: (bctx) {
         return Wrap(
           children: [
-            DisplaySelector(loadedNote.id),
+            DisplaySelector(loadedNote.id, loadedNote.displayMode),
           ],
         );
       },

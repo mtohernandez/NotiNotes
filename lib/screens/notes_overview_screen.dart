@@ -153,6 +153,7 @@ class NotesOverviewScreen extends StatelessWidget {
                                               colorBackground:
                                                   note.colorBackground,
                                               fontColor: note.fontColor,
+                                              displayMode: note.displayMode,
                                             ),
                                           )
                                           .toList(),
@@ -174,6 +175,7 @@ class NotesOverviewScreen extends StatelessWidget {
                                               colorBackground:
                                                   note.colorBackground,
                                               fontColor: note.fontColor,
+                                              displayMode: note.displayMode,
                                             ),
                                           )
                                           .toList(),
@@ -194,6 +196,7 @@ class NotesOverviewScreen extends StatelessWidget {
                                               colorBackground:
                                                   note.colorBackground,
                                               fontColor: note.fontColor,
+                                              displayMode: note.displayMode,
                                             ),
                                           )
                                           .toList(),
