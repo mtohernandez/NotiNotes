@@ -151,7 +151,7 @@ class Notes with ChangeNotifier {
 
   List<Note> filterByTitle(String name) {
     return _notes
-        .where((note) => note.title.similarityTo(name) > 0.6 ? true : false)
+        .where((note) => note.title.toUpperCase().similarityTo(name.toUpperCase()) > 0.6 ? true : false)
         .toList();
   }
 
