@@ -16,6 +16,7 @@ enum ToolingNote {
   removeImage,
   color,
   patternImage,
+  removePatternImage,
   fontColor,
   displayMode,
 }
@@ -173,7 +174,7 @@ class Notes with ChangeNotifier {
   }
 
   //? Tooling for note changing
-
+  // Convert to switch
   void toolingNote(String id, ToolingNote tooling, dynamic value,
       [int index = 0]) {
     final noteIndex = findIndex(id);
@@ -191,6 +192,8 @@ class Notes with ChangeNotifier {
         _notes[noteIndex].colorBackground = value;
       } else if (tooling == ToolingNote.patternImage) {
         _notes[noteIndex].patternImage = value;
+      }else if (tooling == ToolingNote.removePatternImage) {
+        _notes[noteIndex].patternImage = null;
       } else if (tooling == ToolingNote.fontColor) {
         _notes[noteIndex].fontColor = value;
       } else if (tooling == ToolingNote.displayMode) {
@@ -223,6 +226,10 @@ class Notes with ChangeNotifier {
 
   void changeCurrentPattern(String id, String? pattern) {
     toolingNote(id, ToolingNote.patternImage, pattern);
+  }
+
+  void removeCurrentPattern(String id) {
+    toolingNote(id, ToolingNote.removePatternImage, null);
   }
 
   void changeCurrentFontColor(String id, Color color) {

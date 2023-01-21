@@ -146,20 +146,28 @@ class BottomToolsItem extends StatelessWidget {
                   pickImage(context);
                 },
               ),
-              MaterialButton(
-                onPressed: () async {
-                  //? The colorBeforeChange does change the color value inside the ColorPicker
-                  //? If the _showColorPicker is not canceled (false), the colorBeforeChange will not change
-                  // if (await _showColorPicker(context)) {
-                  //   notes.changeCurrentColor(id, colorBeforeChange);
-                  // }
+              GestureDetector(
+                onTap: () {
                   _showColorPicker(context);
                 },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
+                child: Container(
+                  constraints: const BoxConstraints(
+                      maxHeight: 24, minWidth: 90), //! TO FIX
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: notes.findById(id).colorBackground,
+                    image: notes.findById(id).patternImage != null
+                        ? DecorationImage(
+                            colorFilter: ColorFilter.mode(
+                              notes.findById(id).colorBackground,
+                              BlendMode.dstATop,
+                            ),
+                            image: AssetImage(notes.findById(id).patternImage!),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
+                  ),
                 ),
-                height: 24,
-                color: notes.findById(id).colorBackground,
               ),
             ],
           ),

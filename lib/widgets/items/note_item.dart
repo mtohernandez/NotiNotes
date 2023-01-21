@@ -238,6 +238,9 @@ class _NoteItemState extends State<NoteItem> {
                   if (widget.todoList.isNotEmpty &&
                       widget.displayMode == DisplayMode.withTodoList)
                     _buildTodoList(),
+                  if (widget.todoList.isNotEmpty &&
+                      widget.displayMode == DisplayMode.withTodoList)
+                    noteSeparator,
                   if (widget.tags.isNotEmpty &&
                       widget.displayMode == DisplayMode.withTodoList)
                     _buildTags(),

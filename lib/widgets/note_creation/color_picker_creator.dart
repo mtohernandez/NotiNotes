@@ -233,6 +233,30 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children: [
+                              GestureDetector(
+                                onTap: () {
+                                  notes.removeCurrentPattern(widget.id);
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 5),
+                                  width: circleShape,
+                                  height: circleShape,
+                                  decoration: BoxDecoration(
+                                    // Custom color here
+                                    color: notes
+                                        .findById(widget.id)
+                                        .colorBackground,
+                                    border: !ColorPicker.patterns
+                                            .contains(selectedPattern)
+                                        ? Border.all(
+                                            color: Colors.white,
+                                            width: 2,
+                                          )
+                                        : null,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              ),
                               ...ColorPicker.patterns
                                   .map(
                                     (pattern) => GestureDetector(
@@ -253,6 +277,12 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                                         height: circleShape,
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
+                                            colorFilter: ColorFilter.mode(
+                                              notes
+                                                  .findById(widget.id)
+                                                  .colorBackground,
+                                              BlendMode.dstATop,
+                                            ),
                                             image: AssetImage(pattern),
                                             fit: BoxFit.cover,
                                           ),
