@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:noti_notes_app/helpers/database_helper.dart';
+import 'package:noti_notes_app/helpers/photo_picker.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -32,6 +33,16 @@ class UserData with ChangeNotifier {
       return 'Afternoon';
     }
     return 'Evening';
+  }
+
+  void saveUserToDataBase(User currentUser) {
+    DbHelper.insertUpdateData(
+      DbHelper.userBoxName,
+      'userFromDevice',
+      jsonEncode(
+        currentUser.toJson(),
+      ),
+    );
   }
 
   void randomGreetings(User user) {
@@ -75,16 +86,23 @@ class UserData with ChangeNotifier {
 
   void updateProfilePicture(File? profilePicture) {
     currentUser.profilePicture = profilePicture;
+    saveUserToDataBase(currentUser);
     notifyListeners();
   }
 
   void updateName(String name) {
     currentUser.name = name;
+    saveUserToDataBase(currentUser);
+
     notifyListeners();
   }
 
-  void removeProfilePicture() {
+  Future<void> removeProfilePicture() async {
+    if(currentUser.profilePicture == null) return;
+    await PhotoPicker.removeImage(currentUser.profilePicture!);
     currentUser.profilePicture = null;
+    saveUserToDataBase(currentUser);
+
     notifyListeners();
   }
 
@@ -116,15 +134,4 @@ class UserData with ChangeNotifier {
 
     notifyListeners();
   }
-
-  void saveUserToDataBase(User currentUser) {
-    DbHelper.insertUpdateData(
-      DbHelper.userBoxName,
-      'userFromDevice',
-      jsonEncode(
-        currentUser.toJson(),
-      ),
-    );
-  }
-
 }

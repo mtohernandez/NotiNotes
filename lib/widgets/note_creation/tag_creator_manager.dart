@@ -43,19 +43,7 @@ class _TagCreatorManagerState extends State<TagCreatorManager> {
   @override
   Widget build(BuildContext context) {
     final notes = Provider.of<Notes>(context, listen: false);
-    return Container(
-        padding: EdgeInsets.only(
-            left: 30,
-            right: 30,
-            top: 20,
-            bottom: MediaQuery.of(context).viewInsets.bottom),
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(50), topRight: Radius.circular(50)),
-        ),
-        child: Column(
+    return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -136,6 +124,6 @@ class _TagCreatorManagerState extends State<TagCreatorManager> {
               ),
             ),
           ],
-        ));
+        );
   }
 }

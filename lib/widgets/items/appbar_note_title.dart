@@ -37,6 +37,8 @@ class AppBarNoteTitle extends StatelessWidget implements PreferredSizeWidget {
         onChanged: (value) {
           loadedNote.title = value;
           loadedNote.dateCreated = DateTime.now();
+        },
+        onEditingComplete: (){
           Provider.of<Notes>(context, listen: false).updateNote(loadedNote);
         },
       ),

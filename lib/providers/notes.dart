@@ -22,7 +22,7 @@ enum ToolingNote {
 }
 
 class Notes with ChangeNotifier {
-  List<Note> _notes = [];
+  final List<Note> _notes = [];
   bool editMode = false;
   Set<String> notesToDelete = {};
 
@@ -84,6 +84,11 @@ class Notes with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateNoteOnDataBase(Note note) {
+    DbHelper.insertUpdateData(
+        DbHelper.notesBoxName, note.id, jsonEncode(note.toJson()));
+  }
+
   void updateNotesOnDataBase(List<Note> notes) {
     for (var note in notes) {
       DbHelper.insertUpdateData(
@@ -120,6 +125,9 @@ class Notes with ChangeNotifier {
   Future<void> removeSelectedNotes(Set<String> ids) async {
     _notes.removeWhere((note) => ids.contains(note.id));
     for (var id in ids) {
+      findById(id).imageFile != null
+          ? PhotoPicker.removeImage(findById(id).imageFile!)
+          : null;
       DbHelper.deleteData(DbHelper.notesBoxName, id);
     }
     notifyListeners();
@@ -134,7 +142,7 @@ class Notes with ChangeNotifier {
     notifyListeners();
   }
 
-  //? Note Updating
+  //? Note Updating for temporal memory
 
   void updateNote(
     Note noteUpdated,
@@ -142,16 +150,19 @@ class Notes with ChangeNotifier {
     final noteIndex = findIndex(noteUpdated.id);
     if (noteIndex >= 0) {
       _notes[noteIndex] = noteUpdated;
+      updateNoteOnDataBase(noteUpdated);
       notifyListeners();
     }
-    updateNotesOnDataBase(_notes);
   }
 
   //? Filtering methods
 
   List<Note> filterByTitle(String name) {
     return _notes
-        .where((note) => note.title.toUpperCase().similarityTo(name.toUpperCase()) > 0.6 ? true : false)
+        .where((note) =>
+            note.title.toUpperCase().similarityTo(name.toUpperCase()) > 0.6
+                ? true
+                : false)
         .toList();
   }
 
@@ -178,28 +189,42 @@ class Notes with ChangeNotifier {
   void toolingNote(String id, ToolingNote tooling, dynamic value,
       [int index = 0]) {
     final noteIndex = findIndex(id);
+
     if (noteIndex >= 0) {
-      if (tooling == ToolingNote.addImage) {
-        _notes[noteIndex].imageFile = File(value.path);
-      } else if (tooling == ToolingNote.removeImage) {
-        PhotoPicker.removeImage(_notes[noteIndex].imageFile!);
-        _notes[noteIndex].imageFile = value;
-      } else if (tooling == ToolingNote.addTag) {
-        _notes[noteIndex].tags.add(value);
-      } else if (tooling == ToolingNote.removeTag) {
-        _notes[noteIndex].tags.remove(_notes[noteIndex].tags.elementAt(index));
-      } else if (tooling == ToolingNote.color) {
-        _notes[noteIndex].colorBackground = value;
-      } else if (tooling == ToolingNote.patternImage) {
-        _notes[noteIndex].patternImage = value;
-      }else if (tooling == ToolingNote.removePatternImage) {
-        _notes[noteIndex].patternImage = null;
-      } else if (tooling == ToolingNote.fontColor) {
-        _notes[noteIndex].fontColor = value;
-      } else if (tooling == ToolingNote.displayMode) {
-        _notes[noteIndex].displayMode = value;
+      switch (tooling) {
+        case ToolingNote.addImage:
+          _notes[noteIndex].imageFile = File(value.path);
+          break;
+        case ToolingNote.removeImage:
+          PhotoPicker.removeImage(_notes[noteIndex].imageFile!);
+          _notes[noteIndex].imageFile = value;
+          break;
+        case ToolingNote.addTag:
+          _notes[noteIndex].tags.add(value);
+          break;
+        case ToolingNote.removeTag:
+          _notes[noteIndex]
+              .tags
+              .remove(_notes[noteIndex].tags.elementAt(index));
+          break;
+        case ToolingNote.color:
+          _notes[noteIndex].colorBackground = value;
+          break;
+        case ToolingNote.patternImage:
+          _notes[noteIndex].patternImage = value;
+          break;
+        case ToolingNote.removePatternImage:
+          _notes[noteIndex].patternImage = null;
+          break;
+        case ToolingNote.fontColor:
+          _notes[noteIndex].fontColor = value;
+          break;
+        case ToolingNote.displayMode:
+          _notes[noteIndex].displayMode = value;
+          break;
       }
 
+      updateNoteOnDataBase(_notes[noteIndex]);
       notifyListeners();
     }
   }
@@ -245,6 +270,7 @@ class Notes with ChangeNotifier {
     if (noteIndex >= 0) {
       _notes[noteIndex].todoList[index]['isChecked'] =
           !_notes[noteIndex].todoList[index]['isChecked'];
+      updateNoteOnDataBase(_notes[noteIndex]);
       notifyListeners();
     }
   }
@@ -256,6 +282,7 @@ class Notes with ChangeNotifier {
         'content': '',
         'isChecked': false,
       });
+      updateNoteOnDataBase(_notes[noteIndex]);
       notifyListeners();
     }
   }
@@ -264,6 +291,7 @@ class Notes with ChangeNotifier {
     final noteIndex = findIndex(id);
     if (noteIndex >= 0) {
       _notes[noteIndex].todoList.removeAt(index);
+      updateNoteOnDataBase(_notes[noteIndex]);
       notifyListeners();
     }
   }
@@ -272,6 +300,7 @@ class Notes with ChangeNotifier {
     final noteIndex = findIndex(id);
     if (noteIndex >= 0) {
       _notes[noteIndex].todoList[index]['content'] = content;
+      updateNoteOnDataBase(_notes[noteIndex]);
       notifyListeners();
     }
   }

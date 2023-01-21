@@ -170,7 +170,7 @@ class UserInfoScreen extends StatelessWidget {
                           initialValue: user.curentUserData.name,
                           style: Theme.of(context).textTheme.headline1,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.zero,
+                            contentPadding: const EdgeInsets.only(bottom: 1), // Avoid hint from overlaping bottom
                             border: InputBorder.none,
                             hintText: 'Your name',
                             hintStyle: Theme.of(context).textTheme.headline1,
@@ -184,10 +184,6 @@ class UserInfoScreen extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      // Text(
-                      //   'Favorite Color: ${user.curentUserData.favoriteColor}',
-                      //   style: Theme.of(context).textTheme.headline3,
-                      // ),
                       Text(
                         '${notes.notesCount} notes on this device.',
                         style: Theme.of(context).textTheme.headline4,

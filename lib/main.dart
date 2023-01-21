@@ -53,31 +53,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
   }
 
-  // These savings dont really work or Ive noticed that they dont
-  // But diposing the box does work
-
-  // @override
-  // void dispose() {
-  //   notes.updateNotesOnDataBase(notes.notes);
-  //   userData.saveUserToDataBase(userData.curentUserData);
-  //   DbHelper.closeBox(DbHelper.notesBoxName);
-  //   DbHelper.closeBox(DbHelper.userBoxName);
-  //   WidgetsBinding.instance.removeObserver(this);
-  //   super.dispose();
-  // }
-
   // These do work
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.inactive ||
-        state == AppLifecycleState.paused || state == AppLifecycleState.detached) {
-      notes.updateNotesOnDataBase(notes.notes);
-      userData.saveUserToDataBase(userData.curentUserData);
-    }
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   if (state == AppLifecycleState.inactive ||
+  //       state == AppLifecycleState.paused || state == AppLifecycleState.detached) {
+  //     notes.updateNotesOnDataBase(notes.notes);
+  //     userData.saveUserToDataBase(userData.curentUserData);
+  //   }
 
-    super.didChangeAppLifecycleState(state);
-  }
+  //   super.didChangeAppLifecycleState(state);
+  // }
 
   @override
   Widget build(BuildContext context) {

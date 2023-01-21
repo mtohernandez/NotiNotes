@@ -14,7 +14,8 @@ class MediaGrid extends StatefulWidget {
   final String title;
   final String subtitle;
   final bool isForUser;
-  const MediaGrid(this.pickImage, this.id, this.isForUser, { required this.title, required this.subtitle, super.key});
+  const MediaGrid(this.pickImage, this.id, this.isForUser,
+      {required this.title, required this.subtitle, super.key});
 
   @override
   State<MediaGrid> createState() => _MediaGridState();
@@ -52,7 +53,7 @@ class _MediaGridState extends State<MediaGrid> {
           ? user.updateProfilePicture(imagePicked)
           : notes.addImageToNote(widget.id, imagePicked);
     } on Exception catch (error) {
-      _showErrorDialog(context);
+      _showErrorDialog(context); // This probably wont happen
     }
   }
 
@@ -100,85 +101,73 @@ class _MediaGridState extends State<MediaGrid> {
     final notes = Provider.of<Notes>(context, listen: false);
     final exitCreator = Navigator.of(context).pop;
 
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      // height: MediaQuery.of(context).size.height * 0.15,
-      decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
-        borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(50), topRight: Radius.circular(50)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.title,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-                IconButtonXItem(exitCreator),
-              ],
-            ),
             Text(
-              widget.subtitle,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    // Using copyWith to change the opacity of the text
-                    color: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .color!
-                        .withOpacity(.5),
-                  ),
+              widget.title,
+              style: Theme.of(context).textTheme.headline1,
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            GridView.count(
-              crossAxisCount: widget.isForUser ? 3 : 2,
-              crossAxisSpacing: 5,
-              childAspectRatio: 50 / 30,
-              shrinkWrap: true,
-              children: [
-                _buildImageSelection(
-                  context,
-                  'From gallery',
-                  notes,
-                  ImageSource.gallery,
-                  SvgPicture.asset('lib/assets/icons/gallery.svg'),
-                  widget.isForUser,
-                  user,
-                  false,
-                ),
-                _buildImageSelection(
-                  context,
-                  'Take it yourself',
-                  notes,
-                  ImageSource.camera,
-                  SvgPicture.asset('lib/assets/icons/camera.svg'),
-                  widget.isForUser,
-                  user,
-                  false,
-                ),
-                if (widget.isForUser)
-                  _buildImageSelection(
-                    context,
-                    'Remove image',
-                    notes,
-                    ImageSource.gallery,
-                    SvgPicture.asset('lib/assets/icons/removeUser.svg'),
-                    true,
-                    user,
-                    true,
-                  ),
-              ],
-            ),
+            IconButtonXItem(exitCreator),
           ],
         ),
-      ),
+        Text(
+          widget.subtitle,
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                // Using copyWith to change the opacity of the text
+                color: Theme.of(context)
+                    .textTheme
+                    .bodyText1!
+                    .color!
+                    .withOpacity(.5),
+              ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        GridView.count(
+          crossAxisCount: widget.isForUser ? 3 : 2,
+          crossAxisSpacing: 5,
+          childAspectRatio: 50 / 30,
+          shrinkWrap: true,
+          children: [
+            _buildImageSelection(
+              context,
+              'From gallery',
+              notes,
+              ImageSource.gallery,
+              SvgPicture.asset('lib/assets/icons/gallery.svg'),
+              widget.isForUser,
+              user,
+              false,
+            ),
+            _buildImageSelection(
+              context,
+              'Take it yourself',
+              notes,
+              ImageSource.camera,
+              SvgPicture.asset('lib/assets/icons/camera.svg'),
+              widget.isForUser,
+              user,
+              false,
+            ),
+            if (widget.isForUser)
+              _buildImageSelection(
+                context,
+                'Remove image',
+                notes,
+                ImageSource.gallery,
+                SvgPicture.asset('lib/assets/icons/removeUser.svg'),
+                true,
+                user,
+                true,
+              ),
+          ],
+        ),
+      ],
     );
   }
 }

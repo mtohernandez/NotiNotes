@@ -74,7 +74,7 @@ class _TodoItemState extends State<TodoItem> {
         ? Theme.of(context).textTheme.bodyText1!.fontSize! * 2.0
         : Theme.of(context).textTheme.bodyText1!.fontSize! * 2.5;
 
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: heightContainer,
       child: Row(
@@ -108,20 +108,18 @@ class _TodoItemState extends State<TodoItem> {
               onKey: (event) {
                 if (event.isKeyPressed(LogicalKeyboardKey.backspace) &&
                     textController.text.isEmpty) {
-                  // widget.focusScopeNode.requestFocus(textNode.ancestors.first);
                   widget.notesProvider.removeTask(widget.id, widget.indexTask);
-                  // keyBoardNode.unfocus();
-                  FocusScope.of(context).unfocus();
+                  //unfocus
+                  if (widget.focusScopeNode != null) {
+                    widget.focusScopeNode!.unfocus();
+                  }
                 }
               },
               child: TextFormField(
-                // initialValue: title,
-                // autofocus: true,
-
                 enabled: !widget.isForNote,
                 controller: textController,
                 focusNode: textNode,
-                textInputAction: TextInputAction.next,
+                textInputAction: TextInputAction.done,
                 // focusNode: textNode,
                 style: !widget.isChecked
                     ? Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -146,12 +144,6 @@ class _TodoItemState extends State<TodoItem> {
                 ),
                 onChanged: (value) => widget.notesProvider
                     .updateTask(widget.id, widget.indexTask, value),
-                onFieldSubmitted: (value) {
-                  if (widget.indexTask == widget.fullLength - 1) {
-                    widget.notesProvider.addTask(widget.id);
-                    // widget.focusScopeNode.nextFocus();
-                  }
-                },
               ),
             ),
           ),

@@ -21,81 +21,67 @@ class DisplaySelector extends StatelessWidget {
       Navigator.of(context).pop();
     }
 
-    return Container(
-      padding: EdgeInsets.only(
-          left: 30,
-          right: 30,
-          top: 20,
-          bottom: MediaQuery.of(context).viewInsets.bottom),
-      width: MediaQuery.of(context).size.width,
-      // height: MediaQuery.of(context).size.height * 0.4,
-      decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
-        borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(50), topRight: Radius.circular(50)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Display mode',
-                style: Theme.of(context).textTheme.headline1,
-              ),
-              IconButtonXItem(exitCreator),
-            ],
-          ),
-          const SizedBox(height: 20),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ...DisplayModes.displayModes
-                    .map((e) => GestureDetector(
-                          onTap: () {
-                            notes.changeCurrentDisplay(id, e['display']);
-                          },
-                          child: Opacity(
-                            opacity:
-                                notes.findById(id).displayMode == e['display']
-                                    ? 1
-                                    : 0.5,
-                            child: SvgPicture.asset(
-                              e['asset'],
-                            ),
-                          ),
-                        ))
-                    .toList(),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
-          Center(
-            child: Text(
-              DisplayModes.getDisplayMode(
-                  notes.findById(id).displayMode)['display']!,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Display mode',
               style: Theme.of(context).textTheme.headline1,
             ),
+            IconButtonXItem(exitCreator),
+          ],
+        ),
+        const SizedBox(height: 20),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ...DisplayModes.displayModes
+                  .map((e) => GestureDetector(
+                        onTap: () {
+                          notes.changeCurrentDisplay(id, e['display']);
+                        },
+                        child: Opacity(
+                          opacity:
+                              notes.findById(id).displayMode == e['display']
+                                  ? 1
+                                  : 0.5,
+                          child: SvgPicture.asset(
+                            e['asset'],
+                          ),
+                        ),
+                      ))
+                  .toList(),
+            ],
           ),
-          Center(
-            child: Text(
-              DisplayModes.getDisplayMode(
-                  notes.findById(id).displayMode)['description']!,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    color: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .color!
-                        .withOpacity(0.5),
-                  ),
-            ),
+        ),
+        const SizedBox(height: 20),
+        Center(
+          child: Text(
+            DisplayModes.getDisplayMode(
+                notes.findById(id).displayMode)['display']!,
+            style: Theme.of(context).textTheme.headline1,
           ),
-          const SizedBox(height: 20),
-        ],
-      ),
+        ),
+        Center(
+          child: Text(
+            DisplayModes.getDisplayMode(
+                notes.findById(id).displayMode)['description']!,
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .color!
+                      .withOpacity(0.5),
+                ),
+          ),
+        ),
+        const SizedBox(height: 20),
+      ],
     );
   }
 }

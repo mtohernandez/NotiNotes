@@ -81,15 +81,32 @@ class _NoteViewScreenState extends State<NoteViewScreen>
           }
         }
       }
-      // if (loadedNote.title.isEmpty &&
-      //     loadedNote.content.isEmpty &&
-      //     loadedNote.imageFile == null) {
-      //   Provider.of<Notes>(context, listen: false)
-      //       .removeNoteById(loadedNote.id);
-      // }
       _isInit = false;
     }
     super.didChangeDependencies();
+  }
+
+  Widget _buildBottomSheet(Widget child, bool bottomInsets) {
+    return Wrap(
+      children: [
+        Container(
+          padding: EdgeInsets.only(
+            left: 30,
+            right: 30,
+            top: 20,
+            bottom:
+                bottomInsets ? MediaQuery.of(context).viewInsets.bottom : 20,
+          ),
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(50), topRight: Radius.circular(50)),
+          ),
+          child: child,
+        )
+      ],
+    );
   }
 
   void openMediaPicker(BuildContext context) {
@@ -98,16 +115,15 @@ class _NoteViewScreenState extends State<NoteViewScreen>
       backgroundColor: Colors.transparent,
       context: context,
       builder: (bctx) {
-        return Wrap(
-          children: [
-            MediaGrid(
-              PhotoPicker.pickImage,
-              loadedNote.id,
-              false,
-              title: 'Add Image',
-              subtitle: 'It will be shown at the top of the note.',
-            ),
-          ],
+        return _buildBottomSheet(
+          MediaGrid(
+            PhotoPicker.pickImage,
+            loadedNote.id,
+            false,
+            title: 'Add Image',
+            subtitle: 'It will be shown at the top of the note.',
+          ),
+          false,
         );
       },
     );
@@ -119,11 +135,9 @@ class _NoteViewScreenState extends State<NoteViewScreen>
       backgroundColor: Colors.transparent,
       context: context,
       builder: (bctx) {
-        return Wrap(
-          children: [
-            // TagCreator(loadedNote.id),
-            TagCreatorManager(loadedNote.id),
-          ],
+        return _buildBottomSheet(
+          TagCreatorManager(loadedNote.id),
+          true,
         );
       },
     );
@@ -135,10 +149,9 @@ class _NoteViewScreenState extends State<NoteViewScreen>
       backgroundColor: Colors.transparent,
       context: context,
       builder: (bctx) {
-        return Wrap(
-          children: [
-            DisplaySelector(loadedNote.id, loadedNote.displayMode),
-          ],
+        return _buildBottomSheet(
+          DisplaySelector(loadedNote.id, loadedNote.displayMode),
+          false,
         );
       },
     );

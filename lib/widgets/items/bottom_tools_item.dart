@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:noti_notes_app/models/note.dart';
-import 'package:noti_notes_app/widgets/note_creation/color_picker_creator.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/note.dart';
 import '../../providers/notes.dart';
+import '../../widgets/note_creation/color_picker_creator.dart';
+import '../../helpers/color_picker.dart';
 
 class BottomToolsItem extends StatelessWidget {
   final Function pickImage;
@@ -39,50 +39,6 @@ class BottomToolsItem extends StatelessWidget {
       ),
     );
   }
-
-  // Future<bool> _showColorPicker(BuildContext context) async {
-  //   return ColorPicker(
-  //     onColorChanged: (newColor) {
-  //       colorBeforeChange = newColor;
-  //     },
-  //     actionButtons: const ColorPickerActionButtons(
-  //       dialogOkButtonLabel: 'SET',
-  //     ),
-  //     color: Provider.of<Notes>(context, listen: false)
-  //         .findById(id)
-  //         .colorBackground,
-  //     width: 40,
-  //     height: 40,
-  //     borderRadius: 20,
-  //     spacing: 5,
-  //     wheelDiameter: MediaQuery.of(context).size.width * .5,
-  //     heading: Row(
-  //       mainAxisAlignment: MainAxisAlignment.start,
-  //       children: [
-  //         Text(
-  //           'Select a color',
-  //           style: Theme.of(context).textTheme.headline1,
-  //         ),
-  //       ],
-  //     ),
-  //     enableShadesSelection: false,
-  //     pickersEnabled: const <ColorPickerType, bool>{
-  //       ColorPickerType.accent: false,
-  //       ColorPickerType.primary: true,
-  //       ColorPickerType.custom: true,
-  //       ColorPickerType.wheel: true,
-  //     },
-  //   ).showPickerDialog(
-  //     context,
-  //     constraints: BoxConstraints.tightFor(
-  //         width: MediaQuery.of(context).size.width * .5,
-  //         height: MediaQuery.of(context).size.height * .45),
-  //     backgroundColor: Theme.of(context).backgroundColor,
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.circular(20),
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -159,8 +115,9 @@ class BottomToolsItem extends StatelessWidget {
                     image: notes.findById(id).patternImage != null
                         ? DecorationImage(
                             colorFilter: ColorFilter.mode(
-                              notes.findById(id).colorBackground,
-                              BlendMode.dstATop,
+                              ColorPicker.darken(
+                                  notes.findById(id).colorBackground, 0.1),
+                              BlendMode.srcATop,
                             ),
                             image: AssetImage(notes.findById(id).patternImage!),
                             fit: BoxFit.cover,

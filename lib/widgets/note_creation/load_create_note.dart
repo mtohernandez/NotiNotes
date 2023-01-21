@@ -83,6 +83,8 @@ class LoadCreateNote extends StatelessWidget {
           onChanged: (value) {
             loadedNote.content = value;
             loadedNote.dateCreated = DateTime.now();
+          },
+          onEditingComplete: () {
             Provider.of<Notes>(context, listen: false).updateNote(loadedNote);
           },
         ),
