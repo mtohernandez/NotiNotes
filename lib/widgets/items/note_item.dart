@@ -44,7 +44,6 @@ class NoteItem extends StatefulWidget {
 }
 
 class _NoteItemState extends State<NoteItem> {
-  var isSelected = false;
   late Notes notes;
 
   @override
@@ -55,7 +54,7 @@ class _NoteItemState extends State<NoteItem> {
 
   Widget _buildHeroImage() {
     return Hero(
-      tag: 'noteImage${widget.id}',
+      tag: widget.id,
       child: Container(
         height: MediaQuery.of(context).size.height * 0.1,
         width: double.infinity,
@@ -177,16 +176,14 @@ class _NoteItemState extends State<NoteItem> {
           } else {
             notes.notesToDelete.add(widget.id);
           }
-          setState(() {
-            isSelected = !isSelected;
-          });
+          setState(() {});
         }
       },
       onLongPress: () {
         // Here i need toy to use the notes to delete array instead of the bool variable, just use it to check if the note is selected or not
         if (isSearching.isSearching == SearchType.notSearching) {
           notes.activateEditMode();
-          isSelected = true;
+          notes.notesToDelete.add(widget.id);
           setState(() {});
         }
       },
@@ -203,7 +200,7 @@ class _NoteItemState extends State<NoteItem> {
                   ),
                 )
               : null,
-          color: isSelected
+          color: notes.notesToDelete.contains(widget.id) && notes.editMode
               ? widget.colorBackground.withOpacity(.5)
               : widget.colorBackground,
           // color: Colors.black,
@@ -230,10 +227,12 @@ class _NoteItemState extends State<NoteItem> {
                   if (widget.title.isNotEmpty) _buildTitle(),
                   if (widget.title.isNotEmpty) noteSeparator,
                   if (widget.content.isNotEmpty &&
-                      widget.displayMode != DisplayMode.withoutContent)
+                      widget.displayMode != DisplayMode.withoutContent &&
+                      widget.displayMode != DisplayMode.withTodoList)
                     _buildContent(),
                   if (widget.content.isNotEmpty &&
-                      widget.displayMode != DisplayMode.withoutContent)
+                      widget.displayMode != DisplayMode.withoutContent &&
+                      widget.displayMode != DisplayMode.withTodoList)
                     noteSeparator,
                   if (widget.todoList.isNotEmpty &&
                       widget.displayMode == DisplayMode.withTodoList)
@@ -242,7 +241,7 @@ class _NoteItemState extends State<NoteItem> {
                       widget.displayMode == DisplayMode.withTodoList)
                     noteSeparator,
                   if (widget.tags.isNotEmpty &&
-                      widget.displayMode == DisplayMode.withTodoList)
+                      widget.displayMode != DisplayMode.normal)
                     _buildTags(),
                   if (widget.tags.isNotEmpty) noteSeparator,
                   _buildDate(),

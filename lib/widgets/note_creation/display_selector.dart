@@ -11,7 +11,9 @@ import '../../models/note.dart';
 class DisplaySelector extends StatelessWidget {
   final String id;
   final DisplayMode displayMode;
-  const DisplaySelector(this.id, this.displayMode, {super.key});
+  final TabController tabController;
+  const DisplaySelector(this.id, this.displayMode, this.tabController,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,12 @@ class DisplaySelector extends StatelessWidget {
                   .map((e) => GestureDetector(
                         onTap: () {
                           notes.changeCurrentDisplay(id, e['display']);
+                          if (e['display'] == DisplayMode.withTodoList) {
+                            tabController.animateTo(1);
+                          } else {
+                            if (tabController.index == 0) return;
+                            tabController.animateTo(0);
+                          }
                         },
                         child: Opacity(
                           opacity:

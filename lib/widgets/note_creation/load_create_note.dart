@@ -28,7 +28,7 @@ class LoadCreateNote extends StatelessWidget {
               return Stack(
                 children: [
                   Hero(
-                    tag: 'noteImage${loadedNote.id}',
+                    tag: loadedNote.id,
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.2,
                       width: double.infinity,

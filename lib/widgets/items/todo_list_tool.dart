@@ -30,27 +30,6 @@ class _TodoListToolState extends State<TodoListTool> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormField(
-            maxLength: 25,
-            initialValue: 'To do:',
-            textInputAction: TextInputAction.done,
-            style: Theme.of(context).textTheme.headline2,
-            decoration: InputDecoration(
-              counter: const SizedBox
-                  .shrink(), // This is a good way to remove the counter
-              contentPadding: EdgeInsets.zero,
-              border: InputBorder.none,
-              hintText: 'Add a name to your list',
-              hintStyle: Theme.of(context).textTheme.headline2!.copyWith(
-                    color: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .color!
-                        .withOpacity(0.5),
-                  ),
-            ),
-          ),
-          const SizedBox(height: 10),
           Expanded(
             child: Consumer<Notes>(
               builder: (context, notes, child) {
