@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:io';
 
+import '../widgets/note_creation/reminder_creator.dart';
 import '../widgets/note_creation/tag_creator_manager.dart';
 import '../widgets/note_creation/load_create_note.dart';
 import '../widgets/items/todo_list_tool.dart';
@@ -157,6 +158,20 @@ class _NoteViewScreenState extends State<NoteViewScreen>
     );
   }
 
+  void openReminderCreator(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (bctx) {
+        return _buildBottomSheet(
+          ReminderCreator(loadedNote.id),
+          false,
+        );
+      },
+    );
+  }
+
   void removeImage() {
     Provider.of<Notes>(context, listen: false)
         .removeImageFromNote(loadedNote.id);
@@ -195,6 +210,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
               pickImage: openMediaPicker,
               addTags: openTagCreator,
               displayMode: openDisplayMode,
+              reminderCreator: openReminderCreator,
               id: loadedNote.id,
               colorBeforeChange: loadedNote.colorBackground, //! TO FIX
               tabController: _tabController,

@@ -11,6 +11,7 @@ class BottomToolsItem extends StatelessWidget {
   final Function pickImage;
   final Function addTags;
   final Function displayMode;
+  final Function reminderCreator;
   final String id;
   Color colorBeforeChange; //! TO FIX
   final TabController tabController;
@@ -18,6 +19,7 @@ class BottomToolsItem extends StatelessWidget {
     required this.pickImage,
     required this.addTags,
     required this.displayMode,
+    required this.reminderCreator,
     required this.colorBeforeChange, //! TO FIX
     required this.id,
     required this.tabController,
@@ -78,7 +80,9 @@ class BottomToolsItem extends StatelessWidget {
                   color: Theme.of(context).primaryColor.withOpacity(
                       .2), // Because of the current color which is white
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  reminderCreator(context);
+                },
               ),
               IconButton(
                 icon: SvgPicture.asset(
