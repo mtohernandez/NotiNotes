@@ -213,7 +213,6 @@ class _NoteViewScreenState extends State<NoteViewScreen>
               displayMode: openDisplayMode,
               reminderCreator: openReminderCreator,
               id: loadedNote.id,
-              colorBeforeChange: loadedNote.colorBackground, //! TO FIX
               tabController: _tabController,
             ),
           ],

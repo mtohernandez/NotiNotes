@@ -136,7 +136,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               const NotesOverviewScreen(),
           InformationScreen.routeName: (context) => const InformationScreen(),
           NoteViewScreen.routeName: (context) => const NoteViewScreen(),
-          UserInfoScreen.routeName: (context) => UserInfoScreen(),
+          UserInfoScreen.routeName: (context) => const UserInfoScreen(),
         },
       ),
     );

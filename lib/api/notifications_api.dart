@@ -84,7 +84,7 @@ class LocalNotificationService {
     );
 
     // #3
-    final id = 0;
+    const id = 0;
 
     // #4
     await _localNotificationsPlugin.zonedSchedule(

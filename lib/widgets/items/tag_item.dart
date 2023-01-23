@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:noti_notes_app/widgets/items/icon_button_x_item.dart';
 import 'package:provider/provider.dart';
 import 'dart:math' as math;
 

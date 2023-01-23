@@ -52,7 +52,7 @@ class _MediaGridState extends State<MediaGrid> {
       isForUser
           ? user.updateProfilePicture(imagePicked)
           : notes.addImageToNote(widget.id, imagePicked);
-    } on Exception catch (error) {
+    } on Exception {
       _showErrorDialog(context); // This probably wont happen
     }
   }

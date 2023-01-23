@@ -106,13 +106,6 @@ class UserData with ChangeNotifier {
     notifyListeners();
   }
 
-  //TODO add updateBornDate
-
-  // void updateFavoriteColor(String favoriteColor) {
-  //   currentUser.favoriteColor = favoriteColor;
-  //   notifyListeners();
-  // }
-
   void loadUserFromDataBase() {
     Box userBox = DbHelper.getBox(DbHelper.userBoxName);
     if (userBox.values.isEmpty) {

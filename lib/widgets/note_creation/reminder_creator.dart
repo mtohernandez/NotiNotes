@@ -9,7 +9,7 @@ import '../../providers/notes.dart';
 
 class ReminderCreator extends StatefulWidget {
   final String id;
-  ReminderCreator(this.id, {super.key});
+  const ReminderCreator(this.id, {super.key});
 
   @override
   State<ReminderCreator> createState() => _ReminderCreatorState();
@@ -203,7 +203,7 @@ class _ReminderCreatorState extends State<ReminderCreator> {
                                 seconds: selectedValue,
                               ),
                             );
-                  LocalNotificationService().addNotification(
+                  LocalNotificationService().addNotification(                 
                     note.title != '' ? note.title : 'Reminder',
                     // notes.reminderMessage, TO BE SET
                     'Content',

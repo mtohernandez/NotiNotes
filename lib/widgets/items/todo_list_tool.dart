@@ -7,7 +7,7 @@ import '../../providers/notes.dart';
 
 class TodoListTool extends StatefulWidget {
   final String id;
-  TodoListTool(this.id, {super.key});
+  const TodoListTool(this.id, {super.key});
 
   @override
   State<TodoListTool> createState() => _TodoListToolState();
@@ -24,7 +24,6 @@ class _TodoListToolState extends State<TodoListTool> {
 
   @override
   Widget build(BuildContext context) {
-    final notes = Provider.of<Notes>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
       child: Column(

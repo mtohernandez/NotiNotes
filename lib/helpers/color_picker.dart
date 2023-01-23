@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
-import 'dart:io';
 
 class ColorPicker {
   static Color defaultColor = const Color(0xffEF233C);
@@ -31,10 +30,10 @@ class ColorPicker {
   static final List<Color> fontColors = [
     Colors.white,
     Colors.black,
-    Color(0xffFFE5E5),
-    Color(0xffD2E2FF),
-    Color(0xffFCD9FF),
-    Color(0xffDEFFDB),
+    const Color(0xffFFE5E5),
+    const Color(0xffD2E2FF),
+    const Color(0xffFCD9FF),
+    const Color(0xffDEFFDB),
   ];
 
   static Color darken(Color color, [double amount = .1]) {

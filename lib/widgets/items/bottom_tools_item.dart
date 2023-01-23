@@ -13,14 +13,12 @@ class BottomToolsItem extends StatelessWidget {
   final Function displayMode;
   final Function reminderCreator;
   final String id;
-  Color colorBeforeChange; //! TO FIX
   final TabController tabController;
-  BottomToolsItem({
+  const BottomToolsItem({
     required this.pickImage,
     required this.addTags,
     required this.displayMode,
     required this.reminderCreator,
-    required this.colorBeforeChange, //! TO FIX
     required this.id,
     required this.tabController,
     super.key,
