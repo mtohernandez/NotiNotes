@@ -151,7 +151,8 @@ class _NoteViewScreenState extends State<NoteViewScreen>
       context: context,
       builder: (bctx) {
         return _buildBottomSheet(
-          DisplaySelector(loadedNote.id, loadedNote.displayMode, _tabController),
+          DisplaySelector(
+              loadedNote.id, loadedNote.displayMode, _tabController),
           false,
         );
       },
@@ -166,7 +167,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
       builder: (bctx) {
         return _buildBottomSheet(
           ReminderCreator(loadedNote.id),
-          false,
+          true,
         );
       },
     );

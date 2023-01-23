@@ -40,7 +40,6 @@ dependencies:
   string_similarity: ^2.0.0
   image_picker: ^0.8.6
   flutter_image_compress: ^1.0.0-nullsafety
-  permission_handler: ^10.2.0
   flex_color_picker: ^3.0.0
   material_tag_editor: ^0.1.2
   path: ^1.8.2
@@ -48,6 +47,8 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   flutter_local_notifications: ^13.0.0
+  permission_handler: ^10.2.0
+  flutter_native_timezone: ^2.0.0
 
   
 

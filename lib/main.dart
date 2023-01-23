@@ -4,11 +4,13 @@ import 'package:noti_notes_app/screens/note_view_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
-import 'screens/information_screen.dart';
+import '../api/notifications_api.dart';
+
+import './screens/information_screen.dart';
 import './screens/notes_overview_screen.dart';
 import './screens/user_info_screen.dart';
 
-import 'providers/user_data.dart';
+import './providers/user_data.dart';
 import './providers/notes.dart';
 import './providers/search.dart';
 
@@ -20,6 +22,8 @@ void main() async {
   );
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  await LocalNotificationService().setup();
 
   await DbHelper.initBox(DbHelper.notesBoxName);
   await DbHelper.initBox(DbHelper.userBoxName);

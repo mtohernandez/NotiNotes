@@ -77,8 +77,10 @@ class BottomToolsItem extends StatelessWidget {
               IconButton(
                 icon: SvgPicture.asset(
                   'lib/assets/icons/notification.svg',
-                  color: Theme.of(context).primaryColor.withOpacity(
-                      .2), // Because of the current color which is white
+                  color: notes.findById(id).reminder == null
+                      ? Theme.of(context).primaryColor.withOpacity(.2)
+                      : Theme.of(context).primaryColor.withOpacity(
+                          .5), // Because of the current color which is white
                 ),
                 onPressed: () {
                   reminderCreator(context);

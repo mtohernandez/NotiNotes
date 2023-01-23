@@ -17,6 +17,8 @@ enum ToolingNote {
   color,
   patternImage,
   removePatternImage,
+  addreminder,
+  removeReminder,
   fontColor,
   displayMode,
 }
@@ -222,6 +224,12 @@ class Notes with ChangeNotifier {
         case ToolingNote.displayMode:
           _notes[noteIndex].displayMode = value;
           break;
+        case ToolingNote.addreminder:
+          _notes[noteIndex].reminder = value;
+          break;
+        case ToolingNote.removeReminder:
+          _notes[noteIndex].reminder = null;
+          break; 
       }
 
       updateNoteOnDataBase(_notes[noteIndex]);
@@ -263,6 +271,15 @@ class Notes with ChangeNotifier {
 
   void changeCurrentDisplay(String id, DisplayMode mode) {
     toolingNote(id, ToolingNote.displayMode, mode);
+  }
+
+  void addReminder(String id, DateTime dateTime) {
+    toolingNote(
+        id, ToolingNote.addreminder, dateTime);
+  }
+
+  void removeReminder(String id) {
+    toolingNote(id, ToolingNote.removeReminder, null);
   }
 
   void toggleTask(String id, int index) {
