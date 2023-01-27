@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noti_notes_app/helpers/database_helper.dart';
+import 'package:noti_notes_app/screens/home_screen.dart';
 import 'package:noti_notes_app/screens/note_view_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +8,6 @@ import 'package:flutter/services.dart';
 import '../api/notifications_api.dart';
 
 import './screens/information_screen.dart';
-import './screens/notes_overview_screen.dart';
 import './screens/user_info_screen.dart';
 
 import './providers/user_data.dart';
@@ -27,7 +27,7 @@ void main() async {
 
   await DbHelper.initBox(DbHelper.notesBoxName);
   await DbHelper.initBox(DbHelper.userBoxName);
-  
+
   runApp(const MyApp());
 }
 
@@ -56,19 +56,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     }
     super.initState();
   }
-
-  // These do work
-
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   if (state == AppLifecycleState.inactive ||
-  //       state == AppLifecycleState.paused || state == AppLifecycleState.detached) {
-  //     notes.updateNotesOnDataBase(notes.notes);
-  //     userData.saveUserToDataBase(userData.curentUserData);
-  //   }
-
-  //   super.didChangeAppLifecycleState(state);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -130,10 +117,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             ),
           ),
         ),
-        home: const NotesOverviewScreen(),
+        home: HomeScreen(),
         routes: {
-          NotesOverviewScreen.routeName: (context) =>
-              const NotesOverviewScreen(),
+          HomeScreen.routeName: (context) => const HomeScreen(),
           InformationScreen.routeName: (context) => const InformationScreen(),
           NoteViewScreen.routeName: (context) => const NoteViewScreen(),
           UserInfoScreen.routeName: (context) => const UserInfoScreen(),

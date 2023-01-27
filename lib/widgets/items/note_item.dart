@@ -181,6 +181,7 @@ class _NoteItemState extends State<NoteItem> {
       },
       onLongPress: () {
         // Here i need toy to use the notes to delete array instead of the bool variable, just use it to check if the note is selected or not
+        notes.notesToDelete.clear(); // This avoid errors
         if (isSearching.isSearching == SearchType.notSearching) {
           notes.activateEditMode();
           notes.notesToDelete.add(widget.id);

@@ -10,7 +10,7 @@ import '../widgets/note_creation/tag_creator_manager.dart';
 import '../widgets/note_creation/load_create_note.dart';
 import '../widgets/items/todo_list_tool.dart';
 import '../widgets/items/bottom_tools_item.dart';
-import '../widgets/media_grid.dart';
+import '../widgets/note_creation/media_grid.dart';
 import '../widgets/items/appbar_note_title.dart';
 import '../widgets/note_creation/display_selector.dart';
 

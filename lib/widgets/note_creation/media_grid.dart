@@ -3,10 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/items/icon_button_x_item.dart';
+import '../items/icon_button_x_item.dart';
 
-import '../providers/notes.dart';
-import '../providers/user_data.dart';
+import '../../providers/notes.dart';
+import '../../providers/user_data.dart';
 
 class MediaGrid extends StatefulWidget {
   final Function pickImage;

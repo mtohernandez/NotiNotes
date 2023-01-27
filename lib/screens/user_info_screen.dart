@@ -4,7 +4,7 @@ import 'package:noti_notes_app/helpers/photo_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/items/tag_item.dart';
-import '../widgets/media_grid.dart';
+import '../widgets/note_creation/media_grid.dart';
 
 import '../providers/notes.dart';
 import '../providers/user_data.dart';

@@ -44,7 +44,7 @@ class _BottomNavigationCustomItemState
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -76,6 +76,7 @@ class _BottomNavigationCustomItemState
                 onChanged: (value) {
                   isSearching.activateSearchByTitle();
                   isSearching.setSearchQuery(value);
+                  if (value.isEmpty) isSearching.deactivateSearch();
                 },
                 onSubmitted: (value) => _searchController.clear(),
               ),

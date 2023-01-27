@@ -3,6 +3,7 @@ import 'package:noti_notes_app/helpers/database_helper.dart';
 import 'package:noti_notes_app/helpers/photo_picker.dart';
 import 'package:string_similarity/string_similarity.dart';
 // import 'package:hive_flutter/hive_flutter.dart';
+// ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -106,6 +107,7 @@ class Notes with ChangeNotifier {
       return;
     }
     _notes.add(note);
+    updateNoteOnDataBase(note);
   }
 
   //? Note Searching
@@ -229,7 +231,7 @@ class Notes with ChangeNotifier {
           break;
         case ToolingNote.removeReminder:
           _notes[noteIndex].reminder = null;
-          break; 
+          break;
       }
 
       updateNoteOnDataBase(_notes[noteIndex]);
@@ -238,48 +240,92 @@ class Notes with ChangeNotifier {
   }
 
   void addImageToNote(String id, File? image) {
-    toolingNote(id, ToolingNote.addImage, image);
+    toolingNote(
+      id,
+      ToolingNote.addImage,
+      image,
+    );
   }
 
   void removeImageFromNote(String id) {
-    toolingNote(id, ToolingNote.removeImage, null);
+    toolingNote(
+      id,
+      ToolingNote.removeImage,
+      null,
+    );
   }
 
   void addTagToNote(String tag, String id) {
-    toolingNote(id, ToolingNote.addTag, tag);
+    toolingNote(
+      id,
+      ToolingNote.addTag,
+      tag,
+    );
   }
 
   void removeTagsFromNote(int index, String id) {
-    toolingNote(id, ToolingNote.removeTag, null, index);
+    toolingNote(
+      id,
+      ToolingNote.removeTag,
+      null,
+      index,
+    );
   }
 
   void changeCurrentColor(String id, Color color) {
-    toolingNote(id, ToolingNote.color, color);
+    toolingNote(
+      id,
+      ToolingNote.color,
+      color,
+    );
   }
 
   void changeCurrentPattern(String id, String? pattern) {
-    toolingNote(id, ToolingNote.patternImage, pattern);
+    toolingNote(
+      id,
+      ToolingNote.patternImage,
+      pattern,
+    );
   }
 
   void removeCurrentPattern(String id) {
-    toolingNote(id, ToolingNote.removePatternImage, null);
+    toolingNote(
+      id,
+      ToolingNote.removePatternImage,
+      null,
+    );
   }
 
   void changeCurrentFontColor(String id, Color color) {
-    toolingNote(id, ToolingNote.fontColor, color);
+    toolingNote(
+      id,
+      ToolingNote.fontColor,
+      color,
+    );
   }
 
   void changeCurrentDisplay(String id, DisplayMode mode) {
-    toolingNote(id, ToolingNote.displayMode, mode);
+    toolingNote(
+      id,
+      ToolingNote.displayMode,
+      mode,
+    );
   }
 
   void addReminder(String id, DateTime dateTime) {
     toolingNote(
-        id, ToolingNote.addreminder, dateTime);
+      id,
+      ToolingNote.addreminder,
+      dateTime,
+    );
   }
 
   void removeReminder(String id) {
-    toolingNote(id, ToolingNote.removeReminder, null);
+    toolingNote(
+      id,
+      ToolingNote.removeReminder,
+      null,
+    );
   }
 
   void toggleTask(String id, int index) {
