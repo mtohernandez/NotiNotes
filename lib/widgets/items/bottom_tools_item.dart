@@ -69,6 +69,9 @@ class BottomToolsItem extends StatelessWidget {
                       : Theme.of(context).primaryColor.withOpacity(.5),
                 ),
                 onPressed: () {
+                  if (notes.findById(id).todoList.isEmpty) {
+                    notes.addTask(id);
+                  }
                   tabController.animateTo(1);
                 },
               ),

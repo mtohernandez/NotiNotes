@@ -203,7 +203,8 @@ class _ReminderCreatorState extends State<ReminderCreator> {
                                 seconds: selectedValue,
                               ),
                             );
-                  LocalNotificationService().addNotification(                 
+                  LocalNotificationService().addNotification(
+                    notes.findIndex(note.id),
                     note.title != '' ? note.title : 'Reminder',
                     // notes.reminderMessage, TO BE SET
                     'Content',
@@ -228,7 +229,8 @@ class _ReminderCreatorState extends State<ReminderCreator> {
                   TextButton(
                     onPressed: () {
                       setState(() {
-                        LocalNotificationService().cancelNotification();
+                        LocalNotificationService()
+                            .cancelNotification(notes.findIndex(note.id));
                         notes.removeReminder(widget.id);
                       });
                     },

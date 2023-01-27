@@ -93,9 +93,12 @@ class _NoteItemState extends State<NoteItem> {
 
   Widget _buildTodoList() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.1,
-      alignment: Alignment.topLeft,
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.1,
+      ),
+      // alignment: Alignment.topLeft,
       child: ListView.builder(
+        padding: EdgeInsets.zero,
         shrinkWrap: true,
         itemCount: widget.todoList.length,
         itemBuilder: (context, index) => TodoItem(

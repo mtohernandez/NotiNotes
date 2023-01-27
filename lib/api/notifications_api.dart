@@ -47,6 +47,7 @@ class LocalNotificationService {
   }
 
   void addNotification(
+    int id,
     String title,
     String body,
     DateTime endTime, {
@@ -83,10 +84,6 @@ class LocalNotificationService {
       android: androidDetail,
     );
 
-    // #3
-    const id = 0;
-
-    // #4
     await _localNotificationsPlugin.zonedSchedule(
       id,
       title,
@@ -99,7 +96,7 @@ class LocalNotificationService {
     );
   }
 
-  void cancelNotification() async {
-    await _localNotificationsPlugin.cancelAll();
+  void cancelNotification(int id) async {
+    await _localNotificationsPlugin.cancel(id);
   }
 }
