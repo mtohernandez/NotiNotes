@@ -19,6 +19,7 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
   late Color selectedFontColor;
   late String? selectedPattern;
   var isWheelActive = false;
+  var isGradientActive = false;
 
   @override
   void didChangeDependencies() {
@@ -32,6 +33,12 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
   void deactivateWheel() {
     setState(() {
       isWheelActive = false;
+    });
+  }
+
+  void activateGradient() {
+    setState(() {
+      isGradientActive = true;
     });
   }
 
@@ -85,6 +92,95 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
     );
   }
 
+  Widget _buildTitle(String title, String subtitle) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.headline3,
+        ),
+        Text(
+          subtitle,
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                color: Theme.of(context)
+                    .textTheme
+                    .bodyText1!
+                    .color!
+                    .withOpacity(.5),
+              ),
+        ),
+      ],
+    );
+  }
+
+  SingleChildScrollView _buildSinglePalette(
+      String id,
+      List<dynamic> palette,
+      dynamic selected,
+      Function changeOnData,
+      double circleShape,
+      Color colorBackground) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          ...palette
+              .map(
+                (optionSelected) => GestureDetector(
+                  onTap: () {
+                    if (optionSelected == selected) {
+                      return;
+                    } else {
+                      setState(() {
+                        selected = optionSelected;
+                      });
+                      changeOnData(id, selected);
+                    }
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 5),
+                    width: circleShape,
+                    height: circleShape,
+                    decoration: BoxDecoration(
+                      color: optionSelected is Color
+                          ? optionSelected
+                          : colorBackground,
+                      // borderRadius: BorderRadius.circular(10),
+                      shape: BoxShape.circle,
+                      border: optionSelected == selected
+                          ? Border.all(
+                              color: Colors.white,
+                              width: 2,
+                            )
+                          : null,
+                      image: optionSelected is String
+                          ? DecorationImage(
+                              image: AssetImage(optionSelected),
+                              fit: BoxFit.cover,
+                              colorFilter: ColorFilter.mode(
+                                ColorPicker.darken(
+                                  colorBackground,
+                                  0.2,
+                                ),
+                                BlendMode.srcATop,
+                              ),
+                            )
+                          : null,
+                    ),
+                  ),
+                ),
+              )
+              .toList(),
+        ],
+      ),
+    );
+  }
+
+  // Widget _buildPalettes(){
+  //   return
+  // }
+
   @override
   Widget build(BuildContext context) {
     final notes = Provider.of<Notes>(context, listen: false);
@@ -119,255 +215,66 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Default palette',
-                          style: Theme.of(context).textTheme.headline3,
-                        ),
-                        Text(
-                          'Background color.',
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .color!
-                                        .withOpacity(.5),
-                                  ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isWheelActive = true;
-                                  });
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(right: 5),
-                                  width: circleShape,
-                                  height: circleShape,
-                                  decoration: BoxDecoration(
-                                    // Custom color here
-                                    color: ColorPicker.backgroundColors
-                                            .contains(notes
-                                                .findById(widget.id)
-                                                .colorBackground)
-                                        ? Colors.transparent
-                                        : selectedColor,
-                                    border: Border.all(
-                                      color: Colors.white,
-                                      width: 2,
-                                    ),
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                              ),
-                              ...ColorPicker.backgroundColors
-                                  .map(
-                                    (color) => GestureDetector(
-                                      onTap: () {
-                                        if (color == selectedColor) {
-                                          return;
-                                        } else {
-                                          setState(() {
-                                            selectedColor = color;
-                                          });
-                                          notes.changeCurrentColor(
-                                              widget.id, selectedColor);
-                                        }
-                                      },
-                                      child: Container(
-                                        margin: const EdgeInsets.only(right: 5),
-                                        width: circleShape,
-                                        height: circleShape,
-                                        decoration: BoxDecoration(
-                                          color: color,
-                                          // borderRadius: BorderRadius.circular(10),
-                                          shape: BoxShape.circle,
-                                          border: color == selectedColor
-                                              ? Border.all(
-                                                  color: Colors.white,
-                                                  width: 2,
-                                                )
-                                              : null,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Patterns',
-                          style: Theme.of(context).textTheme.headline3,
-                        ),
-                        Text(
-                          'Overlay on top of the background color.',
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .color!
-                                        .withOpacity(.5),
-                                  ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  notes.removeCurrentPattern(widget.id);
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(right: 5),
-                                  width: circleShape,
-                                  height: circleShape,
-                                  decoration: BoxDecoration(
-                                    // Custom color here
-                                    color: notes
-                                        .findById(widget.id)
-                                        .colorBackground,
-                                    border: !ColorPicker.patterns
-                                            .contains(selectedPattern)
-                                        ? Border.all(
-                                            color: Colors.white,
-                                            width: 2,
-                                          )
-                                        : null,
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                              ),
-                              ...ColorPicker.patterns
-                                  .map(
-                                    (pattern) => GestureDetector(
-                                      onTap: () async {
-                                        if (selectedPattern == pattern) {
-                                          return;
-                                        } else {
-                                          setState(() {
-                                            selectedPattern = pattern;
-                                          }); // Force to update
-                                          notes.changeCurrentPattern(
-                                              widget.id, selectedPattern);
-                                        }
-                                      },
-                                      child: Container(
-                                        margin: const EdgeInsets.only(right: 5),
-                                        width: circleShape,
-                                        height: circleShape,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            colorFilter: ColorFilter.mode(
-                                              notes
-                                                  .findById(widget.id)
-                                                  .colorBackground,
-                                              BlendMode.dstATop,
-                                            ),
-                                            image: AssetImage(pattern),
-                                            fit: BoxFit.cover,
-                                          ),
-                                          color: Colors.black,
-                                          // borderRadius: BorderRadius.circular(10),
-                                          shape: BoxShape.circle,
-                                          border: selectedPattern == pattern
-                                              ? Border.all(
-                                                  color: Colors.white,
-                                                  width: 2,
-                                                )
-                                              : null,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Font Color',
-                          style: Theme.of(context).textTheme.headline3,
-                        ),
-                        Text(
+                        _buildTitle(
+                          'Background Color',
                           'Default is white, try something different.',
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .color!
-                                        .withOpacity(.5),
-                                  ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              ...ColorPicker.fontColors
-                                  .map(
-                                    (color) => GestureDetector(
-                                      onTap: () {
-                                        if (color == selectedFontColor) {
-                                          return;
-                                        } else {
-                                          setState(() {
-                                            selectedFontColor = color;
-                                          });
-                                          notes.changeCurrentFontColor(
-                                              widget.id, selectedFontColor);
-                                        }
-                                      },
-                                      child: Container(
-                                        margin: const EdgeInsets.only(right: 5),
-                                        width: circleShape,
-                                        height: circleShape,
-                                        decoration: BoxDecoration(
-                                          color: color,
-                                          // borderRadius: BorderRadius.circular(10),
-                                          shape: BoxShape.circle,
-                                          border: color == selectedFontColor
-                                              ? Border.all(
-                                                  color: Colors.white,
-                                                  width: 2,
-                                                )
-                                              : null,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ],
-                          ),
+                        _buildSinglePalette(
+                          widget.id,
+                          ColorPicker.backgroundColors,
+                          selectedColor,
+                          notes.changeCurrentColor,
+                          circleShape,
+                          notes.findColor(widget.id),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildTitle(
+                          'Pattern',
+                          'Default is none, try something different.',
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _buildSinglePalette(
+                          widget.id,
+                          ColorPicker.patterns,
+                          selectedPattern,
+                          notes.changeCurrentPattern,
+                          circleShape,
+                          notes.findColor(widget.id),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildTitle(
+                          'Font Color',
+                          'Default is white, try something different.',
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _buildSinglePalette(
+                          widget.id,
+                          ColorPicker.fontColors,
+                          selectedFontColor,
+                          notes.changeCurrentFontColor,
+                          circleShape,
+                          notes.findColor(widget.id),
                         ),
                       ],
                     ),

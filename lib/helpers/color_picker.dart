@@ -36,6 +36,10 @@ class ColorPicker {
     const Color(0xffDEFFDB),
   ];
 
+  static final List<LinearGradient> gradients = [
+    
+  ];
+
   static Color darken(Color color, [double amount = .1]) {
     assert(amount >= 0 && amount <= 1);
 
