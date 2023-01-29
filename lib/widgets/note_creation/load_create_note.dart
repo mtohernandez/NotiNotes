@@ -34,7 +34,7 @@ class LoadCreateNote extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * 0.2,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(15),
                         image: DecorationImage(
                           image: FileImage(loadedNote.imageFile!),
                           fit: BoxFit.cover,

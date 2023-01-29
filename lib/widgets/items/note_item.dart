@@ -52,6 +52,13 @@ class _NoteItemState extends State<NoteItem> {
     notes = Provider.of<Notes>(context, listen: false);
   }
 
+  Widget _addPadding(Widget child) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: child,
+    );
+  }
+
   Widget _buildHeroImage() {
     return Hero(
       tag: widget.id,
@@ -59,7 +66,8 @@ class _NoteItemState extends State<NoteItem> {
         height: MediaQuery.of(context).size.height * 0.1,
         width: double.infinity,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(15), topRight: Radius.circular(15)),
           image: DecorationImage(
             image: FileImage(widget.imageFile!),
             fit: BoxFit.cover,
@@ -208,47 +216,56 @@ class _NoteItemState extends State<NoteItem> {
               ? widget.colorBackground.withOpacity(.5)
               : widget.colorBackground,
           // color: Colors.black,
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Stack(
           children: [
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
+                  // const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
+                  EdgeInsets.only(
+                // left: 20.0,
+                // right: 20.0,
+                top: widget.imageFile != null &&
+                        widget.displayMode == DisplayMode.withImage
+                    ? 0
+                    : 30.0,
+                bottom: 30.0,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (widget.imageFile == null &&
                       widget.title.isEmpty &&
                       widget.content.isEmpty)
-                    _buildEmptyNote(),
+                    _addPadding(_buildEmptyNote()),
                   if (widget.imageFile != null &&
                       widget.displayMode == DisplayMode.withImage)
                     _buildHeroImage(),
                   if (widget.imageFile != null &&
                       widget.displayMode == DisplayMode.withImage)
                     noteSeparator,
-                  if (widget.title.isNotEmpty) _buildTitle(),
+                  if (widget.title.isNotEmpty) _addPadding(_buildTitle()),
                   if (widget.title.isNotEmpty) noteSeparator,
                   if (widget.content.isNotEmpty &&
                       widget.displayMode != DisplayMode.withoutContent &&
                       widget.displayMode != DisplayMode.withTodoList)
-                    _buildContent(),
+                    _addPadding(_buildContent()),
                   if (widget.content.isNotEmpty &&
                       widget.displayMode != DisplayMode.withoutContent &&
                       widget.displayMode != DisplayMode.withTodoList)
                     noteSeparator,
                   if (widget.todoList.isNotEmpty &&
                       widget.displayMode == DisplayMode.withTodoList)
-                    _buildTodoList(),
+                    _addPadding(_buildTodoList()),
                   if (widget.todoList.isNotEmpty &&
                       widget.displayMode == DisplayMode.withTodoList)
                     noteSeparator,
                   if (widget.tags.isNotEmpty &&
                       widget.displayMode != DisplayMode.normal)
-                    _buildTags(),
+                    _addPadding(_buildTags()),
                   if (widget.tags.isNotEmpty) noteSeparator,
-                  _buildDate(),
+                  _addPadding(_buildDate()),
                 ],
               ),
             ),
