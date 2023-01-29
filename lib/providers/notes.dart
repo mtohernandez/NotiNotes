@@ -9,6 +9,7 @@ import 'dart:io';
 import 'dart:convert';
 
 import '../models/note.dart';
+import '../api/notifications_api.dart';
 
 enum ToolingNote {
   addTag,
@@ -87,15 +88,23 @@ class Notes with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateNoteOnDataBase(Note note) {
-    DbHelper.insertUpdateData(
+  //?  Sort notes by date created
+
+  void sortByDateCreated() {
+    _notes.sort((a, b) => b.dateCreated.compareTo(a.dateCreated));
+    notifyListeners();
+  }
+
+  //? Update database
+
+  void updateNoteOnDataBase(Note note) async {
+    await DbHelper.insertUpdateData(
         DbHelper.notesBoxName, note.id, jsonEncode(note.toJson()));
   }
 
   void updateNotesOnDataBase(List<Note> notes) {
     for (var note in notes) {
-      DbHelper.insertUpdateData(
-          DbHelper.notesBoxName, note.id, jsonEncode(note.toJson()));
+      updateNoteOnDataBase(note);
     }
     // notifyListeners();
   }
@@ -127,24 +136,25 @@ class Notes with ChangeNotifier {
   //? Note deletion
 
   Future<void> removeSelectedNotes(Set<String> ids) async {
-    _notes.removeWhere((note) => ids.contains(note.id));
     for (var id in ids) {
       findById(id).imageFile != null
           ? PhotoPicker.removeImage(findById(id).imageFile!)
           : null;
+      LocalNotificationService().cancelNotification(findIndex(id));
+      _notes.removeWhere((note) => note.id == id);
       DbHelper.deleteData(DbHelper.notesBoxName, id);
     }
     notifyListeners();
   }
 
-  Future<void> removeNoteById(String id) async {
-    findById(id).imageFile != null
-        ? PhotoPicker.removeImage(findById(id).imageFile!)
-        : null;
-    _notes.removeWhere((note) => note.id == id);
-    DbHelper.deleteData(DbHelper.notesBoxName, id);
-    notifyListeners();
-  }
+  // Future<void> removeNoteById(String id) async {
+  //   findById(id).imageFile != null
+  //       ? PhotoPicker.removeImage(findById(id).imageFile!)
+  //       : null;
+  //   _notes.removeWhere((note) => note.id == id);
+  //   DbHelper.deleteData(DbHelper.notesBoxName, id);
+  //   notifyListeners();
+  // }
 
   //? Note Updating for temporal memory
 

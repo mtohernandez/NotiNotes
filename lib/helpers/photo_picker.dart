@@ -6,8 +6,8 @@ import 'dart:io';
 class PhotoPicker {
   static final ImagePicker _picker = ImagePicker();
 
-  static Future<File?> pickImage(ImageSource source) async {
-    final imageFile = await _picker.pickImage(source: source);
+  static Future<File?> pickImage(ImageSource source, int quality) async {
+    final imageFile = await _picker.pickImage(source: source, imageQuality: quality);
     if (imageFile == null) return null;
     File storedImage = File(imageFile.path);
     final appDir = await syspaths.getApplicationDocumentsDirectory();

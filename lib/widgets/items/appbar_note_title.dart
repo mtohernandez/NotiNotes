@@ -14,6 +14,7 @@ class AppBarNoteTitle extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final notes = Provider.of<Notes>(context, listen: false);
     return AppBar(
       backgroundColor: Theme.of(context).backgroundColor,
       elevation: 0,
@@ -41,9 +42,7 @@ class AppBarNoteTitle extends StatelessWidget implements PreferredSizeWidget {
         onChanged: (value) {
           loadedNote.title = value;
           loadedNote.dateCreated = DateTime.now();
-        },
-        onEditingComplete: () {
-          Provider.of<Notes>(context, listen: false).updateNote(loadedNote);
+          notes.updateNote(loadedNote);
         },
         onFieldSubmitted: (value) => FocusScope.of(context).nextFocus(),
       ),

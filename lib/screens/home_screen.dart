@@ -9,7 +9,7 @@ import 'dart:math';
 import 'package:noti_notes_app/widgets/items/note_item.dart';
 import 'package:noti_notes_app/providers/notes.dart';
 import 'package:noti_notes_app/providers/search.dart';
-import 'package:noti_notes_app/widgets/items/apbar_title_item.dart';
+import 'package:noti_notes_app/widgets/items/appbar_title_item.dart';
 import 'package:noti_notes_app/widgets/items/icon_button_x_item.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -96,6 +96,7 @@ class HomeScreen extends StatelessWidget {
             right: 10,
           ),
           child: CustomScrollView(
+            // controller: ,
             slivers: [
               _buildSpacer(context, MediaQuery.of(context).padding.top),
               SliverToBoxAdapter(

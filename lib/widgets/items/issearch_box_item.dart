@@ -21,8 +21,8 @@ class IsSearchBoxItem extends StatelessWidget {
         Row(
           children: [
             TextButton(
-              onPressed: () {
-                notes.removeSelectedNotes(notes.notesToDelete);
+              onPressed: () async {
+                await notes.removeSelectedNotes(notes.notesToDelete);
                 notes.deactivateEditMode();
               },
               child: Text(

@@ -20,6 +20,7 @@ class LoadCreateNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final notes = Provider.of<Notes>(context, listen: false);
     return Column(
       children: [
         Consumer<Notes>(
@@ -83,9 +84,8 @@ class LoadCreateNote extends StatelessWidget {
           onChanged: (value) {
             loadedNote.content = value;
             loadedNote.dateCreated = DateTime.now();
-          },
-          onEditingComplete: () {
-            Provider.of<Notes>(context, listen: false).updateNote(loadedNote);
+            // notes.updateNoteOnDataBase(loadedNote);
+            notes.updateNote(loadedNote);
           },
         ),
       ],

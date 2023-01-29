@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noti_notes_app/api/notifications_api.dart';
+import 'package:noti_notes_app/providers/user_data.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -38,6 +39,7 @@ class _ReminderCreatorState extends State<ReminderCreator> {
   @override
   Widget build(BuildContext context) {
     final notes = Provider.of<Notes>(context, listen: false);
+    final user = Provider.of<UserData>(context, listen: false).currentUser;
     final note = notes.findById(widget.id);
 
     exitCreator() {
@@ -62,7 +64,7 @@ class _ReminderCreatorState extends State<ReminderCreator> {
         ),
         // const SizedBox(height: 20),
         Text(
-          'Keep in mind reminders work only on the same day. This will increase your productivity and help you focus on the task at hand.',
+          'Make sure you have a title and content in your note before setting a reminder.',
           style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Theme.of(context)
                     .textTheme
@@ -132,6 +134,7 @@ class _ReminderCreatorState extends State<ReminderCreator> {
             const SizedBox(width: 10),
             Expanded(
               child: Container(
+                // padding: const EdgeInsets.symmetric(vertical: 5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Theme.of(context).primaryColor.withOpacity(0.1),
@@ -205,9 +208,14 @@ class _ReminderCreatorState extends State<ReminderCreator> {
                             );
                   LocalNotificationService().addNotification(
                     notes.findIndex(note.id),
-                    note.title != '' ? note.title : 'Reminder',
+                    note.title != ''
+                        ? LocalNotificationService()
+                            .notificationMessage(note.title, user.name)
+                        : 'Noti!',
                     // notes.reminderMessage, TO BE SET
-                    'Content',
+                    note.content.length > 20
+                        ? '${note.content.substring(0, 20)}...'
+                        : note.content,
                     reminder,
                     channel: 'reminders',
                   );

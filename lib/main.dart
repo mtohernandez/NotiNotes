@@ -51,6 +51,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     userData = UserData();
     notes.loadNotesFromDataBase();
     userData.loadUserFromDataBase();
+    notes.sortByDateCreated();
     if (userData.curentUserData.name != '') {
       userData.randomGreetings(userData.curentUserData);
     }

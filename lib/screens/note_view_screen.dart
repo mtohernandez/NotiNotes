@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noti_notes_app/helpers/color_picker.dart';
 import 'package:noti_notes_app/helpers/photo_picker.dart';
+import 'package:noti_notes_app/widgets/items/bottom_sheet_item.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:io';
@@ -87,36 +88,13 @@ class _NoteViewScreenState extends State<NoteViewScreen>
     super.didChangeDependencies();
   }
 
-  Widget _buildBottomSheet(Widget child, bool bottomInsets) {
-    return Wrap(
-      children: [
-        Container(
-          padding: EdgeInsets.only(
-            left: 30,
-            right: 30,
-            top: 20,
-            bottom:
-                bottomInsets ? MediaQuery.of(context).viewInsets.bottom : 20,
-          ),
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(50), topRight: Radius.circular(50)),
-          ),
-          child: child,
-        )
-      ],
-    );
-  }
-
   void openMediaPicker(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       context: context,
       builder: (bctx) {
-        return _buildBottomSheet(
+        return BottomSheetItem(
           MediaGrid(
             PhotoPicker.pickImage,
             loadedNote.id,
@@ -136,7 +114,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
       backgroundColor: Colors.transparent,
       context: context,
       builder: (bctx) {
-        return _buildBottomSheet(
+        return BottomSheetItem(
           TagCreatorManager(loadedNote.id),
           true,
         );
@@ -150,7 +128,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
       backgroundColor: Colors.transparent,
       context: context,
       builder: (bctx) {
-        return _buildBottomSheet(
+        return BottomSheetItem(
           DisplaySelector(
               loadedNote.id, loadedNote.displayMode, _tabController),
           false,
@@ -165,7 +143,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
       backgroundColor: Colors.transparent,
       context: context,
       builder: (bctx) {
-        return _buildBottomSheet(
+        return BottomSheetItem(
           ReminderCreator(loadedNote.id),
           true,
         );

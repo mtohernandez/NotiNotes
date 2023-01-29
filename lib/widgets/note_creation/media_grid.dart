@@ -48,7 +48,7 @@ class _MediaGridState extends State<MediaGrid> {
   Future<void> _showImagePicker(BuildContext context, Notes notes,
       ImageSource source, bool isForUser, UserData user) async {
     try {
-      final imagePicked = await widget.pickImage(source);
+      final imagePicked = await widget.pickImage(source, isForUser ? 40 : 80);
       isForUser
           ? user.updateProfilePicture(imagePicked)
           : notes.addImageToNote(widget.id, imagePicked);

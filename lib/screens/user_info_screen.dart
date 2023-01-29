@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:noti_notes_app/helpers/photo_picker.dart';
+import 'package:noti_notes_app/widgets/items/bottom_sheet_item.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/items/tag_item.dart';
@@ -94,16 +95,15 @@ class UserInfoScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       context: context,
       builder: (bctx) {
-        return Wrap(
-          children: const [
-            MediaGrid(
-              PhotoPicker.pickImage,
-              '',
-              true,
-              title: 'Choose profile picture',
-              subtitle: 'You can remove it too.',
-            ),
-          ],
+        return const BottomSheetItem(
+          MediaGrid(
+            PhotoPicker.pickImage,
+            '',
+            true,
+            title: 'Choose profile picture',
+            subtitle: 'You can remove it too.',
+          ),
+          false,
         );
       },
     );
@@ -170,7 +170,8 @@ class UserInfoScreen extends StatelessWidget {
                           initialValue: user.curentUserData.name,
                           style: Theme.of(context).textTheme.headline1,
                           decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.only(bottom: 1), // Avoid hint from overlaping bottom
+                            contentPadding: const EdgeInsets.only(
+                                bottom: 1), // Avoid hint from overlaping bottom
                             border: InputBorder.none,
                             hintText: 'Your name',
                             hintStyle: Theme.of(context).textTheme.headline1,
