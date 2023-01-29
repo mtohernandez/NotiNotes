@@ -125,10 +125,10 @@ class UserInfoScreen extends StatelessWidget {
         ),
         backgroundColor: Theme.of(context).backgroundColor,
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -209,33 +209,33 @@ class UserInfoScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * .5,
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 5,
-                  children: [
-                    _buildNoteOptions(
-                      context,
-                      'NoteDrop',
-                      'The people you sent note to will see your profile.',
-                      SvgPicture.asset(
-                        'lib/assets/icons/notedrop.svg',
-                        height: 30,
-                      ),
-                    ),
-                    _buildNoteOptions(
-                      context,
-                      'Audio Notes',
-                      'Record your voice and save it as a note.',
-                      SvgPicture.asset(
-                        'lib/assets/icons/mic.svg',
-                        height: 30,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // SizedBox(
+              //   height: MediaQuery.of(context).size.height * .5,
+              //   child: GridView.count(
+              //     crossAxisCount: 2,
+              //     crossAxisSpacing: 5,
+              //     children: [
+              //       _buildNoteOptions(
+              //         context,
+              //         'NoteDrop',
+              //         'The people you sent note to will see your profile.',
+              //         SvgPicture.asset(
+              //           'lib/assets/icons/notedrop.svg',
+              //           height: 30,
+              //         ),
+              //       ),
+              //       _buildNoteOptions(
+              //         context,
+              //         'Audio Notes',
+              //         'Record your voice and save it as a note.',
+              //         SvgPicture.asset(
+              //           'lib/assets/icons/mic.svg',
+              //           height: 30,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),

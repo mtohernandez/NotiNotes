@@ -131,7 +131,7 @@ class HomeScreen extends StatelessWidget {
                     isSearching,
                   ),
                 ),
-              _buildSpacer(context, null),
+              _buildSpacer(context, appBarSize * .5), // Half the appbar size
               SliverToBoxAdapter(
                 child: isSearching.isSearching == SearchType.notSearching &&
                         notes.notes.isEmpty

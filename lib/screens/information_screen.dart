@@ -15,7 +15,7 @@ class InformationScreen extends StatelessWidget {
       ),
       body: Center(
         child: Text(
-          'Here you\'ll be able to find information about the app and tricks.',
+          'Still in development. Please wait for the next update.',
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
