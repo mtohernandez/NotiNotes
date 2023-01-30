@@ -37,7 +37,38 @@ class ColorPicker {
   ];
 
   static final List<LinearGradient> gradients = [
-    
+    const LinearGradient(
+      colors: [
+        Color(0xffF9C100),
+        Color(0xffEF233C),
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+    const LinearGradient(
+      colors: [
+        Color.fromARGB(255, 85, 230, 71),
+        Color.fromARGB(255, 178, 16, 35),
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+    const LinearGradient(
+      colors: [
+        Color.fromARGB(255, 0, 207, 249),
+        Color.fromARGB(255, 239, 35, 185),
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+    const LinearGradient(
+      colors: [
+        Color.fromARGB(255, 0, 249, 129),
+        Color.fromARGB(255, 208, 35, 239),
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
   ];
 
   static Color darken(Color color, [double amount = .1]) {

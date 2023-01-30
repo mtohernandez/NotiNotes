@@ -33,4 +33,8 @@ class DbHelper {
   static Future<void> deleteAllBoxes() async {
     await Hive.deleteFromDisk();
   }
+
+  static Future<void> clearBox(String boxName) async {
+    await Hive.box(boxName).clear();
+  }
 }

@@ -49,6 +49,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     notes = Notes();
     userData = UserData();
+    // notes.clearBox();
     notes.loadNotesFromDataBase();
     userData.loadUserFromDataBase();
     notes.sortByDateCreated();

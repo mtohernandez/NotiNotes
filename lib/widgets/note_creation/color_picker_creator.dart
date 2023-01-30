@@ -17,6 +17,7 @@ class ColorPickerCreator extends StatefulWidget {
 class _ColorPickerCreatorState extends State<ColorPickerCreator> {
   late Color selectedColor;
   late Color selectedFontColor;
+  late LinearGradient? selectedGradient;
   late String? selectedPattern;
   var isWheelActive = false;
   var isGradientActive = false;
@@ -28,6 +29,7 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
     selectedColor = Provider.of<Notes>(context).findColor(widget.id);
     selectedPattern = Provider.of<Notes>(context).findPatternImage(widget.id);
     selectedFontColor = Provider.of<Notes>(context).findFontColor(widget.id);
+    selectedGradient = Provider.of<Notes>(context).findGradient(widget.id);
   }
 
   void deactivateWheel() {
@@ -115,12 +117,14 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
   }
 
   SingleChildScrollView _buildSinglePalette(
-      String id,
-      List<dynamic> palette,
-      dynamic selected,
-      Function changeOnData,
-      double circleShape,
-      Color colorBackground) {
+    String id,
+    List<dynamic> palette,
+    dynamic selected,
+    Function changeOnData,
+    double circleShape,
+    Color colorBackground, [
+    LinearGradient? gradientBackground,
+  ]) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -143,9 +147,7 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                     width: circleShape,
                     height: circleShape,
                     decoration: BoxDecoration(
-                      color: optionSelected is Color
-                          ? optionSelected
-                          : colorBackground,
+                      color: optionSelected is Color ? optionSelected : null,
                       // borderRadius: BorderRadius.circular(10),
                       shape: BoxShape.circle,
                       border: optionSelected == selected
@@ -153,6 +155,9 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                               color: Colors.white,
                               width: 2,
                             )
+                          : null,
+                      gradient: optionSelected is LinearGradient
+                          ? optionSelected
                           : null,
                       image: optionSelected is String
                           ? DecorationImage(
@@ -176,10 +181,6 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
       ),
     );
   }
-
-  // Widget _buildPalettes(){
-  //   return
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -207,29 +208,79 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
           const SizedBox(
             height: 20,
           ),
-          isWheelActive
-              ? _buildPicker()
-              : Column(
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (isWheelActive) _buildPicker(),
+              if (!isWheelActive)
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildTitle(
-                          'Background Color',
-                          'Default is white, try something different.',
-                        ),
+                        isGradientActive
+                            ? _buildTitle(
+                                'Gradient',
+                                'Add more beauty to the note.',
+                              )
+                            : _buildTitle(
+                                'Background Color',
+                                'Default is white, try something different.',
+                              ),
                         const SizedBox(
                           height: 10,
                         ),
-                        _buildSinglePalette(
-                          widget.id,
-                          ColorPicker.backgroundColors,
-                          selectedColor,
-                          notes.changeCurrentColor,
-                          circleShape,
-                          notes.findColor(widget.id),
-                        ),
+                        isGradientActive
+                            ? _buildSinglePalette(
+                                widget.id,
+                                ColorPicker.gradients,
+                                selectedGradient,
+                                notes.changeCurrentGradient,
+                                circleShape,
+                                notes.findColor(widget.id),
+                                notes.findGradient(widget.id),
+                              )
+                            : Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isWheelActive = true;
+                                      });
+                                    },
+                                    child: Container(
+                                      margin: const EdgeInsets.only(right: 5),
+                                      width: circleShape,
+                                      height: circleShape,
+                                      decoration: BoxDecoration(
+                                        // Custom color here
+                                        color: ColorPicker.backgroundColors
+                                                .contains(notes
+                                                    .findById(widget.id)
+                                                    .colorBackground)
+                                            ? Colors.transparent
+                                            : selectedColor,
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 2,
+                                        ),
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: _buildSinglePalette(
+                                      widget.id,
+                                      ColorPicker.backgroundColors,
+                                      selectedColor,
+                                      notes.changeCurrentColor,
+                                      circleShape,
+                                      notes.findColor(widget.id),
+                                    ),
+                                  ),
+                                ],
+                              ),
                       ],
                     ),
                     const SizedBox(
@@ -245,13 +296,43 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                         const SizedBox(
                           height: 10,
                         ),
-                        _buildSinglePalette(
-                          widget.id,
-                          ColorPicker.patterns,
-                          selectedPattern,
-                          notes.changeCurrentPattern,
-                          circleShape,
-                          notes.findColor(widget.id),
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  notes.removeCurrentPattern(widget.id);
+                                });
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(right: 5),
+                                width: circleShape,
+                                height: circleShape,
+                                decoration: BoxDecoration(
+                                  // Custom color here
+                                  color: notes.findColor(widget.id),
+                                  border:
+                                      notes.findPatternImage(widget.id) == null
+                                          ? Border.all(
+                                              color: Colors.white,
+                                              width: 2,
+                                            )
+                                          : null,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: _buildSinglePalette(
+                                widget.id,
+                                ColorPicker.patterns,
+                                selectedPattern,
+                                notes.changeCurrentPattern,
+                                circleShape,
+                                notes.findColor(widget.id),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -278,10 +359,36 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                         ),
                       ],
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          isGradientActive = true;
+                        });
+                      },
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all<Color>(
+                          Colors.transparent,
+                        ),
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            EdgeInsets.zero),
+                      ),
+                      child: Text(
+                        'Switch to gradient.',
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .color!
+                                  .withOpacity(.5),
+                            ),
+                      ),
+                    )
                   ],
                 ),
-          const SizedBox(
-            height: 20,
+            ],
           ),
         ],
       ),

@@ -29,6 +29,7 @@ class Note {
   Color fontColor;
   String? patternImage;
   DisplayMode displayMode;
+  LinearGradient? gradient;
 
   List<Map<String, dynamic>> todoList;
 
@@ -46,6 +47,7 @@ class Note {
       'patternImage': patternImage,
       'todoList': todoList,
       'displayMode': displayMode.index,
+      'gradient': gradient == null ? '' : gradient?.colors.map((e) => e.value).toList(),
     };
   }
 
@@ -54,7 +56,8 @@ class Note {
     this.imageFile,
     this.patternImage,
     this.todoList,
-    this.reminder, {
+    this.reminder,
+    this.gradient, {
     required this.id,
     required this.title,
     required this.content,

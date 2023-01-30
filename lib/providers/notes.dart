@@ -23,6 +23,7 @@ enum ToolingNote {
   removeReminder,
   fontColor,
   displayMode,
+  gradient,
 }
 
 class Notes with ChangeNotifier {
@@ -40,6 +41,10 @@ class Notes with ChangeNotifier {
 
   bool get isEditMode {
     return editMode;
+  }
+
+  void clearBox() {
+    DbHelper.clearBox(DbHelper.notesBoxName);
   }
 
   //? Modes on note editing
@@ -74,6 +79,20 @@ class Notes with ChangeNotifier {
           noteDecoded['reminder'] != ''
               ? DateTime.parse(noteDecoded['reminder'])
               : null,
+          noteDecoded['gradient'] == ''
+              ? null
+              : noteDecoded['gradient']
+                  ? LinearGradient(
+                      colors: noteDecoded['gradient']['colors']
+                          .cast<String>()
+                          .map((e) => Color(e))
+                          .toList(),
+                      begin: Alignment(noteDecoded['gradient']['begin'][0],
+                          noteDecoded['gradient']['begin'][1]),
+                      end: Alignment(noteDecoded['gradient']['end'][0],
+                          noteDecoded['gradient']['end'][1]),
+                    )
+                  : null,
           id: noteDecoded['id'],
           title: noteDecoded['title'],
           content: noteDecoded['content'],
@@ -198,6 +217,10 @@ class Notes with ChangeNotifier {
     return _notes.firstWhereOrNull((note) => note.id == id)!.patternImage;
   }
 
+  LinearGradient? findGradient(String id) {
+    return _notes.firstWhereOrNull((note) => note.id == id)!.gradient;
+  }
+
   //? Tooling for note changing
   // Convert to switch
   void toolingNote(String id, ToolingNote tooling, dynamic value,
@@ -241,6 +264,9 @@ class Notes with ChangeNotifier {
           break;
         case ToolingNote.removeReminder:
           _notes[noteIndex].reminder = null;
+          break;
+        case ToolingNote.gradient:
+          _notes[noteIndex].gradient = value;
           break;
       }
 
@@ -319,6 +345,14 @@ class Notes with ChangeNotifier {
       id,
       ToolingNote.displayMode,
       mode,
+    );
+  }
+
+  void changeCurrentGradient(String id, LinearGradient gradient) {
+    toolingNote(
+      id,
+      ToolingNote.gradient,
+      gradient,
     );
   }
 
