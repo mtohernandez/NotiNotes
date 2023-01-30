@@ -30,6 +30,10 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
     selectedPattern = Provider.of<Notes>(context).findPatternImage(widget.id);
     selectedFontColor = Provider.of<Notes>(context).findFontColor(widget.id);
     selectedGradient = Provider.of<Notes>(context).findGradient(widget.id);
+
+    if (Provider.of<Notes>(context).findById(widget.id).hasGradient) {
+      isGradientActive = true;
+    }
   }
 
   void deactivateWheel() {
@@ -165,7 +169,11 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                               fit: BoxFit.cover,
                               colorFilter: ColorFilter.mode(
                                 ColorPicker.darken(
-                                  colorBackground,
+                                  !Provider.of<Notes>(context, listen: false)
+                                          .findById(id)
+                                          .hasGradient
+                                      ? Colors.transparent
+                                      : colorBackground,
                                   0.2,
                                 ),
                                 BlendMode.srcATop,
@@ -286,59 +294,61 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildTitle(
-                          'Pattern',
-                          'Default is none, try something different.',
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  notes.removeCurrentPattern(widget.id);
-                                });
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 5),
-                                width: circleShape,
-                                height: circleShape,
-                                decoration: BoxDecoration(
-                                  // Custom color here
-                                  color: notes.findColor(widget.id),
-                                  border:
-                                      notes.findPatternImage(widget.id) == null
-                                          ? Border.all(
-                                              color: Colors.white,
-                                              width: 2,
-                                            )
-                                          : null,
-                                  shape: BoxShape.circle,
+                    if (!isGradientActive)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildTitle(
+                            'Pattern',
+                            'Default is none, try something different.',
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    notes.removeCurrentPattern(widget.id);
+                                  });
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 5),
+                                  width: circleShape,
+                                  height: circleShape,
+                                  decoration: BoxDecoration(
+                                    // Custom color here
+                                    color: notes.findColor(widget.id),
+                                    border: notes.findPatternImage(widget.id) ==
+                                            null
+                                        ? Border.all(
+                                            color: Colors.white,
+                                            width: 2,
+                                          )
+                                        : null,
+                                    shape: BoxShape.circle,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Expanded(
-                              child: _buildSinglePalette(
-                                widget.id,
-                                ColorPicker.patterns,
-                                selectedPattern,
-                                notes.changeCurrentPattern,
-                                circleShape,
-                                notes.findColor(widget.id),
+                              Expanded(
+                                child: _buildSinglePalette(
+                                  widget.id,
+                                  ColorPicker.patterns,
+                                  selectedPattern,
+                                  notes.changeCurrentPattern,
+                                  circleShape,
+                                  notes.findColor(widget.id),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    if (!isGradientActive)
+                      const SizedBox(
+                        height: 20,
+                      ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -364,8 +374,10 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                     ),
                     TextButton(
                       onPressed: () {
+                        notes.switchGradient(widget.id);
+                        notes.removeCurrentPattern(widget.id);
                         setState(() {
-                          isGradientActive = true;
+                          isGradientActive = !isGradientActive;
                         });
                       },
                       style: ButtonStyle(
@@ -376,7 +388,9 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                             EdgeInsets.zero),
                       ),
                       child: Text(
-                        'Switch to gradient.',
+                        isGradientActive
+                            ? 'Switch to color '
+                            : 'Switch to gradient.',
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
                               color: Theme.of(context)
                                   .textTheme

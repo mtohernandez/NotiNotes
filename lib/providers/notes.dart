@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:noti_notes_app/helpers/aligment.dart';
 import 'package:noti_notes_app/helpers/database_helper.dart';
 import 'package:noti_notes_app/helpers/photo_picker.dart';
 import 'package:string_similarity/string_similarity.dart';
@@ -68,6 +69,7 @@ class Notes with ChangeNotifier {
     }
     for (var note in notesBox.values) {
       var noteDecoded = jsonDecode(note);
+      print('Alignment: ${toAlignment(noteDecoded['gradient']['alignment'][0])}');
       _notes.add(
         Note(
           noteDecoded['tags'].cast<String>().toSet(),
@@ -79,20 +81,16 @@ class Notes with ChangeNotifier {
           noteDecoded['reminder'] != ''
               ? DateTime.parse(noteDecoded['reminder'])
               : null,
-          noteDecoded['gradient'] == ''
-              ? null
-              : noteDecoded['gradient']
-                  ? LinearGradient(
-                      colors: noteDecoded['gradient']['colors']
-                          .cast<String>()
-                          .map((e) => Color(e))
-                          .toList(),
-                      begin: Alignment(noteDecoded['gradient']['begin'][0],
-                          noteDecoded['gradient']['begin'][1]),
-                      end: Alignment(noteDecoded['gradient']['end'][0],
-                          noteDecoded['gradient']['end'][1]),
-                    )
-                  : null,
+          noteDecoded['gradient'] != null
+              ? LinearGradient(
+                  colors: [
+                    Color(noteDecoded['gradient']['colors'][0]),
+                    Color(noteDecoded['gradient']['colors'][1]),
+                  ],
+                  begin: toAlignment(noteDecoded['gradient']['alignment'][0]),
+                  end: toAlignment(noteDecoded['gradient']['alignment'][1]),
+                )
+              : null,
           id: noteDecoded['id'],
           title: noteDecoded['title'],
           content: noteDecoded['content'],
@@ -100,6 +98,7 @@ class Notes with ChangeNotifier {
           colorBackground: Color(noteDecoded['colorBackground']),
           fontColor: Color(noteDecoded['fontColor']),
           displayMode: DisplayMode.values[noteDecoded['displayMode']],
+          hasGradient: noteDecoded['hasGradient'],
         ),
       );
     }
@@ -410,6 +409,16 @@ class Notes with ChangeNotifier {
       updateNoteOnDataBase(_notes[noteIndex]);
       notifyListeners();
     }
+  }
+
+  bool checkGradient(String id) {
+    return findById(id).hasGradient;
+  }
+
+  void switchGradient(String id) {
+    findById(id).hasGradient = !findById(id).hasGradient;
+    updateNoteOnDataBase(findById(id));
+    notifyListeners();
   }
 
   // Co pilot did this

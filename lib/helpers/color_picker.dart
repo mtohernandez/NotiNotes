@@ -47,27 +47,43 @@ class ColorPicker {
     ),
     const LinearGradient(
       colors: [
-        Color.fromARGB(255, 85, 230, 71),
-        Color.fromARGB(255, 178, 16, 35),
+        Color(0xff9638CD),
+        Color(0xff5B5DD7),
+      ],
+      begin: Alignment.topRight,
+      end: Alignment.bottomLeft,
+    ),
+    const LinearGradient(
+      colors: [
+        Color(0xff48BFE3),
+        Color(0xff72EFDD),
+      ],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    ),
+    const LinearGradient(
+      colors: [
+        Color(0xff9638CD),
+        Color(0xffEF233C),
       ],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
     ),
     const LinearGradient(
       colors: [
-        Color.fromARGB(255, 0, 207, 249),
-        Color.fromARGB(255, 239, 35, 185),
+        Color(0xffF9C100),
+        Color(0xff48BFE3),
       ],
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
+      begin: Alignment.topRight,
+      end: Alignment.bottomLeft,
     ),
     const LinearGradient(
       colors: [
-        Color.fromARGB(255, 0, 249, 129),
-        Color.fromARGB(255, 208, 35, 239),
+        Color(0xffEF233C),
+        Color(0xff48BFE3),
       ],
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
+      begin: Alignment.topRight,
+      end: Alignment.bottomLeft,
     ),
   ];
 

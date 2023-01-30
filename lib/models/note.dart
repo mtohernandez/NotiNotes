@@ -10,6 +10,8 @@ import 'dart:io';
 * normal: normal displaying without todo list and all elements
 */
 
+
+
 enum DisplayMode {
   withTodoList,
   withImage,
@@ -29,6 +31,7 @@ class Note {
   Color fontColor;
   String? patternImage;
   DisplayMode displayMode;
+  bool hasGradient;
   LinearGradient? gradient;
 
   List<Map<String, dynamic>> todoList;
@@ -47,7 +50,8 @@ class Note {
       'patternImage': patternImage,
       'todoList': todoList,
       'displayMode': displayMode.index,
-      'gradient': gradient == null ? '' : gradient?.colors.map((e) => e.value).toList(),
+      'hasGradient': hasGradient,
+      'gradient': gradient == null ? '' : {'colors': gradient?.colors.map((e) => e.value).toList(), 'alignment': [gradient!.begin.toString(), gradient!.end.toString()]},
     };
   }
 
@@ -64,6 +68,7 @@ class Note {
     required this.dateCreated,
     required this.colorBackground,
     required this.fontColor,
+    required this.hasGradient,
     this.displayMode = DisplayMode.normal,
   });
 }

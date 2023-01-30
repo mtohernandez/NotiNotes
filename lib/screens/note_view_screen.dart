@@ -47,6 +47,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
     dateCreated: DateTime.now(),
     colorBackground: ColorPicker.defaultColor,
     fontColor: ColorPicker.defaultFontColor,
+    hasGradient: false,
   );
 
   @override
@@ -78,6 +79,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
               dateCreated: DateTime.now(),
               colorBackground: ColorPicker.defaultColor,
               fontColor: ColorPicker.defaultFontColor,
+              hasGradient: false,
             );
             Provider.of<Notes>(context, listen: false).addNote(loadedNote);
           } else {

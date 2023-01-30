@@ -118,7 +118,10 @@ class BottomToolsItem extends StatelessWidget {
                       maxHeight: 24, minWidth: 90), //! TO FIX
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: notes.findById(id).colorBackground,
+                    color:
+                        !notes.checkGradient(id) ? notes.findColor(id) : null,
+                    gradient:
+                        notes.checkGradient(id) ? notes.findGradient(id) : null,
                     image: notes.findById(id).patternImage != null
                         ? DecorationImage(
                             colorFilter: ColorFilter.mode(
