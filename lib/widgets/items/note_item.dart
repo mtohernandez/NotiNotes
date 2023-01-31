@@ -35,6 +35,8 @@ class _NoteItemState extends State<NoteItem> {
   late DisplayMode displayMode;
   late Color colorBackground;
   late Color fontColor;
+  late LinearGradient? gradient;
+  late bool hasGradient;
 
   @override
   void didChangeDependencies() {
@@ -49,7 +51,9 @@ class _NoteItemState extends State<NoteItem> {
     date = notes.findById(widget.id).dateCreated;
     displayMode = notes.findById(widget.id).displayMode;
     colorBackground = notes.findById(widget.id).colorBackground;
-    fontColor = notes.findById(widget.id).fontColor;
+    fontColor = notes.findFontColor(widget.id);
+    gradient = notes.findById(widget.id).gradient;
+    hasGradient = notes.findById(widget.id).hasGradient;
   }
 
   Widget _addPadding(Widget child) {
@@ -80,20 +84,14 @@ class _NoteItemState extends State<NoteItem> {
   Widget _buildTitle() {
     return Text(
       title,
-      style: Theme.of(context)
-          .textTheme
-          .headline2!
-          .copyWith(color: fontColor),
+      style: Theme.of(context).textTheme.headline2!.copyWith(color: fontColor),
     );
   }
 
   Widget _buildContent() {
     return Text(
       content,
-      style: Theme.of(context)
-          .textTheme
-          .bodyText1!
-          .copyWith(color: fontColor),
+      style: Theme.of(context).textTheme.bodyText1!.copyWith(color: fontColor),
       maxLines: 4,
       overflow: TextOverflow.ellipsis,
     );
@@ -137,7 +135,7 @@ class _NoteItemState extends State<NoteItem> {
           tag: tags.elementAt(index),
           isForSearch: false,
           isForCreation: false,
-          backgroundColor: notes.findColor(widget.id), // Note background
+          backgroundColor: colorBackground, // Note background
         ),
       ),
     );
@@ -207,18 +205,18 @@ class _NoteItemState extends State<NoteItem> {
                   image: AssetImage(patternImage!),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
-                    ColorPicker.darken(notes.findColor(widget.id), 0.1),
+                    ColorPicker.darken(colorBackground, 0.1),
                     BlendMode.srcATop,
                   ),
                 )
               : null,
           color: notes.notesToDelete.contains(widget.id) && notes.editMode
-              ? notes.findColor(widget.id).withOpacity(.5)
-              : !notes.findById(widget.id).hasGradient
-                  ? notes.findColor(widget.id)
+              ? colorBackground.withOpacity(.5)
+              : !hasGradient
+                  ? colorBackground
                   : null,
-          gradient: notes.findById(widget.id).hasGradient
-              ? notes.findGradient(widget.id)
+          gradient: hasGradient
+              ? gradient
               : null,
           // color: Colors.black,
           borderRadius: BorderRadius.circular(15),
@@ -231,8 +229,7 @@ class _NoteItemState extends State<NoteItem> {
                   EdgeInsets.only(
                 // left: 20.0,
                 // right: 20.0,
-                top: imageFile != null &&
-                        displayMode == DisplayMode.withImage
+                top: imageFile != null && displayMode == DisplayMode.withImage
                     ? 0
                     : 30.0,
                 bottom: 30.0,
@@ -240,15 +237,11 @@ class _NoteItemState extends State<NoteItem> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (imageFile  == null &&
-                      title.isEmpty &&
-                      content.isEmpty)
+                  if (imageFile == null && title.isEmpty && content.isEmpty)
                     _addPadding(_buildEmptyNote()),
-                  if (imageFile != null &&
-                      displayMode == DisplayMode.withImage)
+                  if (imageFile != null && displayMode == DisplayMode.withImage)
                     _buildHeroImage(),
-                  if (imageFile != null &&
-                     displayMode == DisplayMode.withImage)
+                  if (imageFile != null && displayMode == DisplayMode.withImage)
                     noteSeparator,
                   if (title.isNotEmpty) _addPadding(_buildTitle()),
                   if (title.isNotEmpty) noteSeparator,
@@ -266,8 +259,7 @@ class _NoteItemState extends State<NoteItem> {
                   if (todoList.isNotEmpty &&
                       displayMode == DisplayMode.withTodoList)
                     noteSeparator,
-                  if (tags.isNotEmpty &&
-                      displayMode != DisplayMode.normal)
+                  if (tags.isNotEmpty && displayMode != DisplayMode.normal)
                     _addPadding(_buildTags()),
                   if (tags.isNotEmpty) noteSeparator,
                   _addPadding(_buildDate()),
