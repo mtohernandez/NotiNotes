@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 
 Alignment toAlignment(String alignment) {
   switch (alignment) {
-    case 'topLeft':
+    case 'Alignment.topLeft':
       return Alignment.topLeft;
-    case 'topCenter':
+    case 'Alignment.topCenter':
       return Alignment.topCenter;
-    case 'topRight':
+    case 'Alignment.topRight':
       return Alignment.topRight;
-    case 'centerLeft':
+    case 'Alignment.centerLeft':
       return Alignment.centerLeft;
-    case 'center':
+    case 'Alignment.center':
       return Alignment.center;
-    case 'centerRight':
+    case 'Alignment.centerRight':
       return Alignment.centerRight;
-    case 'bottomLeft':
+    case 'Alignment.bottomLeft':
       return Alignment.bottomLeft;
-    case 'bottomCenter':
+    case 'Alignment.bottomCenter':
       return Alignment.bottomCenter;
-    case 'bottomRight':
+    case 'Alignment.bottomRight':
       return Alignment.bottomRight;
     default:
       return Alignment.center;

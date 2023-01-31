@@ -200,7 +200,7 @@ class _NoteItemState extends State<NoteItem> {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          image: patternImage != null
+          image: patternImage != null && !hasGradient
               ? DecorationImage(
                   image: AssetImage(patternImage!),
                   fit: BoxFit.cover,
@@ -210,14 +210,12 @@ class _NoteItemState extends State<NoteItem> {
                   ),
                 )
               : null,
-          color: notes.notesToDelete.contains(widget.id) && notes.editMode
-              ? colorBackground.withOpacity(.5)
-              : !hasGradient
-                  ? colorBackground
-                  : null,
-          gradient: hasGradient
-              ? gradient
-              : null,
+          // color: notes.notesToDelete.contains(widget.id) && notes.editMode
+          //     ? colorBackground.withOpacity(.5)
+          //     : !hasGradient
+          //         ? colorBackground
+          //         : null,
+          gradient: hasGradient ? gradient : null,
           // color: Colors.black,
           borderRadius: BorderRadius.circular(15),
         ),

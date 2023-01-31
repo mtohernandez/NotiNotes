@@ -69,7 +69,7 @@ class Notes with ChangeNotifier {
     }
     for (var note in notesBox.values) {
       var noteDecoded = jsonDecode(note);
-      print('Gradient: ${noteDecoded['gradient']}');
+      // print('Gradient: ${noteDecoded['gradient']}');
       _notes.add(
         Note(
           noteDecoded['tags'].cast<String>().toSet(),
