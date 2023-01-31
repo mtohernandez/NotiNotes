@@ -69,7 +69,7 @@ class Notes with ChangeNotifier {
     }
     for (var note in notesBox.values) {
       var noteDecoded = jsonDecode(note);
-      print('Alignment: ${toAlignment(noteDecoded['gradient']['alignment'][0])}');
+      print('Gradient: ${noteDecoded['gradient']}');
       _notes.add(
         Note(
           noteDecoded['tags'].cast<String>().toSet(),
@@ -81,7 +81,7 @@ class Notes with ChangeNotifier {
           noteDecoded['reminder'] != ''
               ? DateTime.parse(noteDecoded['reminder'])
               : null,
-          noteDecoded['gradient'] != null
+          noteDecoded['gradient'] != null && noteDecoded['gradient'] != ''
               ? LinearGradient(
                   colors: [
                     Color(noteDecoded['gradient']['colors'][0]),

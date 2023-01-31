@@ -13,30 +13,10 @@ import 'tag_item.dart';
 
 class NoteItem extends StatefulWidget {
   final String id;
-  final String title;
-  final String content;
-  final Set<String> tags;
-  final List<Map<String, dynamic>> todoList;
-  final File? imageFile;
-  final String? patternImage;
-  final DateTime date;
-  final DisplayMode displayMode;
-  Color colorBackground;
-  Color fontColor;
 
-  NoteItem(
-    this.tags,
-    this.imageFile,
-    this.patternImage,
-    this.todoList, {
+  const NoteItem({
     super.key,
     required this.id,
-    required this.title,
-    required this.content,
-    required this.date,
-    required this.colorBackground,
-    required this.fontColor,
-    required this.displayMode,
   });
 
   @override
@@ -45,11 +25,31 @@ class NoteItem extends StatefulWidget {
 
 class _NoteItemState extends State<NoteItem> {
   late Notes notes;
+  late String title;
+  late String content;
+  late Set<String> tags;
+  late List<Map<String, dynamic>> todoList;
+  late File? imageFile;
+  late String? patternImage;
+  late DateTime date;
+  late DisplayMode displayMode;
+  late Color colorBackground;
+  late Color fontColor;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     notes = Provider.of<Notes>(context, listen: false);
+    title = notes.findById(widget.id).title;
+    content = notes.findById(widget.id).content;
+    tags = notes.findById(widget.id).tags;
+    todoList = notes.findById(widget.id).todoList;
+    imageFile = notes.findById(widget.id).imageFile;
+    patternImage = notes.findById(widget.id).patternImage;
+    date = notes.findById(widget.id).dateCreated;
+    displayMode = notes.findById(widget.id).displayMode;
+    colorBackground = notes.findById(widget.id).colorBackground;
+    fontColor = notes.findById(widget.id).fontColor;
   }
 
   Widget _addPadding(Widget child) {
@@ -69,7 +69,7 @@ class _NoteItemState extends State<NoteItem> {
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15), topRight: Radius.circular(15)),
           image: DecorationImage(
-            image: FileImage(widget.imageFile!),
+            image: FileImage(imageFile!),
             fit: BoxFit.cover,
           ),
         ),
@@ -79,21 +79,21 @@ class _NoteItemState extends State<NoteItem> {
 
   Widget _buildTitle() {
     return Text(
-      widget.title,
+      title,
       style: Theme.of(context)
           .textTheme
           .headline2!
-          .copyWith(color: widget.fontColor),
+          .copyWith(color: fontColor),
     );
   }
 
   Widget _buildContent() {
     return Text(
-      widget.content,
+      content,
       style: Theme.of(context)
           .textTheme
           .bodyText1!
-          .copyWith(color: widget.fontColor),
+          .copyWith(color: fontColor),
       maxLines: 4,
       overflow: TextOverflow.ellipsis,
     );
@@ -108,15 +108,15 @@ class _NoteItemState extends State<NoteItem> {
       child: ListView.builder(
         padding: EdgeInsets.zero,
         shrinkWrap: true,
-        itemCount: widget.todoList.length,
+        itemCount: todoList.length,
         itemBuilder: (context, index) => TodoItem(
           isForNote: true,
           id: widget.id,
           notesProvider: notes,
           indexTask: index,
-          fullLength: notes.findById(widget.id).todoList.length,
-          title: notes.findById(widget.id).todoList[index]['content'],
-          isChecked: notes.findById(widget.id).todoList[index]['isChecked'],
+          fullLength: todoList.length,
+          title: todoList[index]['content'],
+          isChecked: todoList[index]['isChecked'],
           focusScopeNode: null,
         ),
       ),
@@ -129,15 +129,15 @@ class _NoteItemState extends State<NoteItem> {
       alignment: Alignment.centerLeft,
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: widget.tags.length,
+        itemCount: tags.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) => TagItem(
           null,
           0,
-          tag: widget.tags.elementAt(index),
+          tag: tags.elementAt(index),
           isForSearch: false,
           isForCreation: false,
-          backgroundColor: widget.colorBackground, // Note background
+          backgroundColor: notes.findColor(widget.id), // Note background
         ),
       ),
     );
@@ -145,9 +145,9 @@ class _NoteItemState extends State<NoteItem> {
 
   Widget _buildDate() {
     return Text(
-      DateFormat('MMM d, yyyy').format(widget.date),
+      DateFormat('MMM d, yyyy').format(date),
       style: TextStyle(
-        color: widget.fontColor.withOpacity(.5),
+        color: fontColor.withOpacity(.5),
         fontSize: Theme.of(context).textTheme.bodyText1!.fontSize!,
       ),
     );
@@ -202,20 +202,20 @@ class _NoteItemState extends State<NoteItem> {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          image: widget.patternImage != null
+          image: patternImage != null
               ? DecorationImage(
-                  image: AssetImage(widget.patternImage!),
+                  image: AssetImage(patternImage!),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
-                    ColorPicker.darken(widget.colorBackground, 0.1),
+                    ColorPicker.darken(notes.findColor(widget.id), 0.1),
                     BlendMode.srcATop,
                   ),
                 )
               : null,
           color: notes.notesToDelete.contains(widget.id) && notes.editMode
-              ? widget.colorBackground.withOpacity(.5)
+              ? notes.findColor(widget.id).withOpacity(.5)
               : !notes.findById(widget.id).hasGradient
-                  ? widget.colorBackground
+                  ? notes.findColor(widget.id)
                   : null,
           gradient: notes.findById(widget.id).hasGradient
               ? notes.findGradient(widget.id)
@@ -231,8 +231,8 @@ class _NoteItemState extends State<NoteItem> {
                   EdgeInsets.only(
                 // left: 20.0,
                 // right: 20.0,
-                top: widget.imageFile != null &&
-                        widget.displayMode == DisplayMode.withImage
+                top: imageFile != null &&
+                        displayMode == DisplayMode.withImage
                     ? 0
                     : 30.0,
                 bottom: 30.0,
@@ -240,36 +240,36 @@ class _NoteItemState extends State<NoteItem> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (widget.imageFile == null &&
-                      widget.title.isEmpty &&
-                      widget.content.isEmpty)
+                  if (imageFile  == null &&
+                      title.isEmpty &&
+                      content.isEmpty)
                     _addPadding(_buildEmptyNote()),
-                  if (widget.imageFile != null &&
-                      widget.displayMode == DisplayMode.withImage)
+                  if (imageFile != null &&
+                      displayMode == DisplayMode.withImage)
                     _buildHeroImage(),
-                  if (widget.imageFile != null &&
-                      widget.displayMode == DisplayMode.withImage)
+                  if (imageFile != null &&
+                     displayMode == DisplayMode.withImage)
                     noteSeparator,
-                  if (widget.title.isNotEmpty) _addPadding(_buildTitle()),
-                  if (widget.title.isNotEmpty) noteSeparator,
-                  if (widget.content.isNotEmpty &&
-                      widget.displayMode != DisplayMode.withoutContent &&
-                      widget.displayMode != DisplayMode.withTodoList)
+                  if (title.isNotEmpty) _addPadding(_buildTitle()),
+                  if (title.isNotEmpty) noteSeparator,
+                  if (content.isNotEmpty &&
+                      displayMode != DisplayMode.withoutContent &&
+                      displayMode != DisplayMode.withTodoList)
                     _addPadding(_buildContent()),
-                  if (widget.content.isNotEmpty &&
-                      widget.displayMode != DisplayMode.withoutContent &&
-                      widget.displayMode != DisplayMode.withTodoList)
+                  if (content.isNotEmpty &&
+                      displayMode != DisplayMode.withoutContent &&
+                      displayMode != DisplayMode.withTodoList)
                     noteSeparator,
-                  if (widget.todoList.isNotEmpty &&
-                      widget.displayMode == DisplayMode.withTodoList)
+                  if (todoList.isNotEmpty &&
+                      displayMode == DisplayMode.withTodoList)
                     _addPadding(_buildTodoList()),
-                  if (widget.todoList.isNotEmpty &&
-                      widget.displayMode == DisplayMode.withTodoList)
+                  if (todoList.isNotEmpty &&
+                      displayMode == DisplayMode.withTodoList)
                     noteSeparator,
-                  if (widget.tags.isNotEmpty &&
-                      widget.displayMode != DisplayMode.normal)
+                  if (tags.isNotEmpty &&
+                      displayMode != DisplayMode.normal)
                     _addPadding(_buildTags()),
-                  if (widget.tags.isNotEmpty) noteSeparator,
+                  if (tags.isNotEmpty) noteSeparator,
                   _addPadding(_buildDate()),
                 ],
               ),

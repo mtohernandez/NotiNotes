@@ -151,17 +151,7 @@ class HomeScreen extends StatelessWidget {
                                 ...notes.notes
                                     .map(
                                       (note) => NoteItem(
-                                        note.tags,
-                                        note.imageFile,
-                                        note.patternImage,
-                                        note.todoList,
                                         id: note.id,
-                                        title: note.title,
-                                        content: note.content,
-                                        date: note.dateCreated,
-                                        colorBackground: note.colorBackground,
-                                        fontColor: note.fontColor,
-                                        displayMode: note.displayMode,
                                       ),
                                     )
                                     .toList(),
@@ -171,17 +161,7 @@ class HomeScreen extends StatelessWidget {
                                     .filterByTitle(isSearching.searchQuery)
                                     .map(
                                       (note) => NoteItem(
-                                        note.tags,
-                                        note.imageFile,
-                                        note.patternImage,
-                                        note.todoList,
                                         id: note.id,
-                                        title: note.title,
-                                        content: note.content,
-                                        date: note.dateCreated,
-                                        colorBackground: note.colorBackground,
-                                        fontColor: note.fontColor,
-                                        displayMode: note.displayMode,
                                       ),
                                     )
                                     .toList(),
@@ -191,17 +171,7 @@ class HomeScreen extends StatelessWidget {
                                     .filterByTag(isSearching.searchTags)
                                     .map(
                                       (note) => NoteItem(
-                                        note.tags,
-                                        note.imageFile,
-                                        note.patternImage,
-                                        note.todoList,
                                         id: note.id,
-                                        title: note.title,
-                                        content: note.content,
-                                        date: note.dateCreated,
-                                        colorBackground: note.colorBackground,
-                                        fontColor: note.fontColor,
-                                        displayMode: note.displayMode,
                                       ),
                                     )
                                     .toList(),
