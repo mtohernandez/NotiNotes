@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:noti_notes_app/helpers/database_helper.dart';
 import 'package:noti_notes_app/screens/home_screen.dart';
 import 'package:noti_notes_app/screens/note_view_screen.dart';
@@ -23,8 +24,6 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  await LocalNotificationService().setup();
-
   await DbHelper.initBox(DbHelper.notesBoxName);
   await DbHelper.initBox(DbHelper.userBoxName);
 
@@ -42,6 +41,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   late Notes notes;
   late UserData userData;
 
+  // Init local notifications
+
   //? The box needs to be disposed after closing the app
 
   @override
@@ -56,7 +57,24 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (userData.curentUserData.name != '') {
       userData.randomGreetings(userData.curentUserData);
     }
+
+    Future.delayed(Duration.zero).then(
+      (_) {
+        LocalNotificationService.setup(notificationResponse).asStream().listen(
+              (event) => notificationResponse,
+            );
+      },
+    );
     super.initState();
+  }
+
+  void notificationResponse(NotificationResponse response) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const NoteViewScreen(),
+        settings: RouteSettings(arguments: response.payload),
+      ),
+    );
   }
 
   @override
@@ -119,7 +137,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             ),
           ),
         ),
-        home: HomeScreen(),
+        home: const HomeScreen(),
         routes: {
           HomeScreen.routeName: (context) => const HomeScreen(),
           InformationScreen.routeName: (context) => const InformationScreen(),

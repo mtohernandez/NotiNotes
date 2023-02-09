@@ -40,7 +40,7 @@ class DisplaySelector extends StatelessWidget {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.1,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ...DisplayModes.displayModes
                   .map((e) => GestureDetector(
@@ -88,7 +88,7 @@ class DisplaySelector extends StatelessWidget {
                 ),
           ),
         ),
-        const SizedBox(height: 20),
+        // const SizedBox(height: 20),
       ],
     );
   }

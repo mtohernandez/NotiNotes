@@ -4,7 +4,7 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'dart:math';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tzData;
-
+// import 'package:noti_notes_app/screens/note_view_screen.dart';
 
 class TimeZone {
   factory TimeZone() => _this ?? TimeZone._();
@@ -15,26 +15,31 @@ class TimeZone {
 
   static TimeZone? _this;
 
-  Future<String> getTimeZoneName() async => FlutterNativeTimezone.getLocalTimezone();
+  Future<String> getTimeZoneName() async =>
+      FlutterNativeTimezone.getLocalTimezone();
 
   Future<tz.Location> getLocation([String? timeZoneName]) async {
-    if(timeZoneName == null || timeZoneName.isEmpty){
+    if (timeZoneName == null || timeZoneName.isEmpty) {
       timeZoneName = await getTimeZoneName();
     }
     return tz.getLocation(timeZoneName);
   }
 }
 
-
-
 class LocalNotificationService {
+
   // Initialize the notifications plugin
-  final _localNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  static final _localNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  // void onDidReceiveNotificationResonse(NotificationResponse response) {
+  //   Navigator.pushNamed(context, NoteViewScreen.routeName,
+  //       arguments: response.payload,);
+  // }
 
   // Initialize for every platform
-  Future<void> setup() async {
+  static Future<void> setup(Function(NotificationResponse) notificationResponse) async {
     // Step #1
-    const androidSetting = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSetting = AndroidInitializationSettings('@mipmap/launcher_icon');
     // const iosSetting = IOSInitializationSettings(); These does not work for some reason
 
     // Step #2
@@ -42,13 +47,13 @@ class LocalNotificationService {
 
     // Step #3
     await _localNotificationsPlugin
-        .initialize(initSettings)
+        .initialize(initSettings,
+            onDidReceiveNotificationResponse: notificationResponse)
         .then((_) => {debugPrint('setupPlugin: setup complete')})
         .catchError((Object error) => {debugPrint('Error: $error')});
   }
 
-  String notificationMessage(String body, String userName){
-
+  String notificationMessage(String body, String userName) {
     var messages = [
       'Hey! $body is waiting.',
       'Reminder about $body',
@@ -67,19 +72,18 @@ class LocalNotificationService {
       '$userName you have a reminder: $body',
       '$userName did you fall as sleep or what?',
     ];
-  
+
     var random = Random();
     var element = messages[random.nextInt(messages.length)];
     return element;
-  
   }
-
 
   void addNotification(
     int id,
     String title,
     String body,
-    DateTime endTime, {
+    DateTime endTime,
+    String noteId, {
     String sound = '',
     String channel = 'default',
   }) async {
@@ -100,12 +104,12 @@ class LocalNotificationService {
 
     // #2
     final androidDetail = AndroidNotificationDetails(
-        channel, // channel Id
-        channel,
-        playSound: true,
-        sound: notificationSound, // channel Name
-        enableVibration: true,      
-        );
+      channel, // channel Id
+      channel,
+      playSound: true,
+      sound: notificationSound, // channel Name
+      enableVibration: true,
+    );
 
     // final iosDetail = IOSNotificationDetails();
 
@@ -123,10 +127,11 @@ class LocalNotificationService {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       androidAllowWhileIdle: true,
+      payload: noteId,
     );
   }
 
-  void cancelNotification(int id) async {
+  static void cancelNotification(int id) async {
     await _localNotificationsPlugin.cancel(id);
   }
 }

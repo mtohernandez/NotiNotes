@@ -217,7 +217,9 @@ class _ReminderCreatorState extends State<ReminderCreator> {
                         ? '${note.content.substring(0, 20)}...'
                         : note.content,
                     reminder,
+                    widget.id,
                     channel: 'reminders',
+                    
                   );
                   setState(() {
                     notes.addReminder(widget.id, reminder);
@@ -237,7 +239,7 @@ class _ReminderCreatorState extends State<ReminderCreator> {
                   TextButton(
                     onPressed: () {
                       setState(() {
-                        LocalNotificationService()
+                        LocalNotificationService
                             .cancelNotification(notes.findIndex(note.id));
                         notes.removeReminder(widget.id);
                       });

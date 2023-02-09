@@ -158,7 +158,7 @@ class Notes with ChangeNotifier {
       findById(id).imageFile != null
           ? PhotoPicker.removeImage(findById(id).imageFile!)
           : null;
-      LocalNotificationService().cancelNotification(findIndex(id));
+      LocalNotificationService.cancelNotification(findIndex(id));
       _notes.removeWhere((note) => note.id == id);
       DbHelper.deleteData(DbHelper.notesBoxName, id);
     }

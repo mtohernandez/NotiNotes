@@ -45,6 +45,9 @@ class BottomToolsItem extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 5,
+        ),
         color: Theme.of(context).backgroundColor,
         child: Consumer<Notes>(
           builder: (ctx, notes, _) => Row(
@@ -109,30 +112,36 @@ class BottomToolsItem extends StatelessWidget {
                   pickImage(context);
                 },
               ),
-              GestureDetector(
-                onTap: () {
-                  _showColorPicker(context);
-                },
-                child: Container(
-                  constraints: const BoxConstraints(
-                      maxHeight: 24, minWidth: 90), //! TO FIX
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color:
-                        !notes.checkGradient(id) ? notes.findColor(id) : null,
-                    gradient:
-                        notes.checkGradient(id) ? notes.findGradient(id) : null,
-                    image: notes.findById(id).patternImage != null
-                        ? DecorationImage(
-                            colorFilter: ColorFilter.mode(
-                              ColorPicker.darken(
-                                  notes.findById(id).colorBackground, 0.1),
-                              BlendMode.srcATop,
-                            ),
-                            image: AssetImage(notes.findById(id).patternImage!),
-                            fit: BoxFit.cover,
-                          )
-                        : null,
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    _showColorPicker(context);
+                  },
+                  child: Container(
+                    constraints: const BoxConstraints(
+                      maxHeight: 24,
+                      maxWidth: 40,
+                    ), //! TO FIX
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color:
+                          !notes.checkGradient(id) ? notes.findColor(id) : null,
+                      gradient: notes.checkGradient(id)
+                          ? notes.findGradient(id)
+                          : null,
+                      image: notes.findById(id).patternImage != null
+                          ? DecorationImage(
+                              colorFilter: ColorFilter.mode(
+                                ColorPicker.darken(
+                                    notes.findById(id).colorBackground, 0.1),
+                                BlendMode.srcATop,
+                              ),
+                              image:
+                                  AssetImage(notes.findById(id).patternImage!),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
+                    ),
                   ),
                 ),
               ),

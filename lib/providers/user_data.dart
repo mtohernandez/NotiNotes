@@ -18,7 +18,7 @@ class UserData with ChangeNotifier {
     bornDate: DateTime.now(),
   );
 
-  var _greetingToUser = 'NotiNotes'; // Default greeting
+  var _greetingToUser = 'Noti'; // Default greeting
 
   User get curentUserData => currentUser;
 

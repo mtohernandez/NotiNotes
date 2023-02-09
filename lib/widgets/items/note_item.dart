@@ -210,11 +210,11 @@ class _NoteItemState extends State<NoteItem> {
                   ),
                 )
               : null,
-          // color: notes.notesToDelete.contains(widget.id) && notes.editMode
-          //     ? colorBackground.withOpacity(.5)
-          //     : !hasGradient
-          //         ? colorBackground
-          //         : null,
+          color: notes.notesToDelete.contains(widget.id) && notes.editMode
+              ? colorBackground.withOpacity(.5)
+              : !hasGradient
+                  ? colorBackground
+                  : null,
           gradient: hasGradient ? gradient : null,
           // color: Colors.black,
           borderRadius: BorderRadius.circular(15),

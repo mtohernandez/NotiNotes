@@ -17,22 +17,22 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   Widget _buildCenterMessage(BuildContext context, String message) {
-    return Container(
-      padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom * .4),
-      height: MediaQuery.of(context).size.height * 0.6, // This may not work
-      child: Center(
-        child: Text(
-          message,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                color: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .color!
-                    .withOpacity(0.5),
-              ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: Text(
+            message,
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .color!
+                      .withOpacity(0.5),
+                ),
+          ),
         ),
-      ),
+      ],
     );
   }
 
@@ -81,6 +81,9 @@ class HomeScreen extends StatelessWidget {
     final notes = Provider.of<Notes>(context);
     final isSearching = Provider.of<Search>(context);
     final appBarSize = Theme.of(context).textTheme.bodyText1!.fontSize! * 2;
+    final paddingTop = MediaQuery.of(context).padding.top;
+
+    print(MediaQuery.of(context).padding.top);
 
     return GestureDetector(
       onTap: () {
@@ -91,7 +94,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).backgroundColor,
         body: Padding(
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top,
+            top: paddingTop > 50 ? paddingTop * .3 : paddingTop,
             left: 10,
             right: 10,
           ),
@@ -131,7 +134,7 @@ class HomeScreen extends StatelessWidget {
                     isSearching,
                   ),
                 ),
-              _buildSpacer(context, appBarSize * .5), // Half the appbar size
+              // _buildSpacer(context, appBarSize * .5), // Half the appbar size
               SliverToBoxAdapter(
                 child: isSearching.isSearching == SearchType.notSearching &&
                         notes.notes.isEmpty
