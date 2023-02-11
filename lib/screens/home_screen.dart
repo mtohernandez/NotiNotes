@@ -20,17 +20,15 @@ class HomeScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Center(
-          child: Text(
-            message,
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  color: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .color!
-                      .withOpacity(0.5),
-                ),
-          ),
+        Text(
+          message,
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                color: Theme.of(context)
+                    .textTheme
+                    .bodyText1!
+                    .color!
+                    .withOpacity(0.5),
+              ),
         ),
       ],
     );
@@ -83,8 +81,6 @@ class HomeScreen extends StatelessWidget {
     final appBarSize = Theme.of(context).textTheme.bodyText1!.fontSize! * 2;
     final paddingTop = MediaQuery.of(context).padding.top;
 
-    print(MediaQuery.of(context).padding.top);
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -110,6 +106,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               SliverAppBar(
+                // centerTitle: true,
                 backgroundColor: Theme.of(context).backgroundColor,
                 pinned: true,
                 floating: false,
@@ -117,6 +114,8 @@ class HomeScreen extends StatelessWidget {
                 elevation: 0,
                 expandedHeight: appBarSize,
                 toolbarHeight: appBarSize,
+                titleSpacing: 0,
+
                 flexibleSpace: const FlexibleSpaceBar(
                   expandedTitleScale: 1,
                   titlePadding: EdgeInsets.symmetric(vertical: 10),
@@ -134,7 +133,7 @@ class HomeScreen extends StatelessWidget {
                     isSearching,
                   ),
                 ),
-              // _buildSpacer(context, appBarSize * .5), // Half the appbar size
+              _buildSpacer(context, appBarSize * .5), // Half the appbar size
               SliverToBoxAdapter(
                 child: isSearching.isSearching == SearchType.notSearching &&
                         notes.notes.isEmpty
