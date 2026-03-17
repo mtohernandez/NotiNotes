@@ -71,8 +71,8 @@ class _TodoItemState extends State<TodoItem> {
         : Theme.of(context).primaryColor;
 
     final heightContainer = widget.isForNote
-        ? Theme.of(context).textTheme.bodyText1!.fontSize! * 2.0
-        : Theme.of(context).textTheme.bodyText1!.fontSize! * 2.5;
+        ? Theme.of(context).textTheme.bodyLarge!.fontSize! * 2.0
+        : Theme.of(context).textTheme.bodyLarge!.fontSize! * 2.5;
 
     return SizedBox(
       width: double.infinity,
@@ -122,10 +122,10 @@ class _TodoItemState extends State<TodoItem> {
                 textInputAction: TextInputAction.done,
                 // focusNode: textNode,
                 style: !widget.isChecked
-                    ? Theme.of(context).textTheme.bodyText1!.copyWith(
+                    ? Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: colorTodo,
                         )
-                    : Theme.of(context).textTheme.bodyText1!.copyWith(
+                    : Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: colorTodo,
                           decoration: TextDecoration.lineThrough,
                         ),
@@ -134,10 +134,10 @@ class _TodoItemState extends State<TodoItem> {
                   contentPadding: EdgeInsets.zero,
                   border: InputBorder.none,
                   hintText: 'Add content...',
-                  hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  hintStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: Theme.of(context)
                             .textTheme
-                            .bodyText1!
+                            .bodyLarge!
                             .color!
                             .withOpacity(0.5),
                       ),

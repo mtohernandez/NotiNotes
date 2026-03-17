@@ -65,14 +65,14 @@ class _TagItemState extends State<TagItem> {
           ),
           label: Text(
             widget.tag,
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   fontWeight:
                       widget.isForSearch ? FontWeight.bold : FontWeight.normal,
                   color: isSelected
                       ? Colors.black
                       : widget.isForSearch
                           ? Theme.of(context).primaryColor
-                          : Theme.of(context).textTheme.bodyText1!.color,
+                          : Theme.of(context).textTheme.bodyLarge!.color,
                 ),
           ),
           deleteIcon: widget.isForCreation
@@ -80,7 +80,7 @@ class _TagItemState extends State<TagItem> {
                   angle: 45 * math.pi / 180,
                   child: SvgPicture.asset(
                     'lib/assets/icons/plus.svg',
-                    height: Theme.of(context).textTheme.bodyText1!.fontSize,
+                    height: Theme.of(context).textTheme.bodyLarge!.fontSize,
                   ),
                 )
               : null,

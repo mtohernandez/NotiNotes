@@ -78,16 +78,16 @@ class _TodoListToolState extends State<TodoListTool> {
                         icon: SvgPicture.asset(
                           'lib/assets/icons/plus.svg',
                           height:
-                              Theme.of(context).textTheme.bodyText1!.fontSize,
+                              Theme.of(context).textTheme.bodyLarge!.fontSize,
                           color: Theme.of(context).primaryColor.withOpacity(.5),
                         ),
                         label: Text(
                           'Add a task',
                           style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
                                     color: Theme.of(context)
                                         .textTheme
-                                        .bodyText1!
+                                        .bodyLarge!
                                         .color!
                                         .withOpacity(0.5),
                                   ),

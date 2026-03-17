@@ -84,14 +84,14 @@ class _NoteItemState extends State<NoteItem> {
   Widget _buildTitle() {
     return Text(
       title,
-      style: Theme.of(context).textTheme.headline2!.copyWith(color: fontColor),
+      style: Theme.of(context).textTheme.displayMedium!.copyWith(color: fontColor),
     );
   }
 
   Widget _buildContent() {
     return Text(
       content,
-      style: Theme.of(context).textTheme.bodyText1!.copyWith(color: fontColor),
+      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: fontColor),
       maxLines: 4,
       overflow: TextOverflow.ellipsis,
     );
@@ -123,7 +123,7 @@ class _NoteItemState extends State<NoteItem> {
 
   Widget _buildTags() {
     return Container(
-      height: Theme.of(context).textTheme.bodyText1!.fontSize! * 2.0,
+      height: Theme.of(context).textTheme.bodyLarge!.fontSize! * 2.0,
       alignment: Alignment.centerLeft,
       child: ListView.builder(
         shrinkWrap: true,
@@ -146,7 +146,7 @@ class _NoteItemState extends State<NoteItem> {
       DateFormat('MMM d, yyyy').format(date),
       style: TextStyle(
         color: fontColor.withOpacity(.5),
-        fontSize: Theme.of(context).textTheme.bodyText1!.fontSize!,
+        fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize!,
       ),
     );
   }
@@ -156,7 +156,7 @@ class _NoteItemState extends State<NoteItem> {
       children: [
         Text(
           'You left this note empty...',
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 fontStyle: FontStyle.italic,
                 color: Theme.of(context).primaryColor.withOpacity(.5),
               ),
