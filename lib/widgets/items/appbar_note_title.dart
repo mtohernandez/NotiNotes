@@ -16,7 +16,7 @@ class AppBarNoteTitle extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final notes = Provider.of<Notes>(context, listen: false);
     return AppBar(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       elevation: 0,
       title: TextFormField(
         maxLength: 20,
@@ -26,15 +26,15 @@ class AppBarNoteTitle extends StatelessWidget implements PreferredSizeWidget {
             ? true
             : false,
         initialValue: loadedNote.title,
-        style: Theme.of(context).textTheme.headline1,
+        style: Theme.of(context).textTheme.displayLarge,
         decoration: InputDecoration(
             counterText: '',
             border: InputBorder.none,
             hintText: 'Title',
-            hintStyle: Theme.of(context).textTheme.headline1!.copyWith(
+            hintStyle: Theme.of(context).textTheme.displayLarge!.copyWith(
                   color: Theme.of(context)
                       .textTheme
-                      .headline1!
+                      .displayLarge!
                       .color!
                       .withOpacity(0.5),
                 )),

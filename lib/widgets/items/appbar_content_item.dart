@@ -27,7 +27,7 @@ class AppBarContentItem extends StatelessWidget {
       children: [
         if (allTags.isNotEmpty)
           SizedBox(
-            height: Theme.of(context).textTheme.bodyText1!.fontSize! * 2.0,
+            height: Theme.of(context).textTheme.bodyLarge!.fontSize! * 2.0,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => TagItem(
@@ -37,7 +37,7 @@ class AppBarContentItem extends StatelessWidget {
                 isForSearch: true,
                 isForCreation: false,
                 backgroundColor:
-                    Theme.of(context).backgroundColor, // Does not matter
+                    Theme.of(context).colorScheme.surface, // Does not matter
               ),
               itemCount: allTags.length,
             ),
