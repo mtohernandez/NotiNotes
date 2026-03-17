@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 
 class ColorPicker {
   static Color defaultColor = const Color(0xffEF233C);
