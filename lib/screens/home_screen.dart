@@ -22,10 +22,10 @@ class HomeScreen extends StatelessWidget {
       children: [
         Text(
           message,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 color: Theme.of(context)
                     .textTheme
-                    .bodyText1!
+                    .bodyLarge!
                     .color!
                     .withOpacity(0.5),
               ),
@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
       children: [
         Text(
           'Searching "${isSearching.searchQuery}"',
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 fontWeight: FontWeight.bold,
               ),
         ),
@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildPersistenHeader(BuildContext context, Widget child) {
-    final sliverHeight = Theme.of(context).textTheme.bodyText1!.fontSize! * 2.5;
+    final sliverHeight = Theme.of(context).textTheme.bodyLarge!.fontSize! * 2.5;
 
     return SliverPersistentHeader(
       pinned: true,
@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
         minHeight: sliverHeight,
         maxHeight: sliverHeight,
         child: Container(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.surface,
           child: child,
         ),
       ),
@@ -78,7 +78,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final notes = Provider.of<Notes>(context);
     final isSearching = Provider.of<Search>(context);
-    final appBarSize = Theme.of(context).textTheme.bodyText1!.fontSize! * 2;
+    final appBarSize = Theme.of(context).textTheme.bodyLarge!.fontSize! * 2;
     final paddingTop = MediaQuery.of(context).padding.top;
 
     return GestureDetector(
@@ -87,7 +87,7 @@ class HomeScreen extends StatelessWidget {
         // notes.editMode = false;
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: Padding(
           padding: EdgeInsets.only(
             top: paddingTop > 50 ? paddingTop * .3 : paddingTop,
@@ -107,7 +107,7 @@ class HomeScreen extends StatelessWidget {
               ),
               SliverAppBar(
                 // centerTitle: true,
-                backgroundColor: Theme.of(context).backgroundColor,
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 pinned: true,
                 floating: false,
                 snap: false,
