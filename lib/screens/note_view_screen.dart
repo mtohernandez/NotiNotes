@@ -167,7 +167,7 @@ class _NoteViewScreenState extends State<NoteViewScreen>
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         appBar: AppBarNoteTitle(loadedNote: loadedNote),
         body: Stack(
           children: [
