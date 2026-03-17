@@ -44,14 +44,14 @@ class Note {
       'tags': tags.toList(),
       'dateCreated': dateCreated.toIso8601String(),
       'reminder': reminder?.toIso8601String() ?? '',
-      'colorBackground': colorBackground.value,
-      'fontColor': fontColor.value,
+      'colorBackground': colorBackground.toARGB32(),
+      'fontColor': fontColor.toARGB32(),
       'imageFile': imageFile?.path,
       'patternImage': patternImage,
       'todoList': todoList,
       'displayMode': displayMode.index,
       'hasGradient': hasGradient,
-      'gradient': gradient == null ? '' : {'colors': gradient?.colors.map((e) => e.value).toList(), 'alignment': [gradient!.begin.toString(), gradient!.end.toString()]},
+      'gradient': gradient == null ? '' : {'colors': gradient?.colors.map((e) => e.toARGB32()).toList(), 'alignment': [gradient!.begin.toString(), gradient!.end.toString()]},
     };
   }
 
