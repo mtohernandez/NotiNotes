@@ -38,7 +38,7 @@ class _BottomNavigationCustomItemState
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(50),
         ),
@@ -57,10 +57,10 @@ class _BottomNavigationCustomItemState
                   hintStyle: TextStyle(
                     color: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .color!
                         .withOpacity(.5),
-                    fontSize: Theme.of(context).textTheme.bodyText1!.fontSize,
+                    fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
                   ),
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -72,7 +72,7 @@ class _BottomNavigationCustomItemState
                   ),
                 ),
                 controller: _searchController,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyLarge,
                 onChanged: (value) {
                   isSearching.activateSearchByTitle();
                   isSearching.setSearchQuery(value);
@@ -99,12 +99,12 @@ class _BottomNavigationCustomItemState
                   'lib/assets/icons/plus.svg',
                   color: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .bodyLarge!
                       .color!
                       .withOpacity(.5),
                   height:
-                      Theme.of(context).textTheme.bodyText1!.fontSize! * 1.5,
-                  width: Theme.of(context).textTheme.bodyText1!.fontSize! * 1.5,
+                      Theme.of(context).textTheme.bodyLarge!.fontSize! * 1.5,
+                  width: Theme.of(context).textTheme.bodyLarge!.fontSize! * 1.5,
                 ),
               ),
             if (_searchController.text.isNotEmpty)
@@ -124,12 +124,12 @@ class _BottomNavigationCustomItemState
                   'lib/assets/icons/check.svg',
                   color: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .bodyLarge!
                       .color!
                       .withOpacity(.5),
                   height:
-                      Theme.of(context).textTheme.bodyText1!.fontSize! * 1.5,
-                  width: Theme.of(context).textTheme.bodyText1!.fontSize! * 1.5,
+                      Theme.of(context).textTheme.bodyLarge!.fontSize! * 1.5,
+                  width: Theme.of(context).textTheme.bodyLarge!.fontSize! * 1.5,
                 ),
               )
           ],
