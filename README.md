@@ -2,8 +2,6 @@
 
 A customizable notes app built with Flutter. Create, organize, and personalize your notes with colors, gradients, patterns, tags, todo lists, images, and scheduled reminders.
 
-![NotiNotes Preview](https://user-images.githubusercontent.com/67434849/207646618-66858072-55c9-4a12-a08a-22bf1db91f04.png)
-
 ## Features
 
 - **Rich note creation** — title, content, images, and todo lists
