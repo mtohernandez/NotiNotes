@@ -27,11 +27,11 @@ class _MediaGridState extends State<MediaGrid> {
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           title: Text('An error occured',
-              style: Theme.of(context).textTheme.headline2),
+              style: Theme.of(context).textTheme.displayMedium),
           content: Text('Something went wrong',
-              style: Theme.of(context).textTheme.bodyText1),
+              style: Theme.of(context).textTheme.bodyLarge),
           actions: [
             TextButton(
               onPressed: () {
@@ -87,7 +87,7 @@ class _MediaGridState extends State<MediaGrid> {
             ),
             Text(
               title,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
         ),
@@ -109,18 +109,18 @@ class _MediaGridState extends State<MediaGrid> {
           children: [
             Text(
               widget.title,
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.displayLarge,
             ),
             IconButtonXItem(exitCreator),
           ],
         ),
         Text(
           widget.subtitle,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 // Using copyWith to change the opacity of the text
                 color: Theme.of(context)
                     .textTheme
-                    .bodyText1!
+                    .bodyLarge!
                     .color!
                     .withOpacity(.5),
               ),

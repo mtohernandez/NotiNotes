@@ -57,7 +57,7 @@ class _ReminderCreatorState extends State<ReminderCreator> {
           children: [
             Text(
               'Set a reminder',
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.displayLarge,
             ),
             IconButtonXItem(exitCreator),
           ],
@@ -65,10 +65,10 @@ class _ReminderCreatorState extends State<ReminderCreator> {
         // const SizedBox(height: 20),
         Text(
           'Make sure you have a title and content in your note before setting a reminder.',
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 color: Theme.of(context)
                     .textTheme
-                    .bodyText1!
+                    .bodyLarge!
                     .color!
                     .withOpacity(0.5),
               ),
@@ -82,7 +82,7 @@ class _ReminderCreatorState extends State<ReminderCreator> {
               'Remind me in',
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(fontWeight: FontWeight.w400),
             ),
             const SizedBox(width: 10),
@@ -91,23 +91,23 @@ class _ReminderCreatorState extends State<ReminderCreator> {
                 borderRadius: BorderRadius.circular(10),
                 color: Theme.of(context).primaryColor.withOpacity(0.1),
               ),
-              height: Theme.of(context).textTheme.headline1!.fontSize! + 5,
+              height: Theme.of(context).textTheme.displayLarge!.fontSize! + 5,
               width: MediaQuery.of(context).size.width * 0.1,
               child: ListWheelScrollView(
                 physics: const FixedExtentScrollPhysics(),
                 // diameterRatio: 1.5,
                 itemExtent:
-                    Theme.of(context).textTheme.headline1!.fontSize!.toDouble(),
+                    Theme.of(context).textTheme.displayLarge!.fontSize!.toDouble(),
                 children: [
                   if (dropdownvalue != 'HOURS')
                     ...values.map((e) {
                       return Text(
                         e.toString(),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                        style: Theme.of(context).textTheme.displayLarge!.copyWith(
                               fontWeight: FontWeight.w400,
                               color: Theme.of(context)
                                   .textTheme
-                                  .bodyText1!
+                                  .bodyLarge!
                                   .color!
                                   .withOpacity(0.5),
                             ),
@@ -117,11 +117,11 @@ class _ReminderCreatorState extends State<ReminderCreator> {
                     ...valuesForHours.map((e) {
                       return Text(
                         e.toString(),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                        style: Theme.of(context).textTheme.displayLarge!.copyWith(
                               fontWeight: FontWeight.w400,
                               color: Theme.of(context)
                                   .textTheme
-                                  .bodyText1!
+                                  .bodyLarge!
                                   .color!
                                   .withOpacity(0.5),
                             ),
@@ -139,14 +139,14 @@ class _ReminderCreatorState extends State<ReminderCreator> {
                   borderRadius: BorderRadius.circular(10),
                   color: Theme.of(context).primaryColor.withOpacity(0.1),
                 ),
-                height: Theme.of(context).textTheme.headline1!.fontSize! + 5,
+                height: Theme.of(context).textTheme.displayLarge!.fontSize! + 5,
                 // width: MediaQuery.of(context).size.width * 0.4,
                 child: ListWheelScrollView(
                     physics: const FixedExtentScrollPhysics(),
                     // diameterRatio: 1.5,
                     itemExtent: Theme.of(context)
                         .textTheme
-                        .headline1!
+                        .displayLarge!
                         .fontSize!
                         .toDouble(),
                     children: [
@@ -155,11 +155,11 @@ class _ReminderCreatorState extends State<ReminderCreator> {
                           e,
                           textAlign: TextAlign.center,
                           style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
+                              Theme.of(context).textTheme.displayLarge!.copyWith(
                                     fontWeight: FontWeight.w400,
                                     color: Theme.of(context)
                                         .textTheme
-                                        .bodyText1!
+                                        .bodyLarge!
                                         .color!
                                         .withOpacity(0.5),
                                   ),
@@ -227,14 +227,14 @@ class _ReminderCreatorState extends State<ReminderCreator> {
                 },
                 child: Text(
                   'Set',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               )
             : Row(
                 children: [
                   Text(
                     'Reminder set for ${DateFormat('MMM d, HH:mm').format(note.reminder!)}',
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   TextButton(
                     onPressed: () {
@@ -246,7 +246,7 @@ class _ReminderCreatorState extends State<ReminderCreator> {
                     },
                     child: Text(
                       'Cancel',
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             decoration: TextDecoration.underline,
                           ),
                     ),

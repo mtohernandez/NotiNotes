@@ -51,18 +51,18 @@ class _TagCreatorManagerState extends State<TagCreatorManager> {
               children: [
                 Text(
                   'Add tags',
-                  style: Theme.of(context).textTheme.headline1,
+                  style: Theme.of(context).textTheme.displayLarge,
                 ),
                 IconButtonXItem(exitCreator),
               ],
             ),
             Text(
               'For fast creation add a comma after each tag.',
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     // Using copyWith to change the opacity of the text
                     color: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .color!
                         .withOpacity(.5),
                   ),
@@ -92,11 +92,11 @@ class _TagCreatorManagerState extends State<TagCreatorManager> {
                       border: InputBorder.none,
                       hintText: 'Add a tag...',
                       hintStyle:
-                          Theme.of(context).textTheme.bodyText1!.copyWith(
+                          Theme.of(context).textTheme.bodyLarge!.copyWith(
                                 // Using copyWith to change the opacity of the text
                                 color: Theme.of(context)
                                     .textTheme
-                                    .bodyText1!
+                                    .bodyLarge!
                                     .color!
                                     .withOpacity(.5),
                               ),
@@ -113,7 +113,7 @@ class _TagCreatorManagerState extends State<TagCreatorManager> {
                       tag: _values[index],
                       isForSearch: false,
                       isForCreation: true,
-                      backgroundColor: Theme.of(context).backgroundColor,
+                      backgroundColor: Theme.of(context).colorScheme.surface,
                     ),
                     // InputFormatters example, this disallow \ and /
                     inputFormatters: [

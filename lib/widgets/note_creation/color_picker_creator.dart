@@ -60,7 +60,7 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
               },
               child: Text(
                 'Cancel',
-                style: Theme.of(context).textTheme.headline3!.copyWith(
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(
                       decoration: TextDecoration.underline,
                     ),
               ),
@@ -72,7 +72,7 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
           child: Padding(
             padding: const EdgeInsets.all(6),
             child: Card(
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.surface,
               elevation: 0,
               child: flex.ColorPicker(
                 pickersEnabled: const <flex.ColorPickerType, bool>{
@@ -104,14 +104,14 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.displaySmall,
         ),
         Text(
           subtitle,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 color: Theme.of(context)
                     .textTheme
-                    .bodyText1!
+                    .bodyLarge!
                     .color!
                     .withOpacity(.5),
               ),
@@ -208,7 +208,7 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
             children: [
               Text(
                 'Color Picker',
-                style: Theme.of(context).textTheme.headline1,
+                style: Theme.of(context).textTheme.displayLarge,
               ),
               IconButtonXItem(Navigator.of(context).pop),
             ],
@@ -391,10 +391,10 @@ class _ColorPickerCreatorState extends State<ColorPickerCreator> {
                         isGradientActive
                             ? 'Switch to color '
                             : 'Switch to gradient.',
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               color: Theme.of(context)
                                   .textTheme
-                                  .bodyText1!
+                                  .bodyLarge!
                                   .color!
                                   .withOpacity(.5),
                             ),

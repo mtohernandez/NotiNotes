@@ -65,15 +65,15 @@ class LoadCreateNote extends StatelessWidget {
           maxLines: null, // Lol this works
           keyboardType: TextInputType.multiline,
           initialValue: loadedNote.content,
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
           textInputAction: TextInputAction.newline,
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: 'Add content here...',
-            hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+            hintStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .bodyLarge!
                       .color!
                       .withOpacity(0.5),
                 ),

@@ -31,7 +31,7 @@ class DisplaySelector extends StatelessWidget {
           children: [
             Text(
               'Display mode',
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.displayLarge,
             ),
             IconButtonXItem(exitCreator),
           ],
@@ -72,17 +72,17 @@ class DisplaySelector extends StatelessWidget {
           child: Text(
             DisplayModes.getDisplayMode(
                 notes.findById(id).displayMode)['display']!,
-            style: Theme.of(context).textTheme.headline1,
+            style: Theme.of(context).textTheme.displayLarge,
           ),
         ),
         Center(
           child: Text(
             DisplayModes.getDisplayMode(
                 notes.findById(id).displayMode)['description']!,
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .bodyLarge!
                       .color!
                       .withOpacity(0.5),
                 ),
