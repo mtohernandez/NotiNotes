@@ -6,7 +6,7 @@ import 'package:noti_notes_app/screens/note_view_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
-import '../api/notifications_api.dart';
+import 'package:noti_notes_app/api/notifications_api.dart';
 
 import './screens/information_screen.dart';
 import './screens/user_info_screen.dart';
@@ -95,43 +95,42 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         debugShowCheckedModeBanner: false,
         title: 'NotiNotes',
         theme: ThemeData(
+          useMaterial3: false,
           fontFamily: 'SF Pro Display',
           primaryColor: Colors.white,
-          backgroundColor: const Color(0xff1D1D1D),
-          colorScheme: ColorScheme.fromSwatch(
-                  // primarySwatch: Colors.grey,
-                  )
-              .copyWith(
+          scaffoldBackgroundColor: const Color(0xff1D1D1D),
+          colorScheme: ColorScheme.fromSwatch().copyWith(
             secondary: const Color(0xff1D1D1D),
+            surface: const Color(0xff1D1D1D),
           ),
-          textTheme: TextTheme(
-            headline1: const TextStyle(
+          textTheme: const TextTheme(
+            displayLarge: TextStyle(
               color: Colors.white,
               fontSize: 25,
               fontWeight: FontWeight.w700,
             ),
-            headline2: const TextStyle(
+            displayMedium: TextStyle(
               color: Colors.white,
               fontSize: 30,
               fontWeight: FontWeight.w700,
             ),
-            headline3: const TextStyle(
+            displaySmall: TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.w700,
             ),
-            headline4: const TextStyle(
+            headlineMedium: TextStyle(
               color: Colors.white,
               fontSize: 14,
               fontWeight: FontWeight.w400,
             ),
-            bodyText1: const TextStyle(
+            bodyLarge: TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.w400,
             ),
-            bodyText2: TextStyle(
-              color: Theme.of(context).colorScheme.secondary,
+            bodyMedium: TextStyle(
+              color: Color(0xff1D1D1D),
               fontSize: 16,
               fontWeight: FontWeight.w400,
             ),
