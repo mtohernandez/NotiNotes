@@ -28,7 +28,7 @@ class UserInfoScreen extends StatelessWidget {
 
     return mostUsedTags.isNotEmpty
         ? SizedBox(
-            height: Theme.of(context).textTheme.bodyText1!.fontSize! * 2.0,
+            height: Theme.of(context).textTheme.bodyLarge!.fontSize! * 2.0,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => TagItem(
@@ -37,16 +37,16 @@ class UserInfoScreen extends StatelessWidget {
                 tag: mostUsedTags.elementAt(index),
                 isForSearch: false,
                 isForCreation: false,
-                backgroundColor: Theme.of(context).backgroundColor,
+                backgroundColor: Theme.of(context).colorScheme.surface,
               ),
               itemCount: mostUsedTags.length,
             ),
           )
         : Text(
             'No tags yet.',
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color:
-                      Theme.of(context).textTheme.bodyText1!.color!.withOpacity(
+                      Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(
                             .5,
                           ),
                   fontStyle: FontStyle.italic,
@@ -71,15 +71,15 @@ class UserInfoScreen extends StatelessWidget {
           ),
           Text(
             title,
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
           Text(
             subtitle,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline4!.copyWith(
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                   color: Theme.of(context)
                       .textTheme
-                      .headline4!
+                      .headlineMedium!
                       .color!
                       .withOpacity(.5),
                 ),
@@ -119,11 +119,11 @@ class UserInfoScreen extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text('Your profile',
-              style: Theme.of(context).textTheme.headline1),
-          backgroundColor: Theme.of(context).backgroundColor,
+              style: Theme.of(context).textTheme.displayLarge),
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0,
         ),
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(
@@ -162,19 +162,19 @@ class UserInfoScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: Theme.of(context).textTheme.headline1!.fontSize,
+                        height: Theme.of(context).textTheme.displayLarge!.fontSize,
                         width: MediaQuery.of(context).size.width * .4,
                         child: TextFormField(
                           maxLines: 1,
                           maxLength: 15,
                           initialValue: user.curentUserData.name,
-                          style: Theme.of(context).textTheme.headline1,
+                          style: Theme.of(context).textTheme.displayLarge,
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.only(
                                 bottom: 1), // Avoid hint from overlaping bottom
                             border: InputBorder.none,
                             hintText: 'Your name',
-                            hintStyle: Theme.of(context).textTheme.headline1,
+                            hintStyle: Theme.of(context).textTheme.displayLarge,
                             counter: const SizedBox.shrink(),
                           ),
                           onChanged: (name) {
@@ -187,7 +187,7 @@ class UserInfoScreen extends StatelessWidget {
                       ),
                       Text(
                         '${notes.notesCount} notes on this device.',
-                        style: Theme.of(context).textTheme.headline4,
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
                     ],
                   ),
@@ -197,7 +197,7 @@ class UserInfoScreen extends StatelessWidget {
                 height: 20,
               ),
               Text('Tags you use the most',
-                  style: Theme.of(context).textTheme.headline1),
+                  style: Theme.of(context).textTheme.displayLarge),
               const SizedBox(
                 height: 10,
               ),
