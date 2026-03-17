@@ -14,7 +14,7 @@ class IsSearchBoxItem extends StatelessWidget {
       children: [
         Text(
           'On edit mode',
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 fontWeight: FontWeight.bold,
               ),
         ),
@@ -29,8 +29,8 @@ class IsSearchBoxItem extends StatelessWidget {
                 'Delete Selected',
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText1!
-                    .copyWith(color: Theme.of(context).errorColor),
+                    .bodyLarge!
+                    .copyWith(color: Theme.of(context).colorScheme.error),
               ),
             ),
             TextButton(
@@ -39,10 +39,10 @@ class IsSearchBoxItem extends StatelessWidget {
               },
               child: Text(
                 'Cancel',
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyLarge!
                           .color!
                           .withOpacity(.5),
                     ),

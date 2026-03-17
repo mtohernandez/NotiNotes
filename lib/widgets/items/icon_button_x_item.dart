@@ -21,8 +21,8 @@ class IconButtonXItem extends StatelessWidget {
         ),
         icon: SvgPicture.asset(
           'lib/assets/icons/plus.svg',
-          color: Theme.of(context).textTheme.bodyText1!.color,
-          height: Theme.of(context).textTheme.bodyText1!.fontSize,
+          color: Theme.of(context).textTheme.bodyLarge!.color,
+          height: Theme.of(context).textTheme.bodyLarge!.fontSize,
         ),
       ),
     );

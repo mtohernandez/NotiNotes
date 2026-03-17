@@ -20,7 +20,7 @@ class BottomSheetItem extends StatelessWidget {
           ),
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(50), topRight: Radius.circular(50)),
           ),

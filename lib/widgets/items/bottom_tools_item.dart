@@ -29,7 +29,7 @@ class BottomToolsItem extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         scrollable: true,
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         content: ColorPickerCreator(id),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -48,7 +48,7 @@ class BottomToolsItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
           horizontal: 5,
         ),
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.surface,
         child: Consumer<Notes>(
           builder: (ctx, notes, _) => Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
