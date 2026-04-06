@@ -33,6 +33,8 @@ class Note {
   DisplayMode displayMode;
   bool hasGradient;
   LinearGradient? gradient;
+  bool isPinned;
+  int? sortIndex;
 
   List<Map<String, dynamic>> todoList;
 
@@ -52,6 +54,8 @@ class Note {
       'displayMode': displayMode.index,
       'hasGradient': hasGradient,
       'gradient': gradient == null ? '' : {'colors': gradient?.colors.map((e) => e.toARGB32()).toList(), 'alignment': [gradient!.begin.toString(), gradient!.end.toString()]},
+      'isPinned': isPinned,
+      'sortIndex': sortIndex,
     };
   }
 
@@ -70,5 +74,7 @@ class Note {
     required this.fontColor,
     required this.hasGradient,
     this.displayMode = DisplayMode.normal,
+    this.isPinned = false,
+    this.sortIndex,
   });
 }
