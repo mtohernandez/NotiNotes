@@ -3,8 +3,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:noti_notes_app/helpers/database_helper.dart';
 import 'package:noti_notes_app/screens/home_screen.dart';
 import 'package:noti_notes_app/screens/note_view_screen.dart';
+import 'package:noti_notes_app/theme/app_theme.dart';
+import 'package:noti_notes_app/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/services.dart';
 
 import 'package:noti_notes_app/api/notifications_api.dart';
 
@@ -16,16 +17,11 @@ import './providers/notes.dart';
 import './providers/search.dart';
 
 void main() async {
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      systemNavigationBarColor: Color(0xff1D1D1D),
-    ),
-  );
-
   WidgetsFlutterBinding.ensureInitialized();
 
   await DbHelper.initBox(DbHelper.notesBoxName);
   await DbHelper.initBox(DbHelper.userBoxName);
+  await ThemeProvider.ensureBoxOpen();
 
   runApp(const MyApp());
 }
@@ -40,17 +36,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   late Notes notes;
   late UserData userData;
-
-  // Init local notifications
-
-  //? The box needs to be disposed after closing the app
+  late ThemeProvider themeProvider;
 
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     notes = Notes();
     userData = UserData();
-    // notes.clearBox();
+    themeProvider = ThemeProvider()..load();
     notes.loadNotesFromDataBase();
     userData.loadUserFromDataBase();
     notes.sortByDateCreated();
@@ -81,67 +74,28 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => userData,
-        ),
-        ChangeNotifierProvider(
-          create: (_) => notes,
-        ),
-        ChangeNotifierProvider(
-          create: (_) => Search(),
-        ),
+        ChangeNotifierProvider(create: (_) => userData),
+        ChangeNotifierProvider(create: (_) => notes),
+        ChangeNotifierProvider(create: (_) => Search()),
+        ChangeNotifierProvider.value(value: themeProvider),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'NotiNotes',
-        theme: ThemeData(
-          useMaterial3: false,
-          fontFamily: 'SF Pro Display',
-          primaryColor: Colors.white,
-          scaffoldBackgroundColor: const Color(0xff1D1D1D),
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            secondary: const Color(0xff1D1D1D),
-            surface: const Color(0xff1D1D1D),
-          ),
-          textTheme: const TextTheme(
-            displayLarge: TextStyle(
-              color: Colors.white,
-              fontSize: 25,
-              fontWeight: FontWeight.w700,
-            ),
-            displayMedium: TextStyle(
-              color: Colors.white,
-              fontSize: 30,
-              fontWeight: FontWeight.w700,
-            ),
-            displaySmall: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
-            headlineMedium: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-            ),
-            bodyLarge: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-            ),
-            bodyMedium: TextStyle(
-              color: Color(0xff1D1D1D),
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ),
-        home: const HomeScreen(),
-        routes: {
-          HomeScreen.routeName: (context) => const HomeScreen(),
-          InformationScreen.routeName: (context) => const InformationScreen(),
-          NoteViewScreen.routeName: (context) => const NoteViewScreen(),
-          UserInfoScreen.routeName: (context) => const UserInfoScreen(),
+      child: Consumer<ThemeProvider>(
+        builder: (context, theme, _) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'NotiNotes',
+            theme: AppTheme.light(theme.writingFont),
+            darkTheme: AppTheme.dark(theme.writingFont),
+            themeMode: theme.themeMode,
+            home: const HomeScreen(),
+            routes: {
+              HomeScreen.routeName: (context) => const HomeScreen(),
+              InformationScreen.routeName: (context) =>
+                  const InformationScreen(),
+              NoteViewScreen.routeName: (context) => const NoteViewScreen(),
+              UserInfoScreen.routeName: (context) => const UserInfoScreen(),
+            },
+          );
         },
       ),
     );
