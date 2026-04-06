@@ -3,7 +3,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:noti_notes_app/helpers/database_helper.dart';
 import 'package:noti_notes_app/screens/home_screen.dart';
 import 'package:noti_notes_app/screens/note_editor_screen.dart';
-import 'package:noti_notes_app/screens/note_view_screen.dart';
 import 'package:noti_notes_app/screens/settings_screen.dart';
 import 'package:noti_notes_app/theme/app_theme.dart';
 import 'package:noti_notes_app/theme/theme_provider.dart';
@@ -11,7 +10,6 @@ import 'package:provider/provider.dart';
 
 import 'package:noti_notes_app/api/notifications_api.dart';
 
-import './screens/information_screen.dart';
 import './screens/user_info_screen.dart';
 
 import './providers/user_data.dart';
@@ -66,8 +64,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void notificationResponse(NotificationResponse response) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const NoteViewScreen(),
-        settings: RouteSettings(arguments: response.payload),
+        builder: (context) => NoteEditorScreen(noteId: response.payload),
       ),
     );
   }
@@ -92,9 +89,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             home: const HomeScreen(),
             routes: {
               HomeScreen.routeName: (context) => const HomeScreen(),
-              InformationScreen.routeName: (context) =>
-                  const InformationScreen(),
-              NoteViewScreen.routeName: (context) => const NoteViewScreen(),
               NoteEditorScreen.routeName: (context) => const NoteEditorScreen(),
               UserInfoScreen.routeName: (context) => const UserInfoScreen(),
               SettingsScreen.routeName: (context) => const SettingsScreen(),
