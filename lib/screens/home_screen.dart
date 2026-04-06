@@ -3,9 +3,10 @@ import 'package:noti_notes_app/widgets/items/appbar_content_item.dart';
 import 'package:noti_notes_app/widgets/items/issearch_box_item.dart';
 import 'package:noti_notes_app/widgets/navigation/bottom_navigation_custom_item.dart';
 import 'package:provider/provider.dart';
-import 'package:masonry_grid/masonry_grid.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'dart:math';
 
+import 'package:noti_notes_app/models/note.dart';
 import 'package:noti_notes_app/widgets/items/note_item.dart';
 import 'package:noti_notes_app/providers/notes.dart';
 import 'package:noti_notes_app/providers/search.dart';
@@ -135,50 +136,38 @@ class HomeScreen extends StatelessWidget {
                 ),
               _buildSpacer(context, appBarSize * .5), // Half the appbar size
               SliverToBoxAdapter(
-                child: isSearching.isSearching == SearchType.notSearching &&
-                        notes.notes.isEmpty
-                    ? _buildCenterMessage(
-                        context, 'No notes yet, press + to add one!')
-                    : notes.filterByTitle(isSearching.searchQuery).isEmpty &&
-                            isSearching.isSearching ==
-                                SearchType.searchingByTitle
-                        ? _buildCenterMessage(context, 'No notes found...')
-                        : MasonryGrid(
-                            column: 2,
-                            crossAxisSpacing: 5,
-                            mainAxisSpacing: 5,
-                            children: [
-                              if (isSearching.isSearching ==
-                                  SearchType.notSearching)
-                                ...notes.notes
-                                    .map(
-                                      (note) => NoteItem(
-                                        id: note.id,
-                                      ),
-                                    )
-                                    .toList(),
-                              if (isSearching.isSearching ==
-                                  SearchType.searchingByTitle)
-                                ...notes
-                                    .filterByTitle(isSearching.searchQuery)
-                                    .map(
-                                      (note) => NoteItem(
-                                        id: note.id,
-                                      ),
-                                    )
-                                    .toList(),
-                              if (isSearching.isSearching ==
-                                  SearchType.searchingByTag)
-                                ...notes
-                                    .filterByTag(isSearching.searchTags)
-                                    .map(
-                                      (note) => NoteItem(
-                                        id: note.id,
-                                      ),
-                                    )
-                                    .toList(),
-                            ],
-                          ),
+                child: Builder(builder: (context) {
+                  if (isSearching.isSearching == SearchType.notSearching &&
+                      notes.notes.isEmpty) {
+                    return _buildCenterMessage(
+                        context, 'No notes yet, press + to add one!');
+                  }
+                  if (notes.filterByTitle(isSearching.searchQuery).isEmpty &&
+                      isSearching.isSearching == SearchType.searchingByTitle) {
+                    return _buildCenterMessage(context, 'No notes found...');
+                  }
+                  final List<Note> visible;
+                  switch (isSearching.isSearching) {
+                    case SearchType.notSearching:
+                      visible = notes.notes;
+                      break;
+                    case SearchType.searchingByTitle:
+                      visible = notes.filterByTitle(isSearching.searchQuery);
+                      break;
+                    case SearchType.searchingByTag:
+                      visible = notes.filterByTag(isSearching.searchTags);
+                      break;
+                  }
+                  return MasonryGridView.count(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: visible.length,
+                    itemBuilder: (context, i) => NoteItem(id: visible[i].id),
+                  );
+                }),
               ),
             ],
           ),
