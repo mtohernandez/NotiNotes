@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -54,6 +55,7 @@ class _NoteStyleSheetState extends State<NoteStyleSheet> {
                     color: color,
                     selected: selected,
                     onTap: () {
+                      HapticFeedback.selectionClick();
                       final notesP = context.read<Notes>();
                       notesP.changeCurrentColor(widget.noteId, color);
                       if (note.hasGradient) notesP.switchGradient(widget.noteId);
