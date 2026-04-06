@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
@@ -77,8 +78,11 @@ class HomeScreen extends StatelessWidget {
                   mainAxisSpacing: AppSpacing.md,
                   crossAxisSpacing: AppSpacing.md,
                   childCount: pinned.length,
-                  itemBuilder: (context, i) =>
-                      _buildOpenContainerCard(context, pinned[i]),
+                  itemBuilder: (context, i) => _buildAnimated(
+                    context,
+                    pinned[i],
+                    i,
+                  ),
                 ),
               ),
             ],
@@ -98,8 +102,11 @@ class HomeScreen extends StatelessWidget {
                   mainAxisSpacing: AppSpacing.md,
                   crossAxisSpacing: AppSpacing.md,
                   childCount: unpinned.length,
-                  itemBuilder: (context, i) =>
-                      _buildOpenContainerCard(context, unpinned[i]),
+                  itemBuilder: (context, i) => _buildAnimated(
+                    context,
+                    unpinned[i],
+                    pinned.length + i,
+                  ),
                 ),
               ),
           ],
@@ -125,6 +132,23 @@ class HomeScreen extends StatelessWidget {
         openBuilder: (context, _) => const NoteEditorScreen(),
       ),
     );
+  }
+
+  Widget _buildAnimated(BuildContext context, Note note, int index) {
+    return _buildOpenContainerCard(context, note)
+        .animate()
+        .fadeIn(
+          duration: AppDurations.md,
+          delay: Duration(milliseconds: 40 * index),
+          curve: AppCurves.standard,
+        )
+        .slideY(
+          begin: 0.08,
+          end: 0,
+          duration: AppDurations.md,
+          delay: Duration(milliseconds: 40 * index),
+          curve: AppCurves.standard,
+        );
   }
 
   Widget _buildOpenContainerCard(BuildContext context, Note note) {
