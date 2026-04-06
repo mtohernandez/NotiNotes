@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:noti_notes_app/helpers/database_helper.dart';
 import 'package:noti_notes_app/screens/home_screen.dart';
+import 'package:noti_notes_app/screens/note_editor_screen.dart';
 import 'package:noti_notes_app/screens/note_view_screen.dart';
+import 'package:noti_notes_app/screens/settings_screen.dart';
 import 'package:noti_notes_app/theme/app_theme.dart';
 import 'package:noti_notes_app/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -93,7 +95,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               InformationScreen.routeName: (context) =>
                   const InformationScreen(),
               NoteViewScreen.routeName: (context) => const NoteViewScreen(),
+              NoteEditorScreen.routeName: (context) => const NoteEditorScreen(),
               UserInfoScreen.routeName: (context) => const UserInfoScreen(),
+              SettingsScreen.routeName: (context) => const SettingsScreen(),
             },
           );
         },
