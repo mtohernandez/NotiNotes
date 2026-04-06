@@ -1,214 +1,156 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:noti_notes_app/widgets/items/appbar_content_item.dart';
-import 'package:noti_notes_app/widgets/items/issearch_box_item.dart';
-import 'package:noti_notes_app/widgets/navigation/bottom_navigation_custom_item.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'dart:math';
+import 'package:provider/provider.dart';
 
-import 'package:noti_notes_app/models/note.dart';
-import 'package:noti_notes_app/widgets/items/note_item.dart';
-import 'package:noti_notes_app/providers/notes.dart';
-import 'package:noti_notes_app/providers/search.dart';
-import 'package:noti_notes_app/widgets/items/appbar_title_item.dart';
-import 'package:noti_notes_app/widgets/items/icon_button_x_item.dart';
+import '../models/note.dart';
+import '../providers/notes.dart';
+import '../providers/search.dart';
+import '../theme/app_tokens.dart';
+import '../widgets/home/empty_state.dart';
+import '../widgets/home/filter_chips_row.dart';
+import '../widgets/home/home_app_bar.dart';
+import '../widgets/home/note_card.dart';
+import '../widgets/home/section_header.dart';
+import '../widgets/sheets/long_press_menu_sheet.dart';
+import 'note_editor_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home-screen';
   const HomeScreen({super.key});
 
-  Widget _buildCenterMessage(BuildContext context, String message) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          message,
-          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                color: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .color!
-                    .withOpacity(0.5),
-              ),
-        ),
-      ],
-    );
-  }
-
-  Widget _searchingMessage(BuildContext context, Search isSearching) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text(
-          'Searching "${isSearching.searchQuery}"',
-          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-        ),
-        IconButtonXItem(isSearching.deactivateSearch),
-      ],
-    );
-  }
-
-  Widget _buildPersistenHeader(BuildContext context, Widget child) {
-    final sliverHeight = Theme.of(context).textTheme.bodyLarge!.fontSize! * 2.5;
-
-    return SliverPersistentHeader(
-      pinned: true,
-      delegate: _SliverAppBarDelegate(
-        minHeight: sliverHeight,
-        maxHeight: sliverHeight,
-        child: Container(
-          color: Theme.of(context).colorScheme.surface,
-          child: child,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSpacer(BuildContext context, double? height) {
-    return SliverToBoxAdapter(
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: height,
-      ),
-    );
+  /// Apply title search and filter chip to the visible note list.
+  List<Note> _applyFilters(List<Note> source, Search search) {
+    Iterable<Note> result = source;
+    if (search.searchQuery.isNotEmpty) {
+      final q = search.searchQuery.toLowerCase();
+      result = result.where((n) => n.title.toLowerCase().contains(q));
+    }
+    switch (search.filter) {
+      case NoteFilter.all:
+        break;
+      case NoteFilter.reminders:
+        result = result.where((n) => n.reminder != null);
+        break;
+      case NoteFilter.checklists:
+        result = result.where((n) => n.blocks.any((b) => b['type'] == 'checklist'));
+        break;
+      case NoteFilter.images:
+        result = result.where((n) =>
+            n.blocks.any((b) => b['type'] == 'image') || n.imageFile != null);
+        break;
+    }
+    return result.toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    final notes = Provider.of<Notes>(context);
-    final isSearching = Provider.of<Search>(context);
-    final appBarSize = Theme.of(context).textTheme.bodyLarge!.fontSize! * 2;
-    final paddingTop = MediaQuery.of(context).padding.top;
+    final notes = context.watch<Notes>();
+    final search = context.watch<Search>();
+    final scheme = Theme.of(context).colorScheme;
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        // notes.editMode = false;
-      },
-      child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        body: Padding(
-          padding: EdgeInsets.only(
-            top: paddingTop > 50 ? paddingTop * .3 : paddingTop,
-            left: 10,
-            right: 10,
-          ),
-          child: CustomScrollView(
-            // controller: ,
-            slivers: [
-              _buildSpacer(context, MediaQuery.of(context).padding.top),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  child: const TitleItem(),
-                ),
-              ),
-              SliverAppBar(
-                // centerTitle: true,
-                backgroundColor: Theme.of(context).colorScheme.surface,
-                pinned: true,
-                floating: false,
-                snap: false,
-                elevation: 0,
-                expandedHeight: appBarSize,
-                toolbarHeight: appBarSize,
-                titleSpacing: 0,
+    final pinned = _applyFilters(notes.pinnedNotes, search);
+    final unpinned = _applyFilters(notes.unpinnedNotes, search);
+    final isEmpty = pinned.isEmpty && unpinned.isEmpty;
 
-                flexibleSpace: const FlexibleSpaceBar(
-                  expandedTitleScale: 1,
-                  titlePadding: EdgeInsets.symmetric(vertical: 10),
-                  title: AppBarContentItem(),
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          const HomeAppBar(),
+          const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.sm)),
+          const SliverToBoxAdapter(child: FilterChipsRow()),
+          const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.md)),
+          if (isEmpty)
+            const SliverFillRemaining(
+              hasScrollBody: false,
+              child: EmptyState(),
+            )
+          else ...[
+            if (pinned.isNotEmpty) ...[
+              const SliverToBoxAdapter(child: SectionHeader('Pinned')),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.lg,
                 ),
-              ),
-              if (notes.editMode &&
-                  isSearching.isSearching == SearchType.notSearching)
-                _buildPersistenHeader(context, const IsSearchBoxItem()),
-              if (isSearching.isSearching == SearchType.searchingByTitle)
-                _buildPersistenHeader(
-                  context,
-                  _searchingMessage(
-                    context,
-                    isSearching,
-                  ),
+                sliver: SliverMasonryGrid.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: AppSpacing.md,
+                  crossAxisSpacing: AppSpacing.md,
+                  childCount: pinned.length,
+                  itemBuilder: (context, i) =>
+                      _buildOpenContainerCard(context, pinned[i]),
                 ),
-              _buildSpacer(context, appBarSize * .5), // Half the appbar size
-              SliverToBoxAdapter(
-                child: Builder(builder: (context) {
-                  if (isSearching.isSearching == SearchType.notSearching &&
-                      notes.notes.isEmpty) {
-                    return _buildCenterMessage(
-                        context, 'No notes yet, press + to add one!');
-                  }
-                  if (notes.filterByTitle(isSearching.searchQuery).isEmpty &&
-                      isSearching.isSearching == SearchType.searchingByTitle) {
-                    return _buildCenterMessage(context, 'No notes found...');
-                  }
-                  final List<Note> visible;
-                  switch (isSearching.isSearching) {
-                    case SearchType.notSearching:
-                      visible = notes.notes;
-                      break;
-                    case SearchType.searchingByTitle:
-                      visible = notes.filterByTitle(isSearching.searchQuery);
-                      break;
-                    case SearchType.searchingByTag:
-                      visible = notes.filterByTag(isSearching.searchTags);
-                      break;
-                  }
-                  return MasonryGridView.count(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: visible.length,
-                    itemBuilder: (context, i) => NoteItem(id: visible[i].id),
-                  );
-                }),
               ),
             ],
+            if (unpinned.isNotEmpty)
+              SliverToBoxAdapter(
+                child: SectionHeader(
+                  pinned.isNotEmpty ? 'Notes' : 'All notes',
+                ),
+              ),
+            if (unpinned.isNotEmpty)
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.lg,
+                ),
+                sliver: SliverMasonryGrid.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: AppSpacing.md,
+                  crossAxisSpacing: AppSpacing.md,
+                  childCount: unpinned.length,
+                  itemBuilder: (context, i) =>
+                      _buildOpenContainerCard(context, unpinned[i]),
+                ),
+              ),
+          ],
+          const SliverToBoxAdapter(child: SizedBox(height: 96)),
+        ],
+      ),
+      floatingActionButton: OpenContainer(
+        closedElevation: 6,
+        closedShape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppRadius.lg)),
+        ),
+        closedColor: scheme.primary,
+        openColor: scheme.surface,
+        transitionDuration: AppDurations.md,
+        transitionType: ContainerTransitionType.fadeThrough,
+        closedBuilder: (context, openContainer) => SizedBox(
+          width: 56,
+          height: 56,
+          child: Center(
+            child: Icon(Icons.add, color: scheme.onPrimary, size: 28),
           ),
         ),
-        bottomNavigationBar: const BottomNavigationCustomItem(),
+        openBuilder: (context, _) => const NoteEditorScreen(),
       ),
     );
   }
-}
 
-// In order to make the EditMode and SearchBox persisten, we need to use a SliverPersistentHeaderDelegate and created in a separated class
-
-class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  final double minHeight;
-  final double maxHeight;
-  final Widget child;
-
-  _SliverAppBarDelegate({
-    required this.minHeight,
-    required this.maxHeight,
-    required this.child,
-  });
-
-  @override
-  double get minExtent => minHeight;
-
-  @override
-  double get maxExtent => max(maxHeight, minHeight);
-
-  // 2
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return SizedBox.expand(child: child);
-  }
-
-  // 3
-  @override
-  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxHeight ||
-        minHeight != oldDelegate.minHeight ||
-        child != oldDelegate.child;
+  Widget _buildOpenContainerCard(BuildContext context, Note note) {
+    return OpenContainer(
+      closedElevation: 0,
+      openElevation: 0,
+      closedColor: note.hasGradient
+          ? note.colorBackground
+          : note.colorBackground,
+      openColor: Theme.of(context).colorScheme.surface,
+      closedShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+      ),
+      transitionDuration: AppDurations.md,
+      transitionType: ContainerTransitionType.fadeThrough,
+      closedBuilder: (context, openContainer) => NoteCard(
+        note: note,
+        onTap: openContainer,
+        onLongPress: () => showModalBottomSheet<void>(
+          context: context,
+          isScrollControlled: true,
+          useSafeArea: true,
+          builder: (_) => LongPressMenuSheet(noteId: note.id),
+        ),
+      ),
+      openBuilder: (context, _) => NoteEditorScreen(noteId: note.id),
+    );
   }
 }
