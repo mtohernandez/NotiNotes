@@ -27,14 +27,19 @@ dependencies:
     sdk: flutter
   provider: ^6.1.5
   intl: ^0.20.2
-  masonry_grid: ^1.0.0
+  flutter_staggered_grid_view: ^0.7.0
   flutter_svg: ^2.2.4
   uuid: ^4.5.3
   string_similarity: ^2.1.1
   image_picker: ^1.2.1
   flutter_image_compress: ^2.4.0
-  flex_color_picker: ^3.8.0
   material_tag_editor: ^0.1.2
+  flex_color_picker: ^3.8.0
+  animations: ^2.0.11
+  flutter_animate: ^4.5.0
+  google_fonts: ^6.2.1
+  gap: ^3.0.1
+  board_datetime_picker: ^2.1.0
   path: ^1.9.1
   path_provider: ^2.1.5
   hive_ce: ^2.19.3
