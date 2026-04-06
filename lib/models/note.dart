@@ -36,6 +36,11 @@ class Note {
   bool isPinned;
   int? sortIndex;
 
+  /// New unified editor block list. Each block is a map with a 'type' key
+  /// (one of 'text', 'checklist', 'image') plus type-specific fields.
+  /// New notes use this exclusively; legacy notes use content/todoList/imageFile.
+  List<Map<String, dynamic>> blocks;
+
   List<Map<String, dynamic>> todoList;
 
   Map<String, dynamic> toJson() {
@@ -56,6 +61,7 @@ class Note {
       'gradient': gradient == null ? '' : {'colors': gradient?.colors.map((e) => e.toARGB32()).toList(), 'alignment': [gradient!.begin.toString(), gradient!.end.toString()]},
       'isPinned': isPinned,
       'sortIndex': sortIndex,
+      'blocks': blocks,
     };
   }
 
@@ -76,5 +82,6 @@ class Note {
     this.displayMode = DisplayMode.normal,
     this.isPinned = false,
     this.sortIndex,
-  });
+    List<Map<String, dynamic>>? blocks,
+  }) : blocks = blocks ?? [];
 }
