@@ -101,6 +101,12 @@ class Notes with ChangeNotifier {
           hasGradient: noteDecoded['hasGradient'],
           isPinned: noteDecoded['isPinned'] ?? false,
           sortIndex: noteDecoded['sortIndex'],
+          blocks: noteDecoded['blocks'] != null
+              ? (noteDecoded['blocks'] as List)
+                  .cast<Map>()
+                  .map((m) => m.cast<String, dynamic>())
+                  .toList()
+              : null,
         ),
       );
     }
@@ -420,6 +426,49 @@ class Notes with ChangeNotifier {
   void switchGradient(String id) {
     findById(id).hasGradient = !findById(id).hasGradient;
     updateNoteOnDataBase(findById(id));
+    notifyListeners();
+  }
+
+  //? Pinning
+
+  List<Note> get pinnedNotes => _notes.where((n) => n.isPinned).toList();
+  List<Note> get unpinnedNotes => _notes.where((n) => !n.isPinned).toList();
+
+  void togglePin(String id) {
+    final i = findIndex(id);
+    if (i < 0) return;
+    _notes[i].isPinned = !_notes[i].isPinned;
+    updateNoteOnDataBase(_notes[i]);
+    notifyListeners();
+  }
+
+  //? Block-based editor mutations (used by the unified editor)
+
+  void replaceBlocks(String id, List<Map<String, dynamic>> blocks) {
+    final i = findIndex(id);
+    if (i < 0) return;
+    _notes[i].blocks = blocks;
+    updateNoteOnDataBase(_notes[i]);
+    notifyListeners();
+  }
+
+  void updateTitle(String id, String title) {
+    final i = findIndex(id);
+    if (i < 0) return;
+    _notes[i].title = title;
+    updateNoteOnDataBase(_notes[i]);
+    notifyListeners();
+  }
+
+  void deleteNote(String id) {
+    final i = findIndex(id);
+    if (i < 0) return;
+    if (_notes[i].imageFile != null) {
+      PhotoPicker.removeImage(_notes[i].imageFile!);
+    }
+    LocalNotificationService.cancelNotification(i);
+    _notes.removeAt(i);
+    DbHelper.deleteData(DbHelper.notesBoxName, id);
     notifyListeners();
   }
 
