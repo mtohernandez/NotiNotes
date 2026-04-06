@@ -1,244 +1,135 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:noti_notes_app/helpers/photo_picker.dart';
-import 'package:noti_notes_app/widgets/items/bottom_sheet_item.dart';
+import 'package:gap/gap.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/items/tag_item.dart';
-import '../widgets/note_creation/media_grid.dart';
-
+import '../helpers/photo_picker.dart';
 import '../providers/notes.dart';
 import '../providers/user_data.dart';
+import '../theme/app_tokens.dart';
 
 class UserInfoScreen extends StatelessWidget {
   static const routeName = '/user-info';
   const UserInfoScreen({super.key});
 
-  Set<String> importMostUsedTags(Notes notes) {
-    return notes.notes.fold(
-      <String>{},
-      (previousValue, note) => previousValue..addAll(note.tags),
-    );
-  }
-
-  Widget _buildMostUsedTags(BuildContext context) {
-    // Get a set<string> of the most used tags
-    final mostUsedTags =
-        Provider.of<Notes>(context, listen: false).getMostUsedTags();
-
-    return mostUsedTags.isNotEmpty
-        ? SizedBox(
-            height: Theme.of(context).textTheme.bodyLarge!.fontSize! * 2.0,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => TagItem(
-                null,
-                0,
-                tag: mostUsedTags.elementAt(index),
-                isForSearch: false,
-                isForCreation: false,
-                backgroundColor: Theme.of(context).colorScheme.surface,
-              ),
-              itemCount: mostUsedTags.length,
-            ),
-          )
-        : Text(
-            'No tags yet.',
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color:
-                      Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(
-                            .5,
-                          ),
-                  fontStyle: FontStyle.italic,
-                ),
-          );
-  }
-
-  Widget _buildNoteOptions(
-      BuildContext context, String title, String subtitle, SvgPicture icon) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Theme.of(context).primaryColor.withOpacity(.1),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          icon,
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          Text(
-            subtitle,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                  color: Theme.of(context)
-                      .textTheme
-                      .headlineMedium!
-                      .color!
-                      .withOpacity(.5),
-                ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void openMediaPicker(BuildContext context) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+  Future<void> _pickProfileImage(BuildContext context) async {
+    final source = await showModalBottomSheet<ImageSource>(
       context: context,
-      builder: (bctx) {
-        return const BottomSheetItem(
-          MediaGrid(
-            PhotoPicker.pickImage,
-            '',
-            true,
-            title: 'Choose profile picture',
-            subtitle: 'You can remove it too.',
-          ),
-          false,
-        );
-      },
+      builder: (_) => SafeArea(
+        child: Wrap(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.photo_library_outlined),
+              title: const Text('Choose from gallery'),
+              onTap: () => Navigator.of(context).pop(ImageSource.gallery),
+            ),
+            ListTile(
+              leading: const Icon(Icons.camera_alt_outlined),
+              title: const Text('Take a photo'),
+              onTap: () => Navigator.of(context).pop(ImageSource.camera),
+            ),
+          ],
+        ),
+      ),
     );
+    if (source == null) return;
+    final file = await PhotoPicker.pickImage(source, 80);
+    if (file != null && context.mounted) {
+      context.read<UserData>().updateProfilePicture(file);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserData>(context);
-    final notes = Provider.of<Notes>(context, listen: false);
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text('Your profile',
-              style: Theme.of(context).textTheme.displayLarge),
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          elevation: 0,
+    final user = context.watch<UserData>().curentUserData;
+    final notes = context.watch<Notes>();
+    final scheme = Theme.of(context).colorScheme;
+    final mostUsed = notes.getMostUsedTags();
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Profile')),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.lg,
+          vertical: AppSpacing.md,
         ),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => openMediaPicker(context),
-                    child: Container(
-                      // TODO: Make this values responsive
-                      width: 70,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: user.curentUserData.profilePicture != null
-                            ? DecorationImage(
-                                image: FileImage(
-                                    user.curentUserData.profilePicture!),
-                                fit: BoxFit.cover,
-                              )
-                            : const DecorationImage(
-                                image: AssetImage(
-                                  'lib/assets/images/noProfilePicture.png',
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                      ),
-                    ),
+              GestureDetector(
+                onTap: () => _pickProfileImage(context),
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: scheme.surfaceContainerHigh,
+                    image: user.profilePicture != null
+                        ? DecorationImage(
+                            image: FileImage(File(user.profilePicture!.path)),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
                   ),
-                  const SizedBox(
-                    width: 10,
+                  child: user.profilePicture == null
+                      ? Icon(Icons.person_outline,
+                          size: 40, color: scheme.onSurfaceVariant)
+                      : null,
+                ),
+              ),
+              const Gap(AppSpacing.lg),
+              Expanded(
+                child: TextFormField(
+                  initialValue: user.name,
+                  maxLength: 30,
+                  style: Theme.of(context).textTheme.titleLarge,
+                  decoration: const InputDecoration(
+                    counterText: '',
+                    hintText: 'Your name',
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: Theme.of(context).textTheme.displayLarge!.fontSize,
-                        width: MediaQuery.of(context).size.width * .4,
-                        child: TextFormField(
-                          maxLines: 1,
-                          maxLength: 15,
-                          initialValue: user.curentUserData.name,
-                          style: Theme.of(context).textTheme.displayLarge,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.only(
-                                bottom: 1), // Avoid hint from overlaping bottom
-                            border: InputBorder.none,
-                            hintText: 'Your name',
-                            hintStyle: Theme.of(context).textTheme.displayLarge,
-                            counter: const SizedBox.shrink(),
-                          ),
-                          onChanged: (name) {
-                            user.updateName(name);
-                          },
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        '${notes.notesCount} notes on this device.',
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
-                    ],
-                  ),
-                ],
+                  onChanged: (name) =>
+                      context.read<UserData>().updateName(name),
+                ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text('Tags you use the most',
-                  style: Theme.of(context).textTheme.displayLarge),
-              const SizedBox(
-                height: 10,
-              ),
-              Consumer<Notes>(
-                builder: (context, notesData, child) {
-                  return _buildMostUsedTags(context);
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              // SizedBox(
-              //   height: MediaQuery.of(context).size.height * .5,
-              //   child: GridView.count(
-              //     crossAxisCount: 2,
-              //     crossAxisSpacing: 5,
-              //     children: [
-              //       _buildNoteOptions(
-              //         context,
-              //         'NoteDrop',
-              //         'The people you sent note to will see your profile.',
-              //         SvgPicture.asset(
-              //           'lib/assets/icons/notedrop.svg',
-              //           height: 30,
-              //         ),
-              //       ),
-              //       _buildNoteOptions(
-              //         context,
-              //         'Audio Notes',
-              //         'Record your voice and save it as a note.',
-              //         SvgPicture.asset(
-              //           'lib/assets/icons/mic.svg',
-              //           height: 30,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
             ],
           ),
-        ),
+          const Gap(AppSpacing.xl),
+          Text(
+            '${notes.notesCount} notes on this device',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const Gap(AppSpacing.xl),
+          Text(
+            'TAGS YOU USE THE MOST',
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  letterSpacing: 1.2,
+                  color: scheme.onSurfaceVariant,
+                ),
+          ),
+          const Gap(AppSpacing.sm),
+          if (mostUsed.isEmpty)
+            Text(
+              'No tags yet.',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontStyle: FontStyle.italic,
+                  ),
+            )
+          else
+            Wrap(
+              spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.sm,
+              children: mostUsed
+                  .map(
+                    (t) => Chip(
+                      label: Text('#$t'),
+                      backgroundColor: scheme.surfaceContainerHigh,
+                    ),
+                  )
+                  .toList(),
+            ),
+        ],
       ),
     );
   }
