@@ -99,6 +99,8 @@ class Notes with ChangeNotifier {
           fontColor: Color(noteDecoded['fontColor']),
           displayMode: DisplayMode.values[noteDecoded['displayMode']],
           hasGradient: noteDecoded['hasGradient'],
+          isPinned: noteDecoded['isPinned'] ?? false,
+          sortIndex: noteDecoded['sortIndex'],
         ),
       );
     }
